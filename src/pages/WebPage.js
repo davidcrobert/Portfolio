@@ -14,12 +14,6 @@ const WebPage = () => {
       title: "I Asked My Reflection Its Name Again",
       link: "/projects/i-asked-my-reflection",
       description: "Dancing with yourself<br><br>[2020]<br><br>~JavaScript~"
-    },
-    {
-      id: 3,
-      title: "pointsonacurve",
-      link: "/projects/points-on-a-curve",
-      description: "Honestly just fun with geometry<br><br>[2022]<br><br>~Three.js~"
     }
   ];
 
