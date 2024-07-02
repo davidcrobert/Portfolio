@@ -16,7 +16,9 @@
 
 .project {
   padding: 40px 20px;
-  width: 100%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   position: relative;
   border-bottom: 1px solid black;
@@ -54,9 +56,10 @@
   border-bottom: 1px black solid;
   transition: transform 0.2s linear;
   margin-bottom: 20px;
-  width: 60%;
+  width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  max-width: 60%;
 }
 
 .title:hover {
