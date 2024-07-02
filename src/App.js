@@ -13,6 +13,7 @@ import ICantHearYouProject from './pages/projects/ICantHearYou';
 import MothMelodyProject from   './pages/projects/MothMelody';
 import SixHundredSpheresProject from './pages/projects/SixHundredSpheres';
 import AugmentedSymphonyProject from './pages/projects/AugmentedSymphony';
+import ScavengeARProject from './pages/projects/ScavengeAR';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/projects/moth-melody" element={<MothMelodyProject />} />
           <Route path="/projects/600-spheres" element={<SixHundredSpheresProject />} />
           <Route path="/projects/augmented-symphony" element={<AugmentedSymphonyProject />} />
+          <Route path="/projects/scavenge-ar" element={<ScavengeARProject />} />
         </Routes>
       </div>
     </Router>
