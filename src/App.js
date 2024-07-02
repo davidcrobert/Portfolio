@@ -6,6 +6,8 @@ import InstallationPage from './pages/InstallationPage';
 import VirtualEnvironmentsPage from './pages/VirtualEnvironmentsPage';
 import AugmentedRealityPage from './pages/AugmentedRealityPage';
 import WebPage from './pages/WebPage';
+import AnAntProject from './pages/AnAntProject';
+
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/virtual-environments" element={<VirtualEnvironmentsPage />} />
           <Route path="/augmented-reality" element={<AugmentedRealityPage />} />
           <Route path="/web" element={<WebPage />} />
+
+          <Route path="/projects/an-ant" element={<AnAntProject />} />
         </Routes>
       </div>
     </Router>
