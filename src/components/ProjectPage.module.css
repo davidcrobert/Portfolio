@@ -48,6 +48,20 @@
     text-align: right;
     text-transform: uppercase;
   }
+
+  .media {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 10px;
+    width: 100%;
+    text-align: right;
+  }
+
+  p a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-style: italic;
+  }
   
   @media only screen and (max-width: 800px) {
     .designContent {
