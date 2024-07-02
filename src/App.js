@@ -14,6 +14,7 @@ import MothMelodyProject from   './pages/projects/MothMelody';
 import SixHundredSpheresProject from './pages/projects/SixHundredSpheres';
 import AugmentedSymphonyProject from './pages/projects/AugmentedSymphony';
 import ScavengeARProject from './pages/projects/ScavengeAR';
+import IAskedMyReflectionProject from './pages/projects/IAskedMyReflection';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/projects/600-spheres" element={<SixHundredSpheresProject />} />
           <Route path="/projects/augmented-symphony" element={<AugmentedSymphonyProject />} />
           <Route path="/projects/scavenge-ar" element={<ScavengeARProject />} />
+          <Route path="/projects/i-asked-my-reflection" element={<IAskedMyReflectionProject />} />
         </Routes>
       </div>
     </Router>
