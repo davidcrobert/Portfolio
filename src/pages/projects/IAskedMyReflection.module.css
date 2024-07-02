@@ -7,13 +7,6 @@
     align-items: center;
   }
   
-  .technologies {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px 0px;
-    text-align: right;
-    text-transform: uppercase;
-  }
-  
   .contentContainer {
     width: 80%;
     max-width: 800px;
