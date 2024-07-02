@@ -31,18 +31,16 @@
   border-bottom: none;
 }
 
-/* Single project */
 .projectCount1 {
-  height: calc(100vh - 150px); /* Adjust 150px based on your header height */
+  height: calc(100vh - 150px);
 }
 
-/* Two projects */
 .projectCount2 {
   height: 50vh;
 }
 
-/* Three or more projects */
-.projectCount3 {
+.projectCount3,
+.projectCount4 {
   height: 33.33vh;
 }
 
