@@ -1,14 +1,14 @@
 import React from 'react';
 import ProjectPage from '../../components/ProjectPage';
 import styles from './ScavengeAR.module.css';
+import mainStyles from '../../components/ProjectPage.module.css';
 
 const ScavengeARProject = () => {
   const content = `
     <p>
-      Made as a major project for my internship at <a href="https://www.jam3.com/"
+      Made as a major project for my internship at <a class="${mainStyles.externalLink}" href="https://www.jam3.com/"
       target="_blank" rel="noopener noreferrer">Jam3</a>, alongside one other Creative Developer Intern, two Design Interns, and a Production Intern.
-      Our brief was to create a solution / prototype for a way to help bring small businesses into the Metaverse. To access the website directly, 
-      use this <a href="https://d16ezodv61vppw.cloudfront.net/" target="_blank" rel="noopener noreferrer">link</a>. There are both desktop and mobile versions.
+      Our brief was to create a solution / prototype for a way to help bring small businesses into the Metaverse.
     </p>
 
     <p>

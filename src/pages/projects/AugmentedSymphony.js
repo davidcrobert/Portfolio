@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectPage from '../../components/ProjectPage';
+import styles from '../../components/ProjectPage.module.css';
 
 const AugmentedSymphonyProject = () => {
   const content = `
@@ -27,7 +28,7 @@ const AugmentedSymphonyProject = () => {
         allowfullscreen
       ></iframe>
     </div>
-    <p>This app, along with a <a href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
+    <p>This app, along with a <a class="${styles.externalLink}" href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a class="${styles.externalLink}" href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
   `;
 
   const mediaEmbed = `

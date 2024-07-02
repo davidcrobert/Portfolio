@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectPage from '../../components/ProjectPage';
+import styles from '../../components/ProjectPage.module.css';
 
 const AnAntProject = () => {
   const content = `
@@ -17,7 +18,7 @@ const AnAntProject = () => {
       Simulation was done in Unity - visuals handled in TouchDesigner - Python detected whether their eyes were open or closed.
       <br><br>
       The title is in reference to 
-      <a href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
+      <a class="${styles.externalLink}" href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
     </p>
   `;
 

@@ -23,7 +23,7 @@ const AssemblyLineProject = () => {
       <i>Assembly Line</i> was featured in DesignTO 2022.
     </p>
     <p class="${styles.media}">
-      The CBC wrote an <a href="https://www.cbc.ca/arts/in-toronto-here-s-where-you-can-make-art-with-a-giant-industrial-robot-1.6321499" target="_blank" rel="noopener noreferrer">article</a> about it.
+      The CBC wrote an <a class="${styles.externalLink}"  href="https://www.cbc.ca/arts/in-toronto-here-s-where-you-can-make-art-with-a-giant-industrial-robot-1.6321499" target="_blank" rel="noopener noreferrer">article</a> about it.
     </p>
   `;
 
