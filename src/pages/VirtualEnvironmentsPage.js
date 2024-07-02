@@ -13,7 +13,7 @@ const VirtualEnvironmentsPage = () => {
       id: 2,
       title: "Augmented Symphony",
       link: "/projects/augmented-symphony",
-      description: "Research project exploring spatial and interactive audio for audience experience<br><br>[2021]<br><br>~Unity~<br><br><b>Accepted to EVA London 2022</b>"
+      description: "Research project exploring spatial and interactive audio for audience experience<br><br>[2021]<br><br>~Unity~<br><br><b>Presented at EVA London 2022</b>"
     }
     // Add more projects here as needed
   ];
