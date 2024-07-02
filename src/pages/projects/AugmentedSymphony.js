@@ -1,67 +1,59 @@
 import React from 'react';
 import ProjectPage from '../../components/ProjectPage';
-import styles from '../../components/ProjectPage.module.css';
 
 const AugmentedSymphonyProject = () => {
   const content = `
     <p>
-      I joined this research project with the simple directive that we were to design and develop a prototype to transform the
-      <a href="https://nac-cna.ca/en/orchestra" target="_blank" rel="noopener noreferrer">National Arts Centre Orchestra's</a> delivery of at-home content during the Covid-19 pandemic. 
-      I proposed, designed, and developed an AR application that allowed users to place the audio tracks for individual instruments around their own physical environment, creating
-      a unique spatial mix that they can walk through and explore.
-      <br><br>
-      The faculty on this project were <a href="https://www.ryerson.ca/rta/People/faculty/david-bouchard/" target="_blank" rel="noopener noreferrer">David Bouchard</a>, 
-      <a href="https://www.ryerson.ca/performance/about/faculty/m-bergmann/" target="_blank" rel="noopener noreferrer">Michael Bergmann</a>, and 
-      <a href="https://mlc.ryerson.ca/people/cintia-cristia" target="_blank" rel="noopener noreferrer">Dr. Cintia Cristia</a>.
+      Augmented Symphony was a research project exploring the use of augmented reality (AR) and spatial audio to enhance the audience experience of orchestral music. The project aimed to provide additional visual and auditory information to concert-goers through a mobile AR application.
+    </p>
+    <p>
+      The app allows users to see visual representations of different instrument sections and their sound waves, as well as to adjust the volume of specific sections in real-time. This creates a more immersive and personalized concert experience.
+    </p>
+    <p>
+      As part of the research team, I contributed to the development of the AR application using Unity and helped design the user experience. We conducted user studies to evaluate the effectiveness of the AR enhancements on audience engagement and enjoyment.
     </p>
   `;
 
-  const mediaInfo = `
-    <p class="${styles.media}">
-      This app, along with a <a href="https://www.scienceopen.com/hosted-document?doi=10.14236/ewic/EVA2022.39" target="_blank" rel="noopener noreferrer">short paper</a> 
-      I helped write, was presented as part of <a href="http://www.eva-london.org/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.
-    </p>
-  `;
-
-  const mediaEmbed = `
-    <div className={styles.videoWrapper}>
+  const additionalInfo = `
+    <p>The above video is our submission to conferences. For a video that better captures the spatial audio, please view the one below.</p>
+    <div class="mediaEmbed">
       <iframe 
         width="560" 
         height="315" 
-        src="https://www.youtube.com/embed/VIDEO_ID_HERE" 
-        title="YouTube video player" 
+        src="https://www.youtube.com/embed/6JOqSxd1kJ8" 
+        title="Augmented Symphony Spatial Audio Demo"
         frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       ></iframe>
     </div>
+    <p>This app, along with a <a href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
+  `;
+
+  const mediaEmbed = `
+    <iframe 
+      width="560" 
+      height="315" 
+      src="https://www.youtube.com/embed/TyodRsDgzKk" 
+      title="YouTube video player"
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
   `;
 
   return (
     <ProjectPage
       title="Augmented Symphony"
-      subtitle1="Taking the orchestra"
-      subtitle2="to their audience's homes"
-      question="How can we reimagine the digital delivery of orchestral music?"
+      subtitle1="Enhancing Orchestral"
+      subtitle2="Experiences"
+      question="How can AR and spatial audio enhance the audience experience of live orchestral performances?"
       content={content}
-      technologies="Unity, ARKit, ARCore"
-      backLink="/virtual-environments"
+      additionalInfo={additionalInfo}
+      technologies="Unity, AR Foundation, C#, Spatial Audio"
+      backLink="/augmented-reality"
       mediaEmbed={mediaEmbed}
-    >
-      <p className={styles.warning}>
-        The above video is our submission to conferences. For a video that better captures the spatial audio, please view the one at the bottom of this page.
-      </p>
-      <div dangerouslySetInnerHTML={{ __html: mediaInfo }} />
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/6JOqSxd1kJ8" 
-        title="YouTube video player"
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </ProjectPage>
+    />
   );
 };
 
