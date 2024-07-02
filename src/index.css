@@ -20,6 +20,7 @@ code {
 
 html, body {
   height: 100%;
+  cursor: crosshair;
 }
 
 #root {

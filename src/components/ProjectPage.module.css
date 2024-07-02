@@ -15,6 +15,7 @@ p {
   color: black;
   font-weight: 600;
   font-style: italic;
+  cursor: help;
 }
 
 .designQuestion {
