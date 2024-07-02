@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/Home.module.css';
+import Sketch from '../components/Sketch';
+import Header from '../components/Header';
 
 function Home() {
   return (
     <div className={styles.index}>
-      <header className={styles.header}>
-        <h1 className={styles.intro}>David Robert</h1>
-        <h2 className={`${styles.subtext} ${styles.intro}`}>Creative technologist</h2>
-        <h2 className={`${styles.subtext} ${styles.intro} ${styles.secondSubtext}`}>& interactive developer</h2>
-      </header>
+      <Sketch />
+      <Header 
+        title="David Robert"
+        subtitle1="Creative technologist"
+        subtitle2="& interactive developer"
+      />
       
       <nav className={styles.nav}>
         <Link to="/installation" className={`${styles.navLink} ${styles.skewLeft}`}>↳ Installation</Link>
@@ -19,17 +22,6 @@ function Home() {
       </nav>
 
       <footer className={styles.footer}>
-        {/* <p>
-          <Link to="/about" className={`${styles.footerLink} ${styles.skewLeft}`}>About Me</Link>
-        </p>
-        <p>
-          <a 
-            className={`${styles.footerLink} ${styles.skewRight} ${styles.contact}`} 
-            href="mailto:david.connor.r@gmail.com"
-          >
-            david.connor.r[at]gmail.com
-          </a>
-        </p> */}
         <Link to="/about" className={`${styles.footerLink} ${styles.skewLeft}`}>About Me</Link>
         <a 
           className={`${styles.footerLink} ${styles.skewRight} ${styles.contact}`} 
