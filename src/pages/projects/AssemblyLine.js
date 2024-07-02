@@ -9,14 +9,16 @@ const AssemblyLineProject = () => {
       conditions brought on by Covid-19. Hoping to still capture the magic of an interactive installation,
       we explored ways to involve an audience in the experience while remaining distanced. Users submit 'gestures' through a web portal and watch them
       materialize in the projection. 
-      <br><br>
+    </p>
+    <p>
       Tracking of the box for mapping is done live using an HTC VIVE Tracker.
-      <br><br>
+    </p>
+    <p>
       I led the design and development, as well as solely developing the projection in TouchDesigner as well as the interactive components of the website (front-end and back-end).
     </p>
   `;
 
-  const mediaInfo = `
+  const additionalInfo = `
     <p class="${styles.media}">
       <i>Assembly Line</i> was featured in DesignTO 2022.
     </p>
@@ -44,12 +46,11 @@ const AssemblyLineProject = () => {
       subtitle2="to digital interaction"
       question="How can we create meaningful interactions with installations while maintaining social distance?"
       content={content}
+      additionalInfo={additionalInfo}
       technologies="TouchDesigner, OpenVR, JavaScript, Node.js, Projection, KUKA Robot Arm"
       backLink="/installation"
       mediaEmbed={mediaEmbed}
-    >
-      <div dangerouslySetInnerHTML={{ __html: mediaInfo }} />
-    </ProjectPage>
+    />
   );
 };
 

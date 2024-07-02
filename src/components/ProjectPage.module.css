@@ -1,78 +1,67 @@
 .projectPage {
-    background-color: #f9f9f9;
-    color: black;
-    overscroll-behavior: contain;
-    min-height: 100vh;
-    font-family: 'Times New Roman', Times, serif;
-  }
-  
-  .designQuestion {
-    font-size: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    margin: 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 400;
-  }
-  
+  background-color: #f9f9f9;
+  color: black;
+  overscroll-behavior: contain;
+  min-height: 100vh;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+p {
+  text-align: left;
+}
+
+.designQuestion {
+  font-size: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  margin: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+.designContent {
+  text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50%;
+  min-width: 40%;
+  line-height: 1.25;
+}
+
+.designContent p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+.mediaEmbed {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.mediaEmbed iframe,
+.additionalInfo iframe {
+  max-width: 100%;
+}
+
+.additionalInfo {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.technologies {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 20px 0px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 800px) {
   .designContent {
-    text-align: justify;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 50%;
-    min-width: 40%;
-    line-height: 1.25;
+    max-width: 90%;
+    min-width: 90%;
   }
-  
-  .designContent p {
-    font-size: 18px;
-    margin-bottom: 0px;
-    margin-top: 40px;
-    line-height: 1.5;
-  }
-  
-  .mediaEmbed {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
-  
-  .mediaEmbed iframe {
-    max-width: 100%;
-  }
-  
-  .technologies {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px 0px;
-    text-align: right;
-    text-transform: uppercase;
-    padding-bottom: 15px;
-  }
-
-  .media {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-top: 10px;
-    width: 100%;
-    text-align: right;
-  }
-
-  p a {
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-    font-style: italic;
-  }
-
-  .mySite {
-    width: 100%;
-    height: 65vh;
-    overflow: hidden;
-  }
-  
-  @media only screen and (max-width: 800px) {
-    .designContent {
-      max-width: 90%;
-      min-width: 90%;
-    }
-  }
+}
