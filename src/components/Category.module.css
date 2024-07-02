@@ -4,25 +4,44 @@
   overscroll-behavior: contain;
   min-height: 100vh;
   font-family: 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .projectList {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .project {
-  padding: 40px 0;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 40px 20px;
+  width: 100%;
   text-align: center;
   position: relative;
   border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .project:last-child {
   border-bottom: none;
+}
+
+/* Single project */
+.projectCount1 {
+  height: calc(100vh - 150px); /* Adjust 150px based on your header height */
+}
+
+/* Two projects */
+.projectCount2 {
+  height: 50vh;
+}
+
+/* Three or more projects */
+.projectCount3 {
+  height: 33.33vh;
 }
 
 .title {
@@ -35,6 +54,9 @@
   border-bottom: 1px black solid;
   transition: transform 0.2s linear;
   margin-bottom: 20px;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title:hover {
@@ -60,7 +82,7 @@
 
 @media only screen and (max-width: 800px) {
   .project {
-    padding: 30px 0;
+    padding: 30px 10px;
   }
   
   .title {

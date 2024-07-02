@@ -4,6 +4,8 @@ import styles from './Category.module.css';
 import Header from './Header';
 
 const Category = ({ title, subtitle1, subtitle2, projects }) => {
+  const projectCount = projects.length;
+
   return (
     <div className={styles.category}>
       <Header 
@@ -14,7 +16,10 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
       />
       <section className={styles.projectList}>
         {projects.map((project, index) => (
-          <section key={project.id} className={styles.project}>
+          <section 
+            key={project.id} 
+            className={`${styles.project} ${styles[`projectCount${projectCount}`]}`}
+          >
             <Link 
               to={project.link} 
               className={`${styles.title} ${index % 2 === 0 ? styles.left : styles.right}`}
