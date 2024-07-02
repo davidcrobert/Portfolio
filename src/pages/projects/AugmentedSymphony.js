@@ -24,15 +24,17 @@ const AugmentedSymphonyProject = () => {
   `;
 
   const mediaEmbed = `
-    <iframe 
-      width="560" 
-      height="315" 
-      src="https://www.youtube.com/embed/TyodRsDgzKk" 
-      title="YouTube video player"
-      frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
+    <div className={styles.videoWrapper}>
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/VIDEO_ID_HERE" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+      ></iframe>
+    </div>
   `;
 
   return (
@@ -43,7 +45,7 @@ const AugmentedSymphonyProject = () => {
       question="How can we reimagine the digital delivery of orchestral music?"
       content={content}
       technologies="Unity, ARKit, ARCore"
-      backLink="/augmented-reality"
+      backLink="/virtual-environments"
       mediaEmbed={mediaEmbed}
     >
       <p className={styles.warning}>

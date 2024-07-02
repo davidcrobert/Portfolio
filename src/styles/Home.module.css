@@ -41,6 +41,11 @@
   
   .skewRight:hover {
     transform: skew(-20deg);
+    /* transform: rotateX(50deg); */
+  }
+
+  .skewBack:hover {
+    transform: rotateX(50deg);
   }
 
 .footer {
@@ -62,14 +67,6 @@
   
   .footerLink:hover {
     cursor: help;
-  }
-  
-  .skewLeft:hover {
-    transform: skew(20deg);
-  }
-  
-  .skewRight:hover {
-    transform: skew(-20deg);
   }
   
   .contact {
