@@ -7,9 +7,10 @@ import VirtualEnvironmentsPage from './pages/VirtualEnvironmentsPage';
 import AugmentedRealityPage from './pages/AugmentedRealityPage';
 import WebPage from './pages/WebPage';
 
-import AnAntProject from './pages/projects/AnAnt';
+import AnAntProject from        './pages/projects/AnAnt';
 import AssemblyLineProject from './pages/projects/AssemblyLine';
-
+import ICantHearYouProject from './pages/projects/ICantHearYou';
+import MothMelodyProject from   './pages/projects/MothMelody';
 
 function App() {
   return (
@@ -22,9 +23,10 @@ function App() {
           <Route path="/virtual-environments" element={<VirtualEnvironmentsPage />} />
           <Route path="/augmented-reality" element={<AugmentedRealityPage />} />
           <Route path="/web" element={<WebPage />} />
-
           <Route path="/projects/an-ant" element={<AnAntProject />} />
           <Route path="/projects/assembly-line" element={<AssemblyLineProject />} />
+          <Route path="/projects/i-cant-hear-you" element={<ICantHearYouProject />} />
+          <Route path="/projects/moth-melody" element={<MothMelodyProject />} />
         </Routes>
       </div>
     </Router>
