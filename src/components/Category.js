@@ -7,7 +7,8 @@ const ProjectSection = ({ project, index }) => (
   <section className={`${styles.project} ${styles[`projectCount${project.totalProjects}`]}`}>
     <Link 
       to={project.link} 
-      className={`${styles.title} ${index % 2 === 0 ? styles.left : styles.right}`}
+      // className={`${styles.title} ${index % 2 === 0 ? styles.left : styles.right}`}
+      className={`${styles.title} ${styles.back}`}
     >
       {project.title}
     </Link>

@@ -72,6 +72,10 @@
   transform: skew(-20deg);
 }
 
+.title.back:hover {
+  transform: rotateX(35deg);
+}
+
 .description {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
