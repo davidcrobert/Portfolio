@@ -6,7 +6,9 @@ import InstallationPage from './pages/InstallationPage';
 import VirtualEnvironmentsPage from './pages/VirtualEnvironmentsPage';
 import AugmentedRealityPage from './pages/AugmentedRealityPage';
 import WebPage from './pages/WebPage';
-import AnAntProject from './pages/AnAntProject';
+
+import AnAntProject from './pages/projects/AnAnt';
+import AssemblyLineProject from './pages/projects/AssemblyLine';
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
           <Route path="/web" element={<WebPage />} />
 
           <Route path="/projects/an-ant" element={<AnAntProject />} />
+          <Route path="/projects/assembly-line" element={<AssemblyLineProject />} />
         </Routes>
       </div>
     </Router>

@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectPage from '../components/ProjectPage';
+import ProjectPage from '../../components/ProjectPage';
 
 const AnAntProject = () => {
   const content = `

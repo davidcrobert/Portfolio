@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 import styles from './ProjectPage.module.css';
 
-const ProjectPage = ({ title, subtitle1, subtitle2, question, content, technologies, backLink, mediaEmbed }) => {
+const ProjectPage = ({ title, subtitle1, subtitle2, question, content, technologies, backLink, mediaEmbed, children }) => {
   return (
     <div className={styles.projectPage}>
       <Header
@@ -21,6 +21,8 @@ const ProjectPage = ({ title, subtitle1, subtitle2, question, content, technolog
         )}
 
         <div dangerouslySetInnerHTML={{ __html: content }} />
+
+        {children}
 
         <p className={styles.technologies}>
           <i>Technologies:</i> {technologies}
