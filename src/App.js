@@ -11,6 +11,7 @@ import AnAntProject from        './pages/projects/AnAnt';
 import AssemblyLineProject from './pages/projects/AssemblyLine';
 import ICantHearYouProject from './pages/projects/ICantHearYou';
 import MothMelodyProject from   './pages/projects/MothMelody';
+import SixHundredSpheresProject from './pages/projects/SixHundredSpheres';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/projects/assembly-line" element={<AssemblyLineProject />} />
           <Route path="/projects/i-cant-hear-you" element={<ICantHearYouProject />} />
           <Route path="/projects/moth-melody" element={<MothMelodyProject />} />
+          <Route path="/projects/600-spheres" element={<SixHundredSpheresProject />} />
         </Routes>
       </div>
     </Router>
