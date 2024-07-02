@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/AboutMe.module.css';
+import Header from '../components/Header';
 
 const AboutMe = () => {
   return (
     <div className={styles.aboutMe}>
-      <header className={styles.header}>
-        <h1 className={styles.intro}>About Me</h1>
-        <h2 className={`${styles.intro} ${styles.subtext}`}>Professionally</h2>
-        <h2 className={`${styles.intro} ${styles.subtext} ${styles.secondSubtext}`}>& Personally</h2>
-        <Link to="/" className={`${styles.back} ${styles.skew} ${styles.left}`}>Back</Link>
-      </header>
+      <Header 
+        title="About Me"
+        subtitle1="Professionally"
+        subtitle2="& Personally"
+        backLink="/"
+      />
 
       <div className={styles.test}>
         <a className={`${styles.resume} ${styles.skew} ${styles.right}`} href="CV-DavidRobert.pdf" target="_blank" rel="noopener noreferrer">résumé</a>

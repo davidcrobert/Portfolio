@@ -2,20 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/Home.module.css';
 import Sketch from '../components/Sketch';
+import Header from '../components/Header';
 
 function Home() {
   return (
     <div className={styles.index}>
-    {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"
-        integrity="sha512-w1Bktzax55ZbjW5Mqjz8+mKz4KqRjEUU35Dpq/ath29yskKqIGwNIHiFNp03m/OiJWDXvdQ1/g6aV+l4PeVO7Q=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="sketch.js"></script> */}
       <Sketch />
-      <header className={styles.header}>
-        <h1 className={styles.intro}>David Robert</h1>
-        <h2 className={`${styles.subtext} ${styles.intro}`}>Creative technologist</h2>
-        <h2 className={`${styles.subtext} ${styles.intro} ${styles.secondSubtext}`}>& interactive developer</h2>
-      </header>
+      <Header 
+        title="David Robert"
+        subtitle1="Creative technologist"
+        subtitle2="& interactive developer"
+      />
       
       <nav className={styles.nav}>
         <Link to="/installation" className={`${styles.navLink} ${styles.skewLeft}`}>↳ Installation</Link>
