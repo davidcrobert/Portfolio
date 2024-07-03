@@ -292,25 +292,10 @@ export const projectData = {
             id: 2,
             title: "I Asked My Reflection Its Name Again",
             link: "/projects/i-asked-my-reflection",
-            description: "Dancing with yourself<br><br>[2020]<br><br>~JavaScript~",
+            description: "An interactive exploration of recursive behavior<br><br>[2020]<br><br>~JavaScript~",
             subtitle1: "Recursive",
             subtitle2: "Interaction",
             year: "2020",
-            question: "How does it feel to be surrounded by yourself?",
-            content: `
-              <p>
-                In <i>I ASKED MY REFLECTION ITS NAME AGAIN</i> users are given a simple direction at the
-                beginning to move their mouse. From this point, a number of identical cursors slowly appear. 
-                It becomes clear the cursors are imitating their movements. 
-              </p>
-              <p>
-                The cursors imitate users' behaviour through a Markov model, where they learn patterns of behaviour 
-                based on users' previous movements. As cursors appear and users become aware of the role they play in their movement, this 
-                affects how they interact with the site. Which will in turn affect the cursors. Which will in turn affect the
-                user. Which will in turn affect the cursors. Which will in turn affect the user.
-              </p>
-            `,
-            technologies: "JavaScript, p5.js",
             customComponent: "ReflectionInteractive"
           }
         ]

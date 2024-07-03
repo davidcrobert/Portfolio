@@ -58,9 +58,11 @@ const ProjectPage = () => {
           <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: project.additionalInfo }} />
         )}
 
-        <p className={styles.technologies}>
-          <i>Technologies:</i> {project.technologies}
-        </p>
+        {project.technologies && project.technologies.length > 0 && (
+          <p className={styles.technologies}>
+            <i>Technologies:</i> {project.technologies}
+          </p>
+        )}
       </section>
     </div>
   );

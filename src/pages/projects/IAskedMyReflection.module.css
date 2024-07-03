@@ -1,24 +1,15 @@
-.interactiveContainer {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .contentContainer {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+.projectContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
 
-  /* <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/6JOqSxd1kJ8" 
-        title="YouTube video player"
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe> */
+.interactiveContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: calc(100vh - 150px); /* Adjust 150px based on your header height */
+}
