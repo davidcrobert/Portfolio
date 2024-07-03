@@ -25,6 +25,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  height: calc(25vh - 18px);
+  min-height: 150px;
 }
 
 .project:last-child {
@@ -46,10 +49,10 @@
   min-height: 150px;
 }
 
-.projectCount4 {
+/* .projectCount4 {
   height: calc(25vh - 18px);
   min-height: 150px;
-}
+} */
 
 .title {
   color: black;
