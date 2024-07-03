@@ -286,20 +286,7 @@ export const projectData = {
               </p>
             `,
             technologies: "Three.js, Node.js, React, MongoDB",
-            mediaEmbed: `
-              <div class="gifContainer">
-                <img src="/assets/MultiUser.gif" alt="Multi-user interaction"/>
-                <img src="/assets/QuestList.gif" alt="Quest list"/>
-                <img src="/assets/SignUp.gif" alt="Sign up process"/>
-              </div>
-              
-              <section class="scavengeGifs">
-                <img src="/assets/EV1.gif" alt="Evolution 1"/>
-                <img src="/assets/EV2.gif" alt="Evolution 2"/>
-                <img src="/assets/EV3.gif" alt="Evolution 3"/>
-                <img src="/assets/EV4.gif" alt="Evolution 4"/>
-              </section>
-            `
+            customComponent: "ScavengeARMedia"
           },
           {
             id: 2,
@@ -324,12 +311,7 @@ export const projectData = {
               </p>
             `,
             technologies: "JavaScript, p5.js",
-            mediaEmbed: `
-              <!-- Note: The actual interactive component would be rendered here in the real implementation -->
-              <div class="interactiveContainer">
-                <p>Interactive p5.js sketch would be rendered here</p>
-              </div>
-            `
+            customComponent: "ReflectionInteractive"
           }
         ]
       }

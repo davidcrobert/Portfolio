@@ -3,6 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import styles from './ProjectPage.module.css';
 import { projectData } from '../data/projectData';
+import ScavengeARMedia from './ScavengeARMedia';
+import ReflectionInteractive from './ReflectionInteractive';
+
+const customComponents = {
+  ScavengeARMedia,
+  ReflectionInteractive
+};
 
 const ProjectPage = () => {
   const { projectId } = useParams();
@@ -24,19 +31,7 @@ const ProjectPage = () => {
     return null;
   }
 
-  // Function to process content and add externalLink class to external links
-  const processContent = (content) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-    
-    doc.querySelectorAll('a').forEach(link => {
-      if (link.getAttribute('target') === '_blank') {
-        link.classList.add(styles.externalLink);
-      }
-    });
-
-    return doc.body.innerHTML;
-  };
+  const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
 
   return (
     <div className={styles.projectPage}>
@@ -51,14 +46,16 @@ const ProjectPage = () => {
       <h2 className={styles.designQuestion}>{project.question}</h2>
       
       <section className={styles.designContent}>
-        <div dangerouslySetInnerHTML={{ __html: processContent(project.content) }} />
+        <div dangerouslySetInnerHTML={{ __html: project.content }} />
+
+        {CustomComponent && <CustomComponent />}
 
         {project.mediaEmbed && (
           <div className={styles.mediaEmbed} dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
         )}
 
         {project.additionalInfo && (
-          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: processContent(project.additionalInfo) }} />
+          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: project.additionalInfo }} />
         )}
 
         <p className={styles.technologies}>
