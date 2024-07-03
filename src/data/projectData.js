@@ -255,11 +255,82 @@ export const projectData = {
       ]
     },
     web: {
-      title: "Web",
-      subtitle1: "World",
-      subtitle2: "& Wide & Web",
-      projects: [
-        // ... web projects
-      ]
-    }
+        title: "Web",
+        subtitle1: "World",
+        subtitle2: "& Wide & Web",
+        projects: [
+          {
+            id: 1,
+            title: "ScavengeAR_",
+            link: "/projects/scavenge-ar",
+            description: "Helping small businesses enter the Metaverse<br><br>[2022]<br><br>~Three.js, React, Node.js, Socket.io, MongoDB~",
+            subtitle1: "Small Businesses",
+            subtitle2: "& the Metaverse",
+            year: "2022",
+            question: "How can we reduce the upfront cost/work for small businesses entering the Metaverse?",
+            content: `
+              <p>
+                Made as a major project for my internship at <a href="https://www.jam3.com/" target="_blank" rel="noopener noreferrer">Jam3</a>, alongside one other Creative Developer Intern, two Design Interns, and a Production Intern.
+                Our brief was to create a solution / prototype for a way to help bring small businesses into the Metaverse.
+              </p>
+    
+              <p>
+                Scavenge AR_ allows a small business to create a simple virtual environment to tie into their business. Customers are invited to join 
+                the Metaverse-shop, where they can move through the space and see other users in real-time - this was managed using Node.js and WebSockets. 
+              </p>
+              
+              <p>
+                In the Metaverse they can access "quests" that earn them and the virtual store points. These quests are tasks that have to be completed in-store 
+                by scanning QR codes under certain circumstances - say a certain time of day or a certain number of days in a row. This logic was all handled in Node.js. 
+                By completing a quest, they earn points towards their account, as well as a group total for the store. Once enough collective points are earned, the store "evolves."
+              </p>
+            `,
+            technologies: "Three.js, Node.js, React, MongoDB",
+            mediaEmbed: `
+              <div class="gifContainer">
+                <img src="/assets/MultiUser.gif" alt="Multi-user interaction"/>
+                <img src="/assets/QuestList.gif" alt="Quest list"/>
+                <img src="/assets/SignUp.gif" alt="Sign up process"/>
+              </div>
+              
+              <section class="scavengeGifs">
+                <img src="/assets/EV1.gif" alt="Evolution 1"/>
+                <img src="/assets/EV2.gif" alt="Evolution 2"/>
+                <img src="/assets/EV3.gif" alt="Evolution 3"/>
+                <img src="/assets/EV4.gif" alt="Evolution 4"/>
+              </section>
+            `
+          },
+          {
+            id: 2,
+            title: "I Asked My Reflection Its Name Again",
+            link: "/projects/i-asked-my-reflection",
+            description: "Dancing with yourself<br><br>[2020]<br><br>~JavaScript~",
+            subtitle1: "Recursive",
+            subtitle2: "Interaction",
+            year: "2020",
+            question: "How does it feel to be surrounded by yourself?",
+            content: `
+              <p>
+                In <i>I ASKED MY REFLECTION ITS NAME AGAIN</i> users are given a simple direction at the
+                beginning to move their mouse. From this point, a number of identical cursors slowly appear. 
+                It becomes clear the cursors are imitating their movements. 
+              </p>
+              <p>
+                The cursors imitate users' behaviour through a Markov model, where they learn patterns of behaviour 
+                based on users' previous movements. As cursors appear and users become aware of the role they play in their movement, this 
+                affects how they interact with the site. Which will in turn affect the cursors. Which will in turn affect the
+                user. Which will in turn affect the cursors. Which will in turn affect the user.
+              </p>
+            `,
+            technologies: "JavaScript, p5.js",
+            mediaEmbed: `
+              <!-- Note: The actual interactive component would be rendered here in the real implementation -->
+              <div class="interactiveContainer">
+                <p>Interactive p5.js sketch would be rendered here</p>
+              </div>
+            `
+          }
+        ]
+      }
   };
