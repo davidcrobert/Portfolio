@@ -8,6 +8,10 @@
   padding-bottom: 3px;
 }
 
+.headerContent {
+  position: relative;
+}
+
 .intro {
   font-size: 25px;
   margin-left: 10px;
@@ -25,10 +29,15 @@
   margin-left: 30px;
 }
 
-.back {
+.headerButtons {
   position: absolute;
   top: 27px;
-  right: 40px;
+  right: 20px;
+  display: flex;
+  gap: 30px;
+}
+
+.headerButton {
   color: black;
   text-decoration: none;
   font-size: 20px;
@@ -36,12 +45,35 @@
   transition: transform 0.2s linear;
 }
 
-.skew.left:hover {
+.infoButton {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 20px;
+}
+
+.back.skew.left:hover {
   transform: skew(20deg);
+}
+
+.infoButton:hover {
+  transform: skew(-20deg);
 }
 
 @media only screen and (max-width: 600px) {
   .header h1.intro {
     width: 50%;
+  }
+
+  .headerButtons {
+    top: 15px;
+    right: 10px;
+  }
+
+  .headerButton {
+    font-size: 16px;
   }
 }
