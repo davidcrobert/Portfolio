@@ -8,7 +8,7 @@ const Header = ({ title, subtitle1, subtitle2, year, backLink }) => {
       <div className={styles.headerContent}>
         <h1 className={styles.intro}>
           {title}
-          {year && <span className={styles.year}> - {year}</span>}
+          {year && <span className={styles.year}> [{year}]</span>}
         </h1>
         <h2 className={`${styles.subtext} ${styles.intro}`}>{subtitle1}</h2>
         <h2 className={`${styles.subtext} ${styles.intro} ${styles.secondSubtext}`}>{subtitle2}</h2>
