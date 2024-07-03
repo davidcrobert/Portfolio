@@ -40,6 +40,25 @@
   transform: skew(20deg);
 }
 
+.infoButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: background-color 0.2s;
+}
+
+.infoButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 @media only screen and (max-width: 600px) {
   .header h1.intro {
     width: 50%;

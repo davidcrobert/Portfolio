@@ -55,6 +55,7 @@ const ProjectPage = () => {
         subtitle2={project.subtitle2}
         year={project.year}
         backLink={`/${categoryData.title.toLowerCase().replace(' ', '-')}`}
+        showInfoButton={true}
       />
 
       {project.question && <h2 className={styles.designQuestion}>{project.question}</h2>}
