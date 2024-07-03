@@ -44,14 +44,14 @@ const ReflectionInteractive = ({ width, height }) => {
       };
 
       p.setup = () => {
-        let can = p.createCanvas(width, height);
+        let canvas = p.createCanvas(width, height);
         cursor.resize(13, 15);
         p.noCursor();
         p.textFont(font);
         p.textSize(width / 80);
         p.textAlign(p.CENTER);
 
-        can.style("transform", `translate(-${(45 * scaleMultiplier) / 2}%, 0%)`);
+        canvas.style("transform", `translate(-${(45 * scaleMultiplier) / 2}%, 10%)`);
       };
 
       p.windowResized = () => {
