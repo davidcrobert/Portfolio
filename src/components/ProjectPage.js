@@ -33,6 +33,20 @@ const ProjectPage = () => {
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
 
+  // Function to apply external link styling
+  const applyExternalLinkStyling = (html) => {
+    if (!html) return '';
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const links = doc.querySelectorAll('a');
+    links.forEach(link => {
+      if (link.getAttribute('target') === '_blank') {
+        link.classList.add(styles.externalLink);
+      }
+    });
+    return doc.body.innerHTML;
+  };
+
   return (
     <div className={styles.projectPage}>
       <Header
@@ -43,10 +57,12 @@ const ProjectPage = () => {
         backLink={`/${categoryData.title.toLowerCase().replace(' ', '-')}`}
       />
 
-      <h2 className={styles.designQuestion}>{project.question}</h2>
+      {project.question && <h2 className={styles.designQuestion}>{project.question}</h2>}
       
       <section className={styles.designContent}>
-        <div dangerouslySetInnerHTML={{ __html: project.content }} />
+        {project.content && (
+          <div dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.content) }} />
+        )}
 
         {CustomComponent && <CustomComponent />}
 
@@ -55,7 +71,7 @@ const ProjectPage = () => {
         )}
 
         {project.additionalInfo && (
-          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: project.additionalInfo }} />
+          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.additionalInfo) }} />
         )}
 
         {project.technologies && project.technologies.length > 0 && (
