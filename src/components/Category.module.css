@@ -37,15 +37,18 @@
 
 .projectCount2 {
   height: calc(50vh - 40px);
+  min-height: 150px;
 }
 
 .projectCount3 {
   /* height: 33.33vh; */
-  height: calc(33.33vh - 20px)
+  height: calc(33.33vh - 20px);
+  min-height: 150px;
 }
 
 .projectCount4 {
   height: calc(25vh - 18px);
+  min-height: 150px;
 }
 
 .title {
