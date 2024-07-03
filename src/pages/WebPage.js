@@ -7,13 +7,15 @@ const WebPage = () => {
       id: 1,
       title: "ScavengeAR_",
       link: "/projects/scavenge-ar",
-      description: "Helping small businesses enter the Metaverse<br><br>[2022]<br><br>~Three.js, React, Node.js, Socket.io, MongoDB~"
+      description: "Helping small businesses enter the Metaverse<br><br>~Three.js, React, Node.js, Socket.io, MongoDB~",
+      year: "2022"
     },
     {
       id: 2,
       title: "I Asked My Reflection Its Name Again",
       link: "/projects/i-asked-my-reflection",
-      description: "Dancing with yourself<br><br>[2020]<br><br>~JavaScript~"
+      description: "Dancing with yourself<br><br>~JavaScript~",
+      year: "2020"
     }
   ];
 
