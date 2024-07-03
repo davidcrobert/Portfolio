@@ -3,12 +3,23 @@ import p5 from 'p5';
 
 const ReflectionInteractive = ({ width, height }) => {
   const sketchRef = useRef();
+  // console.log(width, height); // Debugging statement to verify props
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const scaleMultiplier = 0.75;
+  width = screenWidth * scaleMultiplier;
+  height = screenHeight * scaleMultiplier;
 
   useEffect(() => {
     const sketch = (p) => {
-      let texts = ["MOVE YOUR MOUSE", "THROW YOUR VOICE", 'TEACH YOUR SELF', "HUG YOUR YOUNG", "ENJOY YOUR WORRIES", "HOLD YOUR NOSE",  "FORGET YOUR FACE", 
-        "WATCH YOUR TONGUE", "MASH YOUR TEETH", "ASK YOUR REFLECTION ITS NAME", "QUIT YOUR WHINING", "SCREAM YOUR WORDS", "DROP YOUR THOUGHTS", "UNCLENCH YOUR FIST",
-        "THROW YOUR VOICE", "DIM YOUR LIGHTS", "BEG YOUR GOD", "CLOSE YOUR EYES", "WASH YOUR WORRIES", "I ASKED MY REFLECTION ITS NAME AGAIN"];
+      let texts = [
+        "MOVE YOUR MOUSE", "THROW YOUR VOICE", 'TEACH YOUR SELF', "HUG YOUR YOUNG", 
+        "ENJOY YOUR WORRIES", "HOLD YOUR NOSE", "FORGET YOUR FACE", "WATCH YOUR TONGUE", 
+        "MASH YOUR TEETH", "ASK YOUR REFLECTION ITS NAME", "QUIT YOUR WHINING", 
+        "SCREAM YOUR WORDS", "DROP YOUR THOUGHTS", "UNCLENCH YOUR FIST", "THROW YOUR VOICE", 
+        "DIM YOUR LIGHTS", "BEG YOUR GOD", "CLOSE YOUR EYES", "WASH YOUR WORRIES", 
+        "I ASKED MY REFLECTION ITS NAME AGAIN"
+      ];
 
       const font = "Times New Roman";
       const baseCreateFrequency = 2000;
@@ -33,12 +44,14 @@ const ReflectionInteractive = ({ width, height }) => {
       };
 
       p.setup = () => {
-        p.createCanvas(width, height);
+        let can = p.createCanvas(width, height);
         cursor.resize(13, 15);
         p.noCursor();
         p.textFont(font);
         p.textSize(width / 80);
         p.textAlign(p.CENTER);
+
+        can.style("transform", `translate(-${(45 * scaleMultiplier) / 2}%, 0%)`);
       };
 
       p.windowResized = () => {
@@ -49,8 +62,7 @@ const ReflectionInteractive = ({ width, height }) => {
       p.draw = () => {
         let textChoice = p.map(recorder.length, 0, maxCursors, 0, texts.length - 1);
         textChoice = p.floor(textChoice);
-        if(beginTime !== 0) middleText = texts[textChoice];
-        else middleText = "CLICK YOUR MOUSE";
+        middleText = beginTime !== 0 ? texts[textChoice] : "CLICK YOUR MOUSE";
 
         p.background(255);
         p.fill("black");
@@ -158,7 +170,7 @@ const ReflectionInteractive = ({ width, height }) => {
     };
   }, [width, height]);
 
-  return <div ref={sketchRef} style={{ width: `${width}px`, height: `${height}px` }}></div>;
+  return <div ref={sketchRef} style={{ width: '100%', height: '100%' }}></div>;
 };
 
 export default ReflectionInteractive;
