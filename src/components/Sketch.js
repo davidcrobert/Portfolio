@@ -6,13 +6,14 @@ const Sketch = () => {
 
   useEffect(() => {
     let canvas = null;
+    const headerHeight = document.querySelector('header').offsetHeight;
 
     const sketch = (p) => {
       let pillarPoints = [];
       let highestY;
       let previousPoint = null;
       let xPos = null;
-      let yPos = 0;
+      let yPos = headerHeight;
       let direction = 1;
       let time = 0;
       const strokeWeight = 0.6;
@@ -34,9 +35,9 @@ const Sketch = () => {
         if (yPos > p.height) {
           direction *= -1;
           yPos = p.height;
-        } else if (yPos < 0) {
+        } else if (yPos < headerHeight) {
           direction *= -1;
-          yPos = 0;
+          yPos = headerHeight;
         }
         
         xPos = p.lerp(p.pmouseX, p.mouseX, 0.25);
