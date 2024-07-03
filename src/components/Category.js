@@ -8,7 +8,7 @@ const ProjectSection = ({ project, index, onMouseEnter, onMouseLeave }) => (
     <Link 
       to={project.link} 
       className={`${styles.title} ${styles.back}`}
-      onMouseEnter={() => onMouseEnter(project.title)}
+      onMouseEnter={() => onMouseEnter(project.title, project.year)}
       onMouseLeave={onMouseLeave}
     >
       {project.title}
@@ -19,16 +19,20 @@ const ProjectSection = ({ project, index, onMouseEnter, onMouseLeave }) => (
 
 const Category = ({ title, subtitle1, subtitle2, projects }) => {
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [hoveredYear, setHoveredYear] = useState(null);
 
-  const handleProjectHover = (projectTitle) => {
+  const handleProjectHover = (projectTitle, projectYear) => {
     setHoveredProject(projectTitle);
+    setHoveredYear(projectYear);
   };
 
   const handleProjectLeave = () => {
     setHoveredProject(null);
+    setHoveredYear(null);
   };
 
   const headerTitle = hoveredProject ? `${title}/${hoveredProject}` : title;
+  const headerYear = hoveredYear || '';
 
   return (
     <div className={styles.category}>
@@ -36,6 +40,7 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
         title={headerTitle}
         subtitle1={subtitle1}
         subtitle2={subtitle2}
+        year={headerYear}
         backLink="/"
       />
       <section className={styles.projectList}>
