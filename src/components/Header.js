@@ -21,12 +21,14 @@ const Header = ({ title, subtitle1, subtitle2, year, backLink, backLinkText, sho
         </h1>
         <h2 className={`${styles.subtext} ${styles.intro}`}>{subtitle1}</h2>
         <h2 className={`${styles.subtext} ${styles.intro} ${styles.secondSubtext}`}>{subtitle2}</h2>
-        {showInfoButton && (
-          <button onClick={toggleInfoButton} className={styles.infoButton}>INFO {infoButtonText}</button>
-        )}
-        {backLink && (
-          <Link to={backLink} className={`${styles.back} ${styles.skew} ${styles.left}`}>{backLinkText || 'back'}</Link>
-        )}
+        <div className={styles.headerButtons}>
+          {showInfoButton && (
+            <button onClick={toggleInfoButton} className={`${styles.infoButton} ${styles.headerButton}`}>INFO {infoButtonText}</button>
+          )}
+          {backLink && (
+            <Link to={backLink} className={`${styles.back} ${styles.skew} ${styles.left} ${styles.headerButton}`}>{backLinkText || 'back'}</Link>
+          )}
+        </div>
       </div>
     </header>
   );
