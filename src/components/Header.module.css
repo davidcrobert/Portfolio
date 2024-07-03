@@ -1,37 +1,47 @@
-  .intro {
-    font-size: 27px;
-    margin-left: 10px;
-    text-transform: uppercase;
-    font-weight: 400;
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #f9f9f9;
+  border-bottom: black 1px solid;
+  width: 100%;
+  padding-bottom: 3px;
+}
+
+.intro {
+  font-size: 27px;
+  margin-left: 10px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.subtext {
+  font-size: 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+}
+
+.secondSubtext {
+  margin-left: 30px;
+}
+
+.back {
+  position: absolute;
+  top: 27px;
+  right: 40px;
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  text-transform: uppercase;
+  transition: transform 0.2s linear;
+}
+
+.skew.left:hover {
+  transform: skew(20deg);
+}
+
+@media only screen and (max-width: 600px) {
+  .header h1.intro {
+    width: 50%;
   }
-  
-  .subtext {
-    font-size: 14px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-transform: uppercase;
-  }
-  
-  .secondSubtext {
-    margin-left: 30px;
-  }
-  
-  .back {
-    position: absolute;
-    top: 27px;
-    right: 40px;
-    color: black;
-    text-decoration: none;
-    font-size: 20px;
-    text-transform: uppercase;
-    transition: transform 0.2s linear;
-  }
-  
-  .skew.left:hover {
-    transform: skew(20deg);
-  }
-  
-  @media only screen and (max-width: 600px) {
-    .header h1.intro {
-      width: 50%;
-    }
-  }
+}
