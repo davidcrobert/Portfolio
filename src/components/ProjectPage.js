@@ -24,6 +24,20 @@ const ProjectPage = () => {
     return null;
   }
 
+  // Function to process content and add externalLink class to external links
+  const processContent = (content) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, 'text/html');
+    
+    doc.querySelectorAll('a').forEach(link => {
+      if (link.getAttribute('target') === '_blank') {
+        link.classList.add(styles.externalLink);
+      }
+    });
+
+    return doc.body.innerHTML;
+  };
+
   return (
     <div className={styles.projectPage}>
       <Header
@@ -37,14 +51,14 @@ const ProjectPage = () => {
       <h2 className={styles.designQuestion}>{project.question}</h2>
       
       <section className={styles.designContent}>
-        <div dangerouslySetInnerHTML={{ __html: project.content }} />
+        <div dangerouslySetInnerHTML={{ __html: processContent(project.content) }} />
 
         {project.mediaEmbed && (
           <div className={styles.mediaEmbed} dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
         )}
 
         {project.additionalInfo && (
-          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: project.additionalInfo }} />
+          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: processContent(project.additionalInfo) }} />
         )}
 
         <p className={styles.technologies}>
