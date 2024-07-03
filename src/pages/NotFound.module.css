@@ -1,0 +1,15 @@
+.notFound {
+    background-color: #f9f9f9;
+    color: black;
+    overscroll-behavior: contain;
+    /* min-height: 100vh; */
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .skew.left:hover {
+    transform: skew(20deg);
+  }

@@ -7,6 +7,7 @@ import VirtualEnvironmentsPage from './pages/VirtualEnvironmentsPage';
 import AugmentedRealityPage from './pages/AugmentedRealityPage';
 import WebPage from './pages/WebPage';
 import ProjectPage from './components/ProjectPage';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/augmented-reality" element={<AugmentedRealityPage />} />
           <Route path="/web" element={<WebPage />} />
           <Route path="/projects/:projectId" element={<ProjectPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
