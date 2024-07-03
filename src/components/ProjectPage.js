@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import styles from './ProjectPage.module.css';
@@ -14,6 +14,7 @@ const customComponents = {
 const ProjectPage = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const [isBlurred, setIsBlurred] = useState(false);
 
   // Find the project across all categories
   let project, categoryData;
@@ -47,8 +48,12 @@ const ProjectPage = () => {
     return doc.body.innerHTML;
   };
 
+  const toggleBlur = () => {
+    setIsBlurred(!isBlurred);
+  };
+
   return (
-    <div className={styles.projectPage}>
+    <div className={`${styles.projectPage} ${isBlurred ? styles.blurred : ''}`}>
       <Header
         title={`${categoryData.title}/${project.title}`}
         subtitle1={project.subtitle1}
@@ -56,31 +61,34 @@ const ProjectPage = () => {
         year={project.year}
         backLink={`/${categoryData.title.toLowerCase().replace(' ', '-')}`}
         showInfoButton={true}
+        onInfoClick={toggleBlur}
       />
 
-      {project.question && <h2 className={styles.designQuestion}>{project.question}</h2>}
-      
-      <section className={styles.designContent}>
-        {project.content && (
-          <div dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.content) }} />
-        )}
+      <div className={styles.projectContent}>
+        {project.question && <h2 className={styles.designQuestion}>{project.question}</h2>}
+        
+        <section className={styles.designContent}>
+          {project.content && (
+            <div dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.content) }} />
+          )}
 
-        {CustomComponent && <CustomComponent />}
+          {CustomComponent && <CustomComponent />}
 
-        {project.mediaEmbed && (
-          <div className={styles.mediaEmbed} dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
-        )}
+          {project.mediaEmbed && (
+            <div className={styles.mediaEmbed} dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
+          )}
 
-        {project.additionalInfo && (
-          <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.additionalInfo) }} />
-        )}
+          {project.additionalInfo && (
+            <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.additionalInfo) }} />
+          )}
 
-        {project.technologies && project.technologies.length > 0 && (
-          <p className={styles.technologies}>
-            <i>Technologies:</i> {project.technologies}
-          </p>
-        )}
-      </section>
+          {project.technologies && project.technologies.length > 0 && (
+            <p className={styles.technologies}>
+              <i>Technologies:</i> {project.technologies}
+            </p>
+          )}
+        </section>
+      </div>
     </div>
   );
 };

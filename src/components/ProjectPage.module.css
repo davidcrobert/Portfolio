@@ -4,6 +4,15 @@
   overscroll-behavior: contain;
   min-height: 100vh;
   font-family: 'Times New Roman', Times, serif;
+  transition: filter 0.75s ease-in-out;
+}
+
+.projectContent {
+  transition: filter 0.75s ease-in-out;
+}
+
+.blurred .projectContent {
+  filter: blur(5px);
 }
 
 p {
