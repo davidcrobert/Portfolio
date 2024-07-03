@@ -28,7 +28,7 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
     setHoveredProject(null);
   };
 
-  const headerTitle = hoveredProject ? `${title}/${hoveredProject.title}` : title;
+  const headerTitle = hoveredProject ? `${title}/${hoveredProject.title}` : `${title}/`;
   const headerSubtitle1 = hoveredProject ? hoveredProject.subtitle1 : subtitle1;
   const headerSubtitle2 = hoveredProject ? hoveredProject.subtitle2 : subtitle2;
   const headerYear = hoveredProject ? hoveredProject.year : '';
