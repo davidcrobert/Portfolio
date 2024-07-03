@@ -16,7 +16,6 @@
 }
 
 .project {
-  padding: 40px 20px;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -37,12 +36,16 @@
 }
 
 .projectCount2 {
-  height: 50vh;
+  height: calc(50vh - 40px);
 }
 
-.projectCount3,
+.projectCount3 {
+  /* height: 33.33vh; */
+  height: calc(33.33vh - 20px)
+}
+
 .projectCount4 {
-  height: 33.33vh;
+  height: calc(25vh - 18px);
 }
 
 .title {
