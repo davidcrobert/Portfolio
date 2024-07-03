@@ -15,7 +15,6 @@ const Sketch = () => {
       let xPos = null;
       let yPos = headerHeight;
       let direction = 1;
-      let time = 0;
       const strokeWeight = 0.6;
 
       p.setup = () => {
@@ -41,7 +40,6 @@ const Sketch = () => {
         }
         
         xPos = p.lerp(p.pmouseX, p.mouseX, 0.25);
-        time += 0.01;
         pillarPoints.push({ x: xPos, y: yPos });
 
         let mappedX = p.map(xPos, 0, p.width, p.width * 0.5 - 40, p.width * 0.5 + 40);
