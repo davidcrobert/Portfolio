@@ -89,6 +89,8 @@ const ProjectPage = () => {
           )}
         </section>
       </div>
+      
+      <div className={styles.overlay}></div>
     </div>
   );
 };
