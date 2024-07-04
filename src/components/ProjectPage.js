@@ -78,6 +78,15 @@ const ProjectPage = () => {
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
 
+  const renderMultiLineText = (text) => {
+    return text.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+  };
+
   // Function to apply external link styling
   const applyExternalLinkStyling = (html) => {
     if (!html) return '';
@@ -132,17 +141,20 @@ const ProjectPage = () => {
       
       {showInfo && (
         <div ref={infoPopupRef} className={styles.infoPopup}>
+          {project.infoPopup.mainStatement && (
+            <h2 className={styles.mainStatement}>{project.infoPopup.mainStatement}</h2>
+          )}
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Context</h3>
-            <p>{project.infoPopup.context}</p>
+            <p>{renderMultiLineText(project.infoPopup.context)}</p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Tech</h3>
-            <p>{project.infoPopup.tech}</p>
+            <p>{renderMultiLineText(project.infoPopup.tech)}</p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Tools</h3>
-            <p>{project.infoPopup.tools}</p>
+            <p>{renderMultiLineText(project.infoPopup.tools)}</p>
           </div>
         </div>
       )}
