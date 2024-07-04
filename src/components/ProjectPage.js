@@ -153,8 +153,9 @@ const ProjectPage = () => {
             <p>{renderMultiLineText(project.infoPopup.tech)}</p>
           </div>
           <div className={styles.infoSection}>
-            <h3 className={styles.infoHeader}>Tools</h3>
-            <p>{renderMultiLineText(project.infoPopup.tools)}</p>
+            <h3 className={styles.infoHeader}>{renderMultiLineText(project.infoPopup.tools)}</h3>
+            {/* <h3 className={styles.infoHeader}>Tools</h3> */}
+            {/* <p>{renderMultiLineText(project.infoPopup.tools)}</p> */}
           </div>
         </div>
       )}
