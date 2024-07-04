@@ -8,30 +8,11 @@
 }
 
 .projectContent {
-  transition: filter 0.3s ease-in-out;
+  transition: filter 0.75s ease-in-out;
 }
 
 .blurred .projectContent {
   filter: blur(5px);
-}
-
-.overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70vw;
-  height: 70vh;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  pointer-events: none;
-}
-
-.blurred .overlay {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 p {
@@ -96,13 +77,55 @@ p {
   padding-bottom: 15px;
 }
 
+.infoPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 70vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 100;
+  padding: 20px;
+  overflow-y: auto;
+  color: white;
+  opacity: 0;
+  animation: fadeIn 0.75s ease-in-out forwards;
+}
+
+.infoPopup.fadeOut {
+  animation: fadeOut 0.75s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.infoSection {
+  margin-bottom: 20px;
+}
+
+.infoHeader {
+  font-family: 'Times New Roman', Times, serif;
+  color: #f9f9f9;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 800px) {
   .designContent {
     max-width: 90%;
     min-width: 90%;
   }
   
-  .overlay {
-    width: 80%;
+  .infoPopup {
+    width: 90vw;
+    height: 80vh;
   }
 }
