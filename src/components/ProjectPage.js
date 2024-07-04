@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import styles from './ProjectPage.module.css';
@@ -15,24 +15,77 @@ const ProjectPage = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [isBlurred, setIsBlurred] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const infoPopupRef = useRef(null);
 
-  // Find the project across all categories
-  let project, categoryData;
-  for (const category in projectData) {
-    const foundProject = projectData[category].projects.find(p => p.link === `/projects/${projectId}`);
-    if (foundProject) {
-      project = foundProject;
-      categoryData = projectData[category];
-      break;
+  const [project, setProject] = useState(null);
+  const [categoryData, setCategoryData] = useState(null);
+
+  useEffect(() => {
+    // Find the project across all categories
+    let foundProject = null;
+    let foundCategoryData = null;
+
+    for (const category in projectData) {
+      foundProject = projectData[category].projects.find(p => p.link === `/projects/${projectId}`);
+      if (foundProject) {
+        foundCategoryData = projectData[category];
+        break;
+      }
     }
-  }
 
-  if (!project) {
-    navigate('/404');
-    return null;
+    if (foundProject && foundCategoryData) {
+      setProject(foundProject);
+      setCategoryData(foundCategoryData);
+    } else {
+      navigate('/404');
+    }
+  }, [projectId, navigate]);
+
+  const toggleInfo = useCallback(() => {
+    if (!isBlurred) {
+      setIsBlurred(true);
+      setShowInfo(true);
+    } else {
+      const infoPopup = infoPopupRef.current;
+      if (infoPopup) {
+        infoPopup.classList.add(styles.fadeOut);
+        setIsBlurred(false);
+        setTimeout(() => {
+          setShowInfo(false);
+        }, 750); // Match this with the CSS animation duration
+      }
+    }
+  }, [isBlurred]);
+
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && isBlurred) {
+        toggleInfo();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [isBlurred, toggleInfo]);
+
+  if (!project || !categoryData) {
+    return null; // or a loading spinner
   }
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
+
+  const renderMultiLineText = (text) => {
+    return text.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+  };
 
   // Function to apply external link styling
   const applyExternalLinkStyling = (html) => {
@@ -48,10 +101,6 @@ const ProjectPage = () => {
     return doc.body.innerHTML;
   };
 
-  const toggleBlur = () => {
-    setIsBlurred(!isBlurred);
-  };
-
   return (
     <div className={`${styles.projectPage} ${isBlurred ? styles.blurred : ''}`}>
       <Header
@@ -61,7 +110,7 @@ const ProjectPage = () => {
         year={project.year}
         backLink={`/${categoryData.title.toLowerCase().replace(' ', '-')}`}
         showInfoButton={true}
-        onInfoClick={toggleBlur}
+        onInfoClick={toggleInfo}
       />
 
       <div className={styles.projectContent}>
@@ -90,7 +139,26 @@ const ProjectPage = () => {
         </section>
       </div>
       
-      <div className={styles.overlay}></div>
+      {showInfo && (
+        <div ref={infoPopupRef} className={styles.infoPopup}>
+          {project.infoPopup.mainStatement && (
+            <h2 className={styles.mainStatement}>{project.infoPopup.mainStatement}</h2>
+          )}
+          <div className={styles.infoSection}>
+            <h3 className={styles.infoHeader}>Context</h3>
+            <p>{renderMultiLineText(project.infoPopup.context)}</p>
+          </div>
+          <div className={styles.infoSection}>
+            <h3 className={styles.infoHeader}>Tech</h3>
+            <p>{renderMultiLineText(project.infoPopup.tech)}</p>
+          </div>
+          <div className={styles.infoSection}>
+            <h3 className={styles.infoHeader}>{renderMultiLineText(project.infoPopup.tools)}</h3>
+            {/* <h3 className={styles.infoHeader}>Tools</h3> */}
+            {/* <p>{renderMultiLineText(project.infoPopup.tools)}</p> */}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
