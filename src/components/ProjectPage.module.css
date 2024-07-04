@@ -145,3 +145,28 @@ p {
   font-weight: 400;
   color: #f9f9f9;
 }
+
+.infoPopup::-webkit-scrollbar {
+  width: 2px;
+  background-color: transparent;
+}
+
+.infoPopup::-webkit-scrollbar-thumb {
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  border: transparent;
+}
+
+/* .infoPopup::-webkit-scrollbar {
+  width: 1px;
+}
+
+.infoPopup::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.infoPopup::-webkit-scrollbar-thumb {
+  background-color: rgba(1.00, 0, 0, 1.0);
+  border-radius: 20px;
+  border: transparent;
+} */
