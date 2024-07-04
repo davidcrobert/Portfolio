@@ -9,8 +9,8 @@ export const projectData = {
             title: "AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL",
             link: "/projects/an-ant",
             description: "An isolated and ephemeral social performance",
-            subtitle1: "Isolated &",
-            subtitle2: "Fleeting",
+            subtitle1: "Isolated",
+            subtitle2: "& Fleeting",
             year: "2023",
             question: "At what point are we an intelligent actor?",
             content: `
@@ -49,8 +49,8 @@ export const projectData = {
             title: "Assembly Line",
             link: "/projects/assembly-line",
             description: "An interactive and collaborative performance between audience and robot for DesignTO 2022",
-            subtitle1: "An industrial approach",
-            subtitle2: "to digital interaction",
+            subtitle1: "Industrial approach",
+            subtitle2: "& digital interaction",
             year: "2022",
             question: "How can we create meaningful interactions with installations while maintaining social distance?",
             content: `
@@ -93,8 +93,8 @@ export const projectData = {
             title: "Moth Melody",
             link: "/projects/moth-melody",
             description: "A musical, interactive, and collaborative tabletop-projection for children",
-            subtitle1: "An intro",
-            subtitle2: "to insects",
+            subtitle1: "Music",
+            subtitle2: "& Moths",
             year: "2022",
             question: "How can we make bugs approachable for kids?",
             content: `
@@ -127,7 +127,7 @@ export const projectData = {
             link: "/projects/i-cant-hear-you",
             description: "A networked experience about [mis]communication",
             subtitle1: "Like talking",
-            subtitle2: "to a brick wall",
+            subtitle2: "@ a brick wall",
             year: "2022",
             question: "How can we talk when we don't understand each other?",
             content: `
@@ -172,7 +172,7 @@ export const projectData = {
             link: "/projects/600-spheres",
             description: "An embodied audio interaction",
             subtitle1: "Spatialized sound",
-            subtitle2: "Sonified movements",
+            subtitle2: "& Sonified movements",
             year: "2021",
             question: "How can sound be recontextualized through space?",
             content: `
@@ -201,8 +201,8 @@ export const projectData = {
             title: "Augmented Symphony",
             link: "/projects/augmented-symphony",
             description: "Research project exploring spatial and interactive audio for audience experience",
-            subtitle1: "Enhancing Orchestral",
-            subtitle2: "Experiences",
+            subtitle1: "Orchestras",
+            subtitle2: "@ Home",
             year: "2021",
             question: "How can AR and spatial audio enhance the audience experience of live orchestral performances?",
             content: `
@@ -285,8 +285,8 @@ export const projectData = {
             title: "I Asked My Reflection Its Name Again",
             link: "/projects/i-asked-my-reflection",
             description: "An interactive exploration of recursive behavior",
-            subtitle1: "Recursive",
-            subtitle2: "Interaction",
+            subtitle1: "Recursive Interaction",
+            subtitle2: "& Interacting Recursively",
             year: "2020",
             customComponent: "ReflectionInteractive"
           }
