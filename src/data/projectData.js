@@ -42,7 +42,12 @@ export const projectData = {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
-            `
+            `,
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           },
           {
             id: 2,
@@ -86,7 +91,12 @@ export const projectData = {
               <p class="media">
                 The CBC wrote an <a class="externalLink"  href="https://www.cbc.ca/arts/in-toronto-here-s-where-you-can-make-art-with-a-giant-industrial-robot-1.6321499" target="_blank" rel="noopener noreferrer">article</a> about it.
               </p>
-            `
+            `,
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           },
           {
             id: 3,
@@ -119,7 +129,12 @@ export const projectData = {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
-            `
+            `,
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           },
           {
             id: 4,
@@ -157,7 +172,12 @@ export const projectData = {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
-            `
+            `,
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           }
         ]
       },
@@ -194,7 +214,12 @@ export const projectData = {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
-            `
+            `,
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           },
           {
             id: 2,
@@ -242,7 +267,12 @@ export const projectData = {
                 ></iframe>
               </div>
               <p>This app, along with a <a href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
-            `
+            `,
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           }
         ]
       },
@@ -278,7 +308,12 @@ export const projectData = {
               </p>
             `,
             technologies: "Three.js, Node.js, React, MongoDB",
-            customComponent: "ScavengeARMedia"
+            customComponent: "ScavengeARMedia",
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           },
           {
             id: 2,
@@ -288,7 +323,12 @@ export const projectData = {
             subtitle1: "Recursive",
             subtitle2: "Interaction",
             year: "2020",
-            customComponent: "ReflectionInteractive"
+            customComponent: "ReflectionInteractive",
+            infoPopup: {
+              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
+              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            }
           }
         ]
       }

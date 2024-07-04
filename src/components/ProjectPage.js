@@ -134,15 +134,15 @@ const ProjectPage = () => {
         <div ref={infoPopupRef} className={styles.infoPopup}>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Context</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>{project.infoPopup.context}</p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Tech</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>{project.infoPopup.tech}</p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Tools</h3>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>{project.infoPopup.tools}</p>
           </div>
         </div>
       )}
