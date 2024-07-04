@@ -90,6 +90,7 @@ p {
   overflow-y: auto;
   color: white;
   opacity: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeIn 0.75s ease-in-out forwards;
 }
 
@@ -116,6 +117,7 @@ p {
   color: #f9f9f9;
   font-size: 24px;
   margin-bottom: 10px;
+  border-bottom: 1px solid #f9f9f9;
 }
 
 @media only screen and (max-width: 800px) {
