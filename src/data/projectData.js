@@ -104,9 +104,20 @@ export const projectData = {
               </p>
             `,
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           },
           {
@@ -142,9 +153,20 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           },
           {
@@ -185,9 +207,20 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           }
         ]
@@ -227,9 +260,20 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           },
           {
@@ -280,9 +324,20 @@ export const projectData = {
               <p>This app, along with a <a href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
             `,
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           }
         ]
@@ -321,9 +376,20 @@ export const projectData = {
             technologies: "Three.js, Node.js, React, MongoDB",
             customComponent: "ScavengeARMedia",
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           },
           {
@@ -336,9 +402,20 @@ export const projectData = {
             year: "2020",
             customComponent: "ReflectionInteractive",
             infoPopup: {
-              context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ASDASDASDASD.",
-              tech: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              tools: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+              mainStatement: "At what point are we an intelligent actor?",
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
+                        They put the headphones in front of them on - they were silent.
+                        
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.
+                        Visual effects and change is done in TouchDesigner.
+                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+              tools:   `TouchDesigner & Unity & Python`
             }
           }
         ]
