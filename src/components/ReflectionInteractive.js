@@ -51,7 +51,9 @@ const ReflectionInteractive = ({ width, height }) => {
         p.textSize(width / 80);
         p.textAlign(p.CENTER);
 
-        canvas.style("transform", `translate(-${(45 * scaleMultiplier) / 2}%, 10%)`);
+        canvas.style("transform", `translate(15%, 10%)`);
+        canvas.style("border", "1px solid black");
+        // canvas.style("transform", `translate(-${(45 * scaleMultiplier) / 2}%, 10%)`);
       };
 
       p.windowResized = () => {

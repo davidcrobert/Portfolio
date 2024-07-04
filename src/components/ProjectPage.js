@@ -17,12 +17,10 @@ const ProjectPage = () => {
   const [isBlurred, setIsBlurred] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const infoPopupRef = useRef(null);
-
   const [project, setProject] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
 
   useEffect(() => {
-    // Find the project across all categories
     let foundProject = null;
     let foundCategoryData = null;
 
@@ -53,7 +51,7 @@ const ProjectPage = () => {
         setIsBlurred(false);
         setTimeout(() => {
           setShowInfo(false);
-        }, 750); // Match this with the CSS animation duration
+        }, 750);
       }
     }
   }, [isBlurred]);
@@ -73,7 +71,7 @@ const ProjectPage = () => {
   }, [isBlurred, toggleInfo]);
 
   if (!project || !categoryData) {
-    return null; // or a loading spinner
+    return null;
   }
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
@@ -85,20 +83,6 @@ const ProjectPage = () => {
         <br />
       </React.Fragment>
     ));
-  };
-
-  // Function to apply external link styling
-  const applyExternalLinkStyling = (html) => {
-    if (!html) return '';
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const links = doc.querySelectorAll('a');
-    links.forEach(link => {
-      if (link.getAttribute('target') === '_blank') {
-        link.classList.add(styles.externalLink);
-      }
-    });
-    return doc.body.innerHTML;
   };
 
   return (
@@ -114,29 +98,11 @@ const ProjectPage = () => {
       />
 
       <div className={styles.projectContent}>
-        {project.question && <h2 className={styles.designQuestion}>{project.question}</h2>}
-        
-        <section className={styles.designContent}>
-          {project.content && (
-            <div dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.content) }} />
-          )}
+        {CustomComponent && <CustomComponent />}
 
-          {CustomComponent && <CustomComponent />}
-
-          {project.mediaEmbed && (
-            <div className={styles.mediaEmbed} dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
-          )}
-
-          {project.additionalInfo && (
-            <div className={styles.additionalInfo} dangerouslySetInnerHTML={{ __html: applyExternalLinkStyling(project.additionalInfo) }} />
-          )}
-
-          {project.technologies && project.technologies.length > 0 && (
-            <p className={styles.technologies}>
-              <i>Technologies:</i> {project.technologies}
-            </p>
-          )}
-        </section>
+        {project.mediaEmbed && (
+          <div className={styles.mediaEmbed} dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
+        )}
       </div>
       
       {showInfo && (
@@ -154,8 +120,6 @@ const ProjectPage = () => {
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>{renderMultiLineText(project.infoPopup.tools)}</h3>
-            {/* <h3 className={styles.infoHeader}>Tools</h3> */}
-            {/* <p>{renderMultiLineText(project.infoPopup.tools)}</p> */}
           </div>
         </div>
       )}
