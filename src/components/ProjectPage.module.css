@@ -21,7 +21,7 @@
 
 .mediaEmbed {
   margin-top: 30px;
-  width: 85vw;
+  width: 75vw;
   height: 42.1875vw; /* This maintains a 16:9 aspect ratio */
   max-height: 80vh;
   display: flex;
