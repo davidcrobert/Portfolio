@@ -3,11 +3,13 @@
     justify-content: space-between;
     gap: 10px;
     margin: 20px 0;
+    z-index: 101;
   }
   
   .gif {
     width: calc(33.333% - 7px);
     height: auto;
+    z-index: 101;
   }
   
   .scavengeGifs {
@@ -15,6 +17,7 @@
     flex-wrap: wrap;
     gap: 10px;
     margin: 20px 0;
+    z-index: 101;
   }
   
   .scanvengeDoc {

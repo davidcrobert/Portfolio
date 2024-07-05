@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import {config} from '../config';
 
 const NoiseOverlay = () => {
   const canvasRef = useRef(null);
@@ -7,6 +8,7 @@ const NoiseOverlay = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     let animationFrameId;
+    let time = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -14,7 +16,7 @@ const NoiseOverlay = () => {
     };
 
     const flicker = () => {
-        return Math.random() > 0.95 ? 0.6 : 1;
+        return Math.random() > config.noiseOverlay.flickerProbability ? config.noiseOverlay.flickerIntensity : 1;
     };
 
     const createNoise = (ctx) => {
@@ -33,7 +35,7 @@ const NoiseOverlay = () => {
 
     const createScanlines = (ctx) => {
         ctx.globalCompositeOperation = 'lighter';
-        ctx.globalAlpha = 0.1;
+        ctx.globalAlpha = config.noiseOverlay.scanlineIntensity;
         for (let i = 0; i < canvas.height; i += 2) {
           ctx.fillStyle = i % 4 === 0 ? '#fff' : '#000';
           ctx.fillRect(0, i, canvas.width, 1);
@@ -43,8 +45,18 @@ const NoiseOverlay = () => {
       };
 
     const animate = () => {
+      time++;
       createNoise(context);
       createScanlines(context);
+
+      context.globalCompositeOperation = 'hue';
+      context.fillStyle = `hsl(${time % 360}, 100%, 50%)`;
+      context.globalAlpha = config.noiseOverlay.colorShiftIntensity;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      
+      context.globalCompositeOperation = 'source-over';
+      context.globalAlpha = 1;
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -68,8 +80,8 @@ const NoiseOverlay = () => {
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
-        opacity: 0.1,
-        zIndex: 9999,
+        opacity: config.noiseOverlay.opacity,
+        zIndex: config.noiseOverlay.zIndex,
       }}
     />
   );
