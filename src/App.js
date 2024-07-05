@@ -8,11 +8,13 @@ import AugmentedRealityPage from './pages/AugmentedRealityPage';
 import WebPage from './pages/WebPage';
 import ProjectPage from './components/ProjectPage';
 import NotFound from './pages/NotFound';
+import NoiseOverlay from './components/NoiseOverlay';
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <NoiseOverlay />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutMe />} />
