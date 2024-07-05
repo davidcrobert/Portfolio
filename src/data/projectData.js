@@ -87,7 +87,7 @@ export const projectData = {
                        
                        The CBC wrote an <a href="https://www.cbc.ca/arts/in-toronto-here-s-where-you-can-make-art-with-a-giant-industrial-robot-1.6321499" target="_blank" rel="noopener noreferrer">article</a> about it.`,
 
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.<br><br>
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection content and mapping is done in TouchDesigner.<br><br>
               
                        Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
 
@@ -102,19 +102,6 @@ export const projectData = {
             subtitle1: "Music",
             subtitle2: "& Moths",
             year: "2022",
-            question: "How can we make bugs approachable for kids?",
-            content: `
-              <p>
-                My class partnered with the <a href="https://www.ontariosciencecentre.ca/" target="_blank" rel="noopener noreferrer">Ontario Science Centre</a>
-                to produce interactive exhibits about insects for children. My team's is based on moths. Users can touch our table's lanterns, which would light up, and a corresponding 
-                lantern in the centre projection would light-up as well. The moth is attracted to and moves towards this light - if it passes through a flower, a musical note 
-                from a scale plays.
-                <br><br>
-                I programmed the entire installation. The interactions were handled using capacitive touch with an Arduino. This communicated to Unity, 
-                which managed the game mechanics of the installation. Then TouchDesigner was used for some post-processing and the keystoning of the projection.
-              </p>
-            `,
-            technologies: "Unity, Arduino, Digital Fabrication, TouchDesigner",
             mediaEmbed: `
               <iframe 
                 width="560" 
@@ -127,16 +114,17 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
-              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
-              
-                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
-                       
-                       The CBC wrote an article about it.`,
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
-              
-                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
-              tools:   `TouchDesigner & Node.js & JavaScript`
+              main:    "How can we make bugs more approachable for kids?",
+              context: `
+                      My class partnered with the <a href="https://www.ontariosciencecentre.ca/" target="_blank" rel="noopener noreferrer">Ontario Science Centre</a>
+                      to produce interactive exhibits about insects for children. My team's is based on moths.<br><br>
+                      Users can touch our table's lanterns, which would light up, and a corresponding lantern in the centre projection would light-up as well. 
+                      The moth is attracted to and moves towards this light - if it passes through a flower, a musical note from a scale plays.
+`,
+              tech:    `I programmed the project. The interactions were handled using capacitive touch with an Arduino. This communicated to Unity,
+                      which managed the game mechanics of the installation. TouchDesigner was used for some post-processing and the keystoning of the projection.`,
+
+              tools:   `Unity & TouchDesigner`
             }
           },
           {
@@ -177,16 +165,26 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
-              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
-              
-                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
-                       
-                       The CBC wrote an article about it.`,
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
-              
-                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
-              tools:   `TouchDesigner & Node.js & JavaScript`
+              main:    "How can we communicate when we don't understand each other?",
+              context: `
+                      In I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER, my audience is divided.<br>
+                      In one room, the majority of them remain together. It is warmly lit, and they sat in a semi-circle looking at each other.<br> 
+                      For the other room I took one member of the group, and placed them in a large, dark studio.<br> 
+                      The only thing lighting the room is a projection of long green lines against the wall.<br>
+                      This member's phone is taken and put in a box, then are seated in a high chair with a microphone sitting on the ground in front of them.<br><br>
+
+                      Connecting these rooms is a Zoom call. In the first room, with the group, the Zoom call is audible and they may communally speak to it.<br>
+                      In the second room with the single participant, they cannot hear anything from the call, but rather just see a visualization of the audio 
+                      from the call, sitting in silence.<br>
+                      Their collective goal: have a conversation. Speak to each other.<br><br>
+                      The performance lasted about 15 minutes for each participant.
+                      `,
+
+              tech:    `
+                      The audio visualization was done in TouchDesigner.
+                      `,
+
+              tools:   `TouchDesigner`
             }
           }
         ]
