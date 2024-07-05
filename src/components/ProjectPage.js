@@ -233,24 +233,6 @@ const ProjectPage = () => {
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
 
-  const processHTML = (html) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    
-    return doc.body.innerHTML;
-  };
-
-  const renderHTML = (html) => {
-    return { __html: processHTML(html) };
-  };
-
-  // const renderContent = (content) => {
-  //   const processedContent = processHTML(content);
-  //   return (
-  //     <div dangerouslySetInnerHTML={{ __html: processedContent }}/>
-  //   );
-  // };
-
   const renderContent = (content) => {
     const options = {
       replace: (domNode) => {
