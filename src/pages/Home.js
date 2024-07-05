@@ -11,7 +11,7 @@ function Home() {
       <Header 
         title="David Robert"
         subtitle1="Creative technologist"
-        subtitle2="& interactive developer"
+        subtitle2="& Arts Worker"
       />
       
       <nav className={styles.nav}>

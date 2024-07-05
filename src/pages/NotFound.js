@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import styles from './NotFound.module.css';
+import styles from '../styles/NotFound.module.css';
 
 const NotFound = () => {
   return (
