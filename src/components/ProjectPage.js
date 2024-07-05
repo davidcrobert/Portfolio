@@ -14,61 +14,50 @@ const customComponents = {
 const ProjectPage = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const [isBlurred, setIsBlurred] = useState(false);
-  const [showInfo, setShowInfo] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const infoPopupRef = useRef(null);
   const [project, setProject] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
 
   useEffect(() => {
-    let foundProject = null;
-    let foundCategoryData = null;
-
-    for (const category in projectData) {
-      foundProject = projectData[category].projects.find(p => p.link === `/projects/${projectId}`);
-      if (foundProject) {
-        foundCategoryData = projectData[category];
-        break;
+    const findProjectAndCategory = () => {
+      for (const category in projectData) {
+        const foundProject = projectData[category].projects.find(p => p.link === `/projects/${projectId}`);
+        if (foundProject) {
+          setProject(foundProject);
+          setCategoryData(projectData[category]);
+          return;
+        }
       }
-    }
-
-    if (foundProject && foundCategoryData) {
-      setProject(foundProject);
-      setCategoryData(foundCategoryData);
-    } else {
       navigate('/404');
-    }
+    };
+
+    findProjectAndCategory();
   }, [projectId, navigate]);
+
+  const toggleInfo = useCallback(() => {
+    setIsInfoOpen(prev => !prev);
+  }, []);
 
   const closeInfoPopup = useCallback(() => {
     const infoPopup = infoPopupRef.current;
     if (infoPopup) {
       infoPopup.classList.add(styles.fadeOut);
-      setIsBlurred(false);
       setTimeout(() => {
-        setShowInfo(false);
+        setIsInfoOpen(false);
       }, 750);
     }
   }, []);
 
-  const toggleInfo = useCallback(() => {
-    if (!isBlurred) {
-      setIsBlurred(true);
-      setShowInfo(true);
-    } else {
-      closeInfoPopup();
-    }
-  }, [isBlurred, closeInfoPopup]);
-
   useEffect(() => {
     const handleEscKey = (event) => {
-      if (event.key === 'Escape' && isBlurred) {
+      if (event.key === 'Escape' && isInfoOpen) {
         closeInfoPopup();
       }
     };
 
     const handleOutsideClick = (event) => {
-      if (infoPopupRef.current && !infoPopupRef.current.contains(event.target) && isBlurred) {
+      if (infoPopupRef.current && !infoPopupRef.current.contains(event.target) && isInfoOpen) {
         closeInfoPopup();
       }
     };
@@ -80,7 +69,7 @@ const ProjectPage = () => {
       document.removeEventListener('keydown', handleEscKey);
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isBlurred, closeInfoPopup]);
+  }, [isInfoOpen, closeInfoPopup]);
 
   if (!project || !categoryData) {
     return null;
@@ -106,7 +95,7 @@ const ProjectPage = () => {
   };
   
   return (
-    <div className={`${styles.projectPage} ${isBlurred ? styles.blurred : ''}`}>
+    <div className={`${styles.projectPage} ${isInfoOpen ? styles.blurred : ''}`}>
       <Header
         title={`${categoryData.title}/${project.title}`}
         subtitle1={project.subtitle1}
@@ -115,6 +104,7 @@ const ProjectPage = () => {
         backLink={`/${categoryData.title.toLowerCase().replace(' ', '-')}`}
         showInfoButton={true}
         onInfoClick={toggleInfo}
+        isInfoOpen={isInfoOpen}
       />
 
       <div className={styles.projectContent}>
@@ -125,7 +115,7 @@ const ProjectPage = () => {
         )}
       </div>
       
-      {showInfo && (
+      {isInfoOpen && (
         <div ref={infoPopupRef} className={styles.infoPopup}>
           {project.infoPopup.main && (
             <h2 className={styles.mainStatement}>{project.infoPopup.main}</h2>

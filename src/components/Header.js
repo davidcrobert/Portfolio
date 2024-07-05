@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
-const Header = ({ title, subtitle1, subtitle2, year, backLink, backLinkText, showInfoButton, onInfoClick }) => {
-  const [infoButtonText, setInfoButtonText] = useState('+');
-
-  const toggleInfoButton = () => {
-    setInfoButtonText(prevText => prevText === '+' ? '-' : '+');
-    if (onInfoClick) {
-      onInfoClick();
-    }
-  };
-
+const Header = ({ title, subtitle1, subtitle2, year, backLink, backLinkText, showInfoButton, onInfoClick, isInfoOpen }) => {
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
@@ -25,10 +16,14 @@ const Header = ({ title, subtitle1, subtitle2, year, backLink, backLinkText, sho
         </div>
         <div className={styles.headerButtons}>
           {showInfoButton && (
-            <button onClick={toggleInfoButton} className={`${styles.infoButton} ${styles.headerButton}`}>INFO {infoButtonText}</button>
+            <button onClick={onInfoClick} className={`${styles.infoButton} ${styles.headerButton}`}>
+              INFO {isInfoOpen ? '-' : '+'}
+            </button>
           )}
           {backLink && (
-            <Link to={backLink} className={`${styles.back} ${styles.skew} ${styles.left} ${styles.headerButton}`}>{backLinkText || 'back'}</Link>
+            <Link to={backLink} className={`${styles.back} ${styles.skew} ${styles.left} ${styles.headerButton}`}>
+              {backLinkText || 'back'}
+            </Link>
           )}
         </div>
       </div>
