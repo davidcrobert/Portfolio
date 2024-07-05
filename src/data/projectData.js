@@ -27,20 +27,24 @@ export const projectData = {
             `,
             infoPopup: {
               main:    "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+              context: `A group of people were brought into a room. There was pizza. People got comfortable.<br>
+                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.<br><br>
 
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
+                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, 
+                        as well as the words "CLOSE YOUR EYES."<br>
+                        They put the headphones in front of them on - they were silent.<br><br>
                         
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.
+                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation.<br>
+                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids.<br>
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.<br><br>
                         
-                        The name is in reference to this Hilary Putnam essay.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
+                        The title is in reference to 
+                        <a href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
+                        `,
+              tech:    `Background is a feedback loop of a boid simulation run in Unity.<br>
+                        Visual effects and change is done in TouchDesigner.<br>
+                        Python is used to detect whether the participant-performer's eyes are open or closed.<br>
+                        `,
               tools:   `TouchDesigner & Unity & Python`
             }
           },
