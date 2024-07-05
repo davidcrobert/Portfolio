@@ -85,6 +85,23 @@ const ProjectPage = () => {
     ));
   };
 
+  const processHTML = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    doc.querySelectorAll('a').forEach(link => {
+      link.classList.add(styles.externalLink);
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+
+    return doc.body.innerHTML;
+  };
+
+  const renderHTML = (html) => {
+    return { __html: processHTML(html) };
+  };
+  
   return (
     <div className={`${styles.projectPage} ${isBlurred ? styles.blurred : ''}`}>
       <Header
@@ -107,16 +124,18 @@ const ProjectPage = () => {
       
       {showInfo && (
         <div ref={infoPopupRef} className={styles.infoPopup}>
-          {project.infoPopup.mainStatement && (
-            <h2 className={styles.mainStatement}>{project.infoPopup.mainStatement}</h2>
+          {project.infoPopup.main && (
+            <h2 className={styles.mainStatement}>{project.infoPopup.main}</h2>
           )}
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Context</h3>
-            <p>{renderMultiLineText(project.infoPopup.context)}</p>
+            {/* <p>{renderMultiLineText(project.infoPopup.context)}</p> */}
+            <p dangerouslySetInnerHTML={renderHTML(project.infoPopup.context)}></p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Tech</h3>
-            <p>{renderMultiLineText(project.infoPopup.tech)}</p>
+            {/* <p>{renderMultiLineText(project.infoPopup.tech)}</p> */}
+            <p dangerouslySetInnerHTML={renderHTML(project.infoPopup.tech)}></p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>{renderMultiLineText(project.infoPopup.tools)}</h3>

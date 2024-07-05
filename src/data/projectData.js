@@ -13,24 +13,6 @@ export const projectData = {
             subtitle2: "& Fleeting",
             year: "2023",
             question: "At what point are we an intelligent actor?",
-            content: `
-              <p>
-                A group of people were brought into a room. There was pizza. People got comfortable.
-                In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-                <br><br>
-                A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words
-                "CLOSE YOUR EYES." They put the headphones in front of them on - they were silent.
-                <br><br>
-                When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. The headphones 
-                played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. When the participant-performer 
-                opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.
-                <br><br>
-                Simulation was done in Unity - visuals handled in TouchDesigner - Python detected whether their eyes were open or closed.
-                <br><br>
-                The title is in reference to 
-                <a class="externalLink" href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
-              </p>
-            `,
             technologies: "TouchDesigner, Unity, Python",
             mediaEmbed: `
               <iframe 
@@ -44,7 +26,7 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
+              main:    "At what point are we an intelligent actor?",
               context: `A group of people were brought into a room. There was pizza. People got comfortable.
                         In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
 
@@ -53,7 +35,9 @@ export const projectData = {
                         
                         When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
                         The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
+                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.
+                        
+                        The name is in reference to this Hilary Putnam essay.`,
               tech:    `Background is a feedback loop of a boid simulation run in Unity.
                         Visual effects and change is done in TouchDesigner.
                         Python is used to detect whether the participant-performer's eyes are open or closed.`,
@@ -68,21 +52,6 @@ export const projectData = {
             subtitle1: "Industrial approach",
             subtitle2: "& digital interaction",
             year: "2022",
-            question: "How can we create meaningful interactions with installations while maintaining social distance?",
-            content: `
-              <p>
-                Designed and developed by a team from Toronto Metropolitan University's Design + Technology LAB, <i>Assembly Line</i> emerged from the
-                conditions brought on by Covid-19. Hoping to still capture the magic of an interactive installation,
-                we explored ways to involve an audience in the experience while remaining distanced. Users submit 'gestures' through a web portal and watch them
-                materialize in the projection. 
-              </p>
-              <p>
-                Tracking of the box for mapping is done live using an HTC VIVE Tracker.
-              </p>
-              <p>
-                I led the design and development, as well as solely developing the projection in TouchDesigner as well as the interactive components of the website (front-end and back-end).
-              </p>
-            `,
             technologies: "TouchDesigner, OpenVR, JavaScript, Node.js, Projection, KUKA Robot Arm",
             mediaEmbed: `
               <iframe 
@@ -104,20 +73,21 @@ export const projectData = {
               </p>
             `,
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
 
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed <i>Assembly Line</i> 
+                        under the constraints brought on by Covid-19.<br><br>
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point
+                        they are pulled apart and brought to life.<br><br>
+                       
+                       The CBC wrote an <a href="https://www.cbc.ca/arts/in-toronto-here-s-where-you-can-make-art-with-a-giant-industrial-robot-1.6321499" target="_blank" rel="noopener noreferrer">article</a> about it.`,
+
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.<br><br>
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           },
           {
@@ -153,20 +123,16 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
+                       
+                       The CBC wrote an article about it.`,
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           },
           {
@@ -207,20 +173,16 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
+                       
+                       The CBC wrote an article about it.`,
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           }
         ]
@@ -260,20 +222,16 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
+                       
+                       The CBC wrote an article about it.`,
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           },
           {
@@ -324,20 +282,16 @@ export const projectData = {
               <p>This app, along with a <a href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
             `,
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
+                       
+                       The CBC wrote an article about it.`,
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           }
         ]
@@ -376,20 +330,16 @@ export const projectData = {
             technologies: "Three.js, Node.js, React, MongoDB",
             customComponent: "ScavengeARMedia",
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
+                       
+                       The CBC wrote an article about it.`,
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           },
           {
@@ -402,20 +352,16 @@ export const projectData = {
             year: "2020",
             customComponent: "ReflectionInteractive",
             infoPopup: {
-              mainStatement: "At what point are we an intelligent actor?",
-              context: `A group of people were brought into a room. There was pizza. People got comfortable.
-                        In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.
-
-                        A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, as well as the words "CLOSE YOUR EYES." 
-                        They put the headphones in front of them on - they were silent.
-                        
-                        When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation. 
-                        The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids. 
-                        When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.`,
-              tech:    `Background is a feedback loop of a boid simulation run in Unity.
-                        Visual effects and change is done in TouchDesigner.
-                        Python is used to detect whether the participant-performer's eyes are open or closed.`,
-              tools:   `TouchDesigner & Unity & Python`
+              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
+              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
+              
+                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
+                       
+                       The CBC wrote an article about it.`,
+              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
+              
+                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
+              tools:   `TouchDesigner & Node.js & JavaScript`
             }
           }
         ]
