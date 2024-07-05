@@ -281,7 +281,7 @@ export const projectData = {
                       Creative Developer Intern, two Design Interns, and a Production Intern.<br>
                       Our brief was to create a solution / prototype for a way to help bring small businesses into the Metaverse.<br><br>
 
-                      <i>Scavenge AR_</i> allows a small business to create a simple virtual environment to tie into their business. Customers are invited to join
+                      <i>ScavengeAR_</i> allows a small business to create a simple virtual environment to tie into their business. Customers are invited to join
                       the Metaverse-shop, where they can move through the space and see other users in real-time.<br><br>
 
                       In the Metaverse they can access "quests" that earn them and the virtual store points. These quests are tasks that have to be completed in-store
