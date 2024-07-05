@@ -149,4 +149,8 @@
   .infoHeader {
     font-size: 20px;
   }
+
+  .mediaEmbed iframe {
+    transform: translateY(-25%);
+  }
 }
