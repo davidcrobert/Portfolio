@@ -175,6 +175,28 @@ const ProjectPage = () => {
   const [project, setProject] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
 
+  const cleanYouTubeEmbed = (embedCode) => {
+    if (!embedCode.includes('youtube.com/embed/')) {
+      return embedCode; // Return original embed if it's not a YouTube video
+    }
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(embedCode, 'text/html');
+    const iframe = doc.querySelector('iframe');
+
+    if (iframe) {
+      let src = iframe.getAttribute('src');
+      // Add or update YouTube parameters
+      src = src.includes('?') ? `${src}&` : `${src}?`;
+      src += 'controls=1&iv_load_policy=3&rel=0';
+      iframe.setAttribute('src', src);
+
+      return iframe.outerHTML;
+    }
+
+    return embedCode; // Return original embed if parsing fails
+  };
+
   useEffect(() => {
     const findProjectAndCategory = () => {
       for (const category in projectData) {
@@ -271,7 +293,7 @@ const ProjectPage = () => {
           {CustomComponent && <CustomComponent />}
 
           {project.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: project.mediaEmbed }} />
+            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(project.mediaEmbed) }} />
           )}
         </ProjectContent>
       </MainContent>
