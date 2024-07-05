@@ -130,7 +130,7 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
     }
   };
 
-  const headerTitle = isMobile ? title : (hoveredProject ? `${title}/${hoveredProject.title}` : `${title}/`);
+  const headerTitle = isMobile ? title : (hoveredProject ? `${title}/ ${hoveredProject.title}` : `${title}/`);
   const headerSubtitle1 = isMobile ? subtitle1 : (hoveredProject ? hoveredProject.subtitle1 : subtitle1);
   const headerSubtitle2 = isMobile ? subtitle2 : (hoveredProject ? hoveredProject.subtitle2 : subtitle2);
   const headerYear = isMobile ? '' : (hoveredProject ? hoveredProject.year : '');

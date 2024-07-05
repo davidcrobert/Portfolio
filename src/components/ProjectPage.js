@@ -160,7 +160,7 @@ const MainStatement = styled.h2`
 const ExternalLink = styled.a`
   text-decoration: none;
   color: #f9f9f9;
-  font-weight: 800;
+  font-weight: 600;
   font-style: italic;
   cursor: help;
 `;
@@ -257,7 +257,7 @@ const ProjectPage = () => {
     <PageWrapper>
       <MainContent>
         <Header
-          title={`${categoryData.title}/${project.title}`}
+          title={`${categoryData.title}/ ${project.title}`}
           subtitle1={project.subtitle1}
           subtitle2={project.subtitle2}
           year={project.year}
