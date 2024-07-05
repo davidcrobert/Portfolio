@@ -12,8 +12,6 @@ export const projectData = {
             subtitle1: "Isolated",
             subtitle2: "& Fleeting",
             year: "2023",
-            question: "At what point are we an intelligent actor?",
-            technologies: "TouchDesigner, Unity, Python",
             mediaEmbed: `
               <iframe 
                 width="560" 
@@ -38,7 +36,7 @@ export const projectData = {
                         The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids.<br>
                         When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.<br><br>
                         
-                        The title is in reference to 
+                        The title <i>AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL</i>  is in reference to 
                         <a href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
                         `,
               tech:    `Background is a feedback loop of a boid simulation run in Unity.<br>
@@ -56,7 +54,6 @@ export const projectData = {
             subtitle1: "Industrial approach",
             subtitle2: "& digital interaction",
             year: "2022",
-            technologies: "TouchDesigner, OpenVR, JavaScript, Node.js, Projection, KUKA Robot Arm",
             mediaEmbed: `
               <iframe 
                 width="560" 
@@ -124,7 +121,7 @@ export const projectData = {
               tech:    `I programmed the project. The interactions were handled using capacitive touch with an Arduino. This communicated to Unity,
                       which managed the game mechanics of the installation. TouchDesigner was used for some post-processing and the keystoning of the projection.`,
 
-              tools:   `Unity & TouchDesigner`
+              tools:   `Unity & Arduino & TouchDesigner & Fabrication`
             }
           },
           {
@@ -135,24 +132,6 @@ export const projectData = {
             subtitle1: "Like talking",
             subtitle2: "@ a brick wall",
             year: "2022",
-            question: "How can we talk when we don't understand each other?",
-            content: `
-              <p>
-                In I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER, my audience is divided. In one room, the majority
-                of them remain together. It is warmly lit, and they sat in a semi-circle looking at each other. For the other room I
-                took one member of the group, and placed them in a large, dark studio. The only thing lighting the room is a projection
-                of long green lines against the wall. This member's phone is taken and put in a box, then are seated in a high chair
-                with a microphone sitting on the ground in front of them.
-                <br><br>
-                Connecting these rooms is a Zoom call. In the first room, with the group, the Zoom call is audible and they may
-                communally speak to it. In the second room with the single participant, they cannot hear anything from the call, but
-                rather just see a visualization of the audio from the call, sitting in silence. Their collective goal: have a conversation. Speak to each
-                other.
-                <br><br>
-                The performance lasted about 15 minutes for each participant.
-              </p>
-            `,
-            technologies: "TouchDesigner, Projection Mapping",
             mediaEmbed: `
               <iframe 
                 width="560" 
@@ -167,7 +146,7 @@ export const projectData = {
             infoPopup: {
               main:    "How can we communicate when we don't understand each other?",
               context: `
-                      In I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER, my audience is divided.<br>
+                      In <i>I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER</i>, my audience is divided.<br>
                       In one room, the majority of them remain together. It is warmly lit, and they sat in a semi-circle looking at each other.<br> 
                       For the other room I took one member of the group, and placed them in a large, dark studio.<br> 
                       The only thing lighting the room is a projection of long green lines against the wall.<br>
@@ -211,7 +190,6 @@ export const projectData = {
                 as digital, three-dimensional media. A flick of the finger captures a lisp, a click of the tongue, a warble of the voice.
               </p>
             `,
-            technologies: "Unity, hand tracking",
             mediaEmbed: `
               <iframe 
                 width="560" 
@@ -224,16 +202,20 @@ export const projectData = {
               ></iframe>
             `,
             infoPopup: {
-              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
-              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
-              
-                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
-                       
-                       The CBC wrote an article about it.`,
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
-              
-                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
-              tools:   `TouchDesigner & Node.js & JavaScript`
+              main:    "Speech as an object and space",
+              context: `
+                      <i>THERE ARE 600 SPHERES HERE AND NONE OF THEM WERE DESCRIBED IN THE BIBLE</i> is an interface for exploring your voice. 
+                      It invites users to speak for 30 seconds before tearing that into 600 distinct audio grains.<br>
+                      These grains are arranged in the shape of a sphere, which users can interact with using hand movements.<br>
+                      When a user's fingertip 'collides' with a grain, it plays its grain back. This creates a uniquely vocal context that must be 
+                      interacted with spatially.<br> It makes users aware of their voices as digital, three-dimensional media. A flick of the finger captures a lisp, 
+                      a click of the tongue, a warble of the voice.
+                        `,
+              tech:    `
+                      Audio manipulation and interactivity handled in Unity.<br> 
+                      Hand tracking is done using a Leap Motion Controller.
+                      `,
+              tools:   `Unity`
             }
           },
           {
@@ -244,19 +226,6 @@ export const projectData = {
             subtitle1: "Orchestras",
             subtitle2: "@ Home",
             year: "2021",
-            question: "How can AR and spatial audio enhance the audience experience of live orchestral performances?",
-            content: `
-              <p>
-                Augmented Symphony was a research project exploring the use of augmented reality (AR) and spatial audio to enhance the audience experience of orchestral music. The project aimed to provide additional visual and auditory information to concert-goers through a mobile AR application.
-              </p>
-              <p>
-                The app allows users to see visual representations of different instrument sections and their sound waves, as well as to adjust the volume of specific sections in real-time. This creates a more immersive and personalized concert experience.
-              </p>
-              <p>
-                As part of the research team, I contributed to the development of the AR application using Unity and helped design the user experience. We conducted user studies to evaluate the effectiveness of the AR enhancements on audience engagement and enjoyment.
-              </p>
-            `,
-            technologies: "Unity, AR Foundation, C#, Spatial Audio",
             mediaEmbed: `
               <iframe 
                 width="560" 
@@ -268,32 +237,25 @@ export const projectData = {
                 allowfullscreen
               ></iframe>
             `,
-            additionalInfo: `
-              <p>The above video is our submission to conferences. For a video that better captures the spatial audio, please view the one below.</p>
-              <div class="mediaEmbed">
-                <iframe 
-                  width="560" 
-                  height="315" 
-                  src="https://www.youtube.com/embed/6JOqSxd1kJ8" 
-                  title="Augmented Symphony Spatial Audio Demo"
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </div>
-              <p>This app, along with a <a href="#" target="_blank" rel="noopener noreferrer">short paper</a> I helped write, was presented as part of <a href="https://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.</p>
-            `,
             infoPopup: {
-              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
-              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
-              
-                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
-                       
-                       The CBC wrote an article about it.`,
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
-              
-                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
-              tools:   `TouchDesigner & Node.js & JavaScript`
+              main:    "How can the digital delivery of orchestral music be enhanced?",
+              context: `
+                      <i>Augmented Symphony</i> was a research project exploring the use of augmented reality (AR) and spatial audio to enhance the audience experience 
+                      of orchestral music at home. The project aimed to engage users through interactivity, allowing them to explore the orchestra in a novel way -
+                      through space.<br><br>
+
+                      The app allows users to place instruments around their space in AR. They can then walk through their uniquely arranged orchestra, paying attention 
+                      to instruments as they wish and creating their own personalized concert experience.<br><br>
+
+                      This app, along with a <a href="https://www.academia.edu/84385746/Augmented_Symphony_An_augmented_reality_application_for_immersive_music_listening" target="_blank" rel="noopener noreferrer">
+                      short paper</a> I helped write, was presented as part of 
+                      <a href="http://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.
+                      `,
+              tech:    `
+                      The app was developed in Unity and programmed with C#.<br>
+                      It works on both iOS and Android devices using AR Foundation.<br>
+                      `,
+              tools:   `Unity & C#`
             }
           }
         ]
@@ -311,37 +273,30 @@ export const projectData = {
             subtitle1: "Small Businesses",
             subtitle2: "& the Metaverse",
             year: "2022",
-            question: "How can we reduce the upfront cost/work for small businesses entering the Metaverse?",
-            content: `
-              <p>
-                Made as a major project for my internship at <a href="https://www.jam3.com/" target="_blank" rel="noopener noreferrer">Jam3</a>, alongside one other Creative Developer Intern, two Design Interns, and a Production Intern.
-                Our brief was to create a solution / prototype for a way to help bring small businesses into the Metaverse.
-              </p>
-    
-              <p>
-                Scavenge AR_ allows a small business to create a simple virtual environment to tie into their business. Customers are invited to join 
-                the Metaverse-shop, where they can move through the space and see other users in real-time - this was managed using Node.js and WebSockets. 
-              </p>
-              
-              <p>
-                In the Metaverse they can access "quests" that earn them and the virtual store points. These quests are tasks that have to be completed in-store 
-                by scanning QR codes under certain circumstances - say a certain time of day or a certain number of days in a row. This logic was all handled in Node.js. 
-                By completing a quest, they earn points towards their account, as well as a group total for the store. Once enough collective points are earned, the store "evolves."
-              </p>
-            `,
-            technologies: "Three.js, Node.js, React, MongoDB",
             customComponent: "ScavengeARMedia",
             infoPopup: {
-              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
-              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
-              
-                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
-                       
-                       The CBC wrote an article about it.`,
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
-              
-                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
-              tools:   `TouchDesigner & Node.js & JavaScript`
+              main:    "How can we reduce the upfront cost/work for small businesses entering the Metaverse?",
+              context: `
+                      Made as a major project for my internship at <a href="https://www.jam3.com/" target="_blank" rel="noopener noreferrer">Jam3</a>, alongside one other 
+                      Creative Developer Intern, two Design Interns, and a Production Intern.<br>
+                      Our brief was to create a solution / prototype for a way to help bring small businesses into the Metaverse.<br><br>
+
+                      <i>Scavenge AR_</i> allows a small business to create a simple virtual environment to tie into their business. Customers are invited to join
+                      the Metaverse-shop, where they can move through the space and see other users in real-time.<br><br>
+
+                      In the Metaverse they can access "quests" that earn them and the virtual store points. These quests are tasks that have to be completed in-store
+                      by scanning QR codes under certain circumstances - say a certain time of day or a certain number of days in a row. 
+                      By completing a quest, they earn points towards their account, as well as a group total for the store. Once enough collective points are earned, 
+                      the store "evolves."
+                      `,
+              tech:    `
+                      The 3D environment was created using Three.js.<br>
+                      The backend was made in Node.js with a MongoDB database and Socket.io.<br>
+                      The UI was made in React.
+
+                      I was responsible for the UI, the backend, and the multi-user functionality in the 3D environment. I also made the generative avatars.
+                      `,
+              tools:   `JavaScript & Node.js & React & Three.js & MongoDB`
             }
           },
           {
@@ -354,16 +309,17 @@ export const projectData = {
             year: "2020",
             customComponent: "ReflectionInteractive",
             infoPopup: {
-              main:    "How can we create meaningful interactions with installations while maintaining social distance?",
-              context: `Through Toronto Metropolitan University's Design + Technology LAB, I designed & developed Assembly Line under the constraints brought on by Covid-19.
-              
-                       Users submit 'gestures' through a web portal and watch them materialize in the projection, at which point they are pulled apart and brought to life.
-                       
-                       The CBC wrote an article about it.`,
-              tech:    `Web portal made in JavaScript with a Node.js backend. The projection is done in TouchDesigner.
-              
-                       Tracking of the box for mapping is done live using an HTC VIVE Tracker.`,
-              tools:   `TouchDesigner & Node.js & JavaScript`
+              main:    "How does it feel to be surrounded by yourself?",
+              context: `
+                      In <i>I ASKED MY REFLECTION ITS NAME AGAIN</i> users are given a simple direction at the beginning to move their mouse.
+                      From this point, a number of identical cursors slowly appear. It becomes clear the cursors are imitating their movements.<br><br>
+                      
+                      The cursors imitate users' behavior based on their previous movements.
+                      As cursors appear and users become aware of the role they play in their movement, this affects how they interact with the site. 
+                      Which will in turn affect the cursors. Which will in turn affect the user. Which will in turn affect the cursors. Which will in turn affect the user.`,
+              tech:    `
+                      The project was made in p5.js. The imitation of the cursors was done using a Markov model.`,
+              tools:   `JavaScript & p5.js`
             }
           }
         ]
