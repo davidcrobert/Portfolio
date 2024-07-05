@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Category.module.css';
 import Header from './Header';
@@ -19,19 +19,37 @@ const ProjectSection = ({ project, index, onMouseEnter, onMouseLeave }) => (
 
 const Category = ({ title, subtitle1, subtitle2, projects }) => {
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
 
   const handleProjectHover = (project) => {
-    setHoveredProject(project);
+    if (!isMobile) {
+      setHoveredProject(project);
+    }
   };
 
   const handleProjectLeave = () => {
-    setHoveredProject(null);
+    if (!isMobile) {
+      setHoveredProject(null);
+    }
   };
 
-  const headerTitle = hoveredProject ? `${title}/${hoveredProject.title}` : `${title}/`;
-  const headerSubtitle1 = hoveredProject ? hoveredProject.subtitle1 : subtitle1;
-  const headerSubtitle2 = hoveredProject ? hoveredProject.subtitle2 : subtitle2;
-  const headerYear = hoveredProject ? hoveredProject.year : '';
+  const headerTitle = isMobile ? title : (hoveredProject ? `${title}/${hoveredProject.title}` : `${title}/`);
+  const headerSubtitle1 = isMobile ? subtitle1 : (hoveredProject ? hoveredProject.subtitle1 : subtitle1);
+  const headerSubtitle2 = isMobile ? subtitle2 : (hoveredProject ? hoveredProject.subtitle2 : subtitle2);
+  const headerYear = isMobile ? '' : (hoveredProject ? hoveredProject.year : '');
 
   return (
     <div className={styles.category}>

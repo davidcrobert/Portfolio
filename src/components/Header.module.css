@@ -5,24 +5,34 @@
   background-color: #f9f9f9;
   border-bottom: black 1px solid;
   width: 100%;
-  padding-bottom: 3px;
+  padding: 10px 0;
 }
 
 .headerContent {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 20px;
+}
+
+.titleContainer {
+  flex: 1;
 }
 
 .intro {
   font-size: 25px;
-  margin-left: 10px;
   text-transform: uppercase;
   font-weight: 400;
+  margin: 0;
+  word-wrap: break-word;
+  max-width: 90%;
 }
 
 .subtext {
   font-size: 14px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: uppercase;
+  margin: 0;
 }
 
 .secondSubtext {
@@ -30,12 +40,9 @@
 }
 
 .headerButtons {
-  position: absolute;
-  /* top: 27px; */
-  bottom: 0;
-  right: 20px;
   display: flex;
-  gap: 30px;
+  gap: 20px;
+  align-items: flex-start;
 }
 
 .headerButton {
@@ -64,14 +71,22 @@
   transform: skew(-20deg);
 }
 
-@media only screen and (max-width: 600px) {
-  .header h1.intro {
-    width: 50%;
+@media screen and (max-width: 768px) {
+  .headerContent {
+    flex-direction: column;
   }
 
   .headerButtons {
-    top: 15px;
-    right: 10px;
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+
+  .intro {
+    font-size: 20px;
+  }
+
+  .subtext {
+    font-size: 12px;
   }
 
   .headerButton {

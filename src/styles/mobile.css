@@ -1,0 +1,99 @@
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    /* General styles */
+    body {
+      font-size: 14px;
+    }
+  
+    /* Header styles */
+    .header {
+      padding: 10px 0;
+    }
+  
+    .intro {
+      font-size: 20px;
+    }
+  
+    .subtext {
+      font-size: 12px;
+    }
+  
+    .secondSubtext {
+      margin-left: 20px;
+    }
+  
+    .headerButtons {
+      top: 10px;
+      right: 10px;
+    }
+  
+    .headerButton {
+      font-size: 16px;
+    }
+  
+    /* Home page styles */
+    .nav {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .navLink {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+  
+    .footer {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0;
+    }
+  
+    .footerLink {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+  
+    /* Category page styles */
+    .projectList {
+      padding: 10px;
+    }
+  
+    .project {
+      width: 100%;
+      min-height: 100px;
+      padding: 15px 0;
+    }
+  
+    .title {
+      font-size: 18px;
+      max-width: 80%;
+    }
+  
+    .description {
+      font-size: 10px;
+    }
+  
+    /* Project page styles */
+    .projectContent {
+      padding: 10px;
+    }
+  
+    .mediaEmbed {
+      width: 100%;
+      height: auto;
+    }
+  
+    .infoPopup {
+      width: 90vw;
+      height: 80vh;
+      padding: 15px;
+    }
+  
+    .mainStatement {
+      font-size: 18px;
+    }
+  
+    .infoHeader {
+      font-size: 20px;
+    }
+  }

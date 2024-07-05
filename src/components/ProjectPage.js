@@ -40,50 +40,53 @@ const ProjectPage = () => {
     }
   }, [projectId, navigate]);
 
+  const closeInfoPopup = useCallback(() => {
+    const infoPopup = infoPopupRef.current;
+    if (infoPopup) {
+      infoPopup.classList.add(styles.fadeOut);
+      setIsBlurred(false);
+      setTimeout(() => {
+        setShowInfo(false);
+      }, 750);
+    }
+  }, []);
+
   const toggleInfo = useCallback(() => {
     if (!isBlurred) {
       setIsBlurred(true);
       setShowInfo(true);
     } else {
-      const infoPopup = infoPopupRef.current;
-      if (infoPopup) {
-        infoPopup.classList.add(styles.fadeOut);
-        setIsBlurred(false);
-        setTimeout(() => {
-          setShowInfo(false);
-        }, 750);
-      }
+      closeInfoPopup();
     }
-  }, [isBlurred]);
+  }, [isBlurred, closeInfoPopup]);
 
   useEffect(() => {
     const handleEscKey = (event) => {
       if (event.key === 'Escape' && isBlurred) {
-        toggleInfo();
+        closeInfoPopup();
+      }
+    };
+
+    const handleOutsideClick = (event) => {
+      if (infoPopupRef.current && !infoPopupRef.current.contains(event.target) && isBlurred) {
+        closeInfoPopup();
       }
     };
 
     document.addEventListener('keydown', handleEscKey);
+    document.addEventListener('mousedown', handleOutsideClick);
 
     return () => {
       document.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isBlurred, toggleInfo]);
+  }, [isBlurred, closeInfoPopup]);
 
   if (!project || !categoryData) {
     return null;
   }
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
-
-  const renderMultiLineText = (text) => {
-    return text.split('\n').map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
-  };
 
   const processHTML = (html) => {
     const parser = new DOMParser();
@@ -129,16 +132,14 @@ const ProjectPage = () => {
           )}
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Context</h3>
-            {/* <p>{renderMultiLineText(project.infoPopup.context)}</p> */}
             <p dangerouslySetInnerHTML={renderHTML(project.infoPopup.context)}></p>
           </div>
           <div className={styles.infoSection}>
             <h3 className={styles.infoHeader}>Tech</h3>
-            {/* <p>{renderMultiLineText(project.infoPopup.tech)}</p> */}
             <p dangerouslySetInnerHTML={renderHTML(project.infoPopup.tech)}></p>
           </div>
           <div className={styles.infoSection}>
-            <h3 className={styles.infoHeader}>{renderMultiLineText(project.infoPopup.tools)}</h3>
+            <h3 className={styles.infoHeader}>{project.infoPopup.tools}</h3>
           </div>
         </div>
       )}

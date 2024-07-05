@@ -2,11 +2,10 @@
   background-color: #f9f9f9;
   color: black;
   overscroll-behavior: contain;
-  min-height: calc(100vh - 150px); /* Adjust this value based on your header height */
+  min-height: calc(100vh - 150px);
   font-family: 'Times New Roman', Times, serif;
   display: flex;
   flex-direction: column;
-  /* padding-top: 20px; Add some top padding to prevent content from being hidden under the header */
 }
 
 .projectList {
@@ -25,7 +24,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   height: calc(25vh - 18px);
   min-height: 150px;
 }
@@ -44,15 +42,9 @@
 }
 
 .projectCount3 {
-  /* height: 33.33vh; */
   height: calc(33.33vh - 20px);
   min-height: 150px;
 }
-
-/* .projectCount4 {
-  height: calc(25vh - 18px);
-  min-height: 150px;
-} */
 
 .title {
   color: black;
@@ -95,16 +87,27 @@
   line-height: 1.5;
 }
 
-@media only screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .project {
-    padding: 30px 10px;
+    height: calc(25vh - 40px);
   }
-  
+
+  .projectCount1 {
+    height: calc(100vh - 150px);
+  }
+
+  .projectCount2 {
+    height: calc(50vh - 80px);
+    min-height: 150px;
+  }
+
   .title {
-    font-size: 20px;
+    font-size: 18px;
+    max-width: 80%;
   }
-  
+
   .description {
     font-size: 10px;
+    padding: 0 10px;
   }
 }
