@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -63,9 +63,9 @@ const HeaderButton = styled.button`
   }
 `;
 
-const Header = ({ title, subtitle1, subtitle2, year, backLink, backLinkText, showInfoButton, onInfoClick, isInfoOpen }) => {
+const Header = forwardRef(({ title, subtitle1, subtitle2, year, backLink, backLinkText, showInfoButton, onInfoClick, isInfoOpen }, ref) => {
   return (
-    <HeaderContainer>
+    <HeaderContainer ref={ref}>
       <HeaderContent>
         <TitleContainer>
           <Title>
@@ -92,6 +92,6 @@ const Header = ({ title, subtitle1, subtitle2, year, backLink, backLinkText, sho
       </HeaderContent>
     </HeaderContainer>
   );
-};
+});
 
 export default Header;

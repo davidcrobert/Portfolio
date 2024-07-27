@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './Header';
@@ -7,7 +7,7 @@ const CategoryContainer = styled.div`
   background-color: #f9f9f9;
   color: black;
   overscroll-behavior: contain;
-  min-height: calc(100vh - 150px);
+  min-height: 100vh;
   font-family: 'Times New Roman', Times, serif;
   display: flex;
   flex-direction: column;
@@ -29,22 +29,14 @@ const Project = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: ${props => {
-    switch(props.totalProjects) {
-      case 1: return 'calc(100vh - 150px)';
-      case 2: return 'calc(50vh - 40px)';
-      case 3: return 'calc(33.33vh - 20px)';
-      default: return 'calc(25vh - 18px)';
-    }
-  }};
-  min-height: 150px;
+  height: ${props => `calc((100vh - ${props.headerHeight}px) / ${Math.min(props.totalProjects, 4) + 0.5})`};
 
   &:last-child {
     border-bottom: none;
   }
 
   @media screen and (max-width: 768px) {
-    height: ${props => props.totalProjects === 1 ? 'calc(100vh - 150px)' : 'calc(25vh - 40px)'};
+    height: ${props => `calc((100vh - ${props.headerHeight}px) / ${Math.min(props.totalProjects, 4) + 0.5})`};
   }
 `;
 
@@ -71,6 +63,7 @@ const ProjectTitle = styled(Link)`
   @media screen and (max-width: 768px) {
     font-size: 18px;
     max-width: 80%;
+    padding-bottom: 5px;
   }
 `;
 
@@ -88,8 +81,8 @@ const ProjectDescription = styled.p`
   }
 `;
 
-const ProjectSection = ({ project, onMouseEnter, onMouseLeave }) => (
-  <Project totalProjects={project.totalProjects}>
+const ProjectSection = ({ project, onMouseEnter, onMouseLeave, headerHeight }) => (
+  <Project totalProjects={project.totalProjects} headerHeight={headerHeight}>
     <ProjectTitle 
       to={project.link}
       onMouseEnter={() => onMouseEnter(project)}
@@ -104,17 +97,29 @@ const ProjectSection = ({ project, onMouseEnter, onMouseLeave }) => (
 const Category = ({ title, subtitle1, subtitle2, projects }) => {
   const [hoveredProject, setHoveredProject] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef(null);
 
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
     checkIfMobile();
+    updateHeaderHeight();
+
     window.addEventListener('resize', checkIfMobile);
+    window.addEventListener('resize', updateHeaderHeight);
 
     return () => {
       window.removeEventListener('resize', checkIfMobile);
+      window.removeEventListener('resize', updateHeaderHeight);
     };
   }, []);
 
@@ -138,6 +143,7 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
   return (
     <CategoryContainer>
       <Header 
+        ref={headerRef}
         title={headerTitle}
         subtitle1={headerSubtitle1}
         subtitle2={headerSubtitle2}
@@ -151,6 +157,7 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
             project={{...project, totalProjects: projects.length}}
             onMouseEnter={handleProjectHover}
             onMouseLeave={handleProjectLeave}
+            headerHeight={headerHeight}
           />
         ))}
       </ProjectList>
