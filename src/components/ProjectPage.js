@@ -126,6 +126,7 @@ const InfoPopup = styled.div`
 
 const InfoSection = styled.div`
   margin-bottom: 20px;
+  font-family: 'Times New Roman', Times, serif;
 `;
 
 const InfoHeader = styled.h3`
