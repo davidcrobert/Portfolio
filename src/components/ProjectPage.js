@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 import parse from 'html-react-parser';
 import Header from './Header';
 import { projectData } from '../data/projectData';
+import { getSubsite } from '../data/subsiteData';
 import ScavengeARMedia from './ScavengeARMedia';
 import ReflectionInteractive from './ReflectionInteractive';
 import LLMAuthentication from './LLMAuthentication';
@@ -189,12 +190,15 @@ const ExternalLink = styled.a`
 
 
 const ProjectPage = () => {
-  const { projectId } = useParams();
+  const { projectId, subsiteId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const infoPopupRef = useRef(null);
   const [project, setProject] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
+  const [subsiteContext, setSubsiteContext] = useState(null);
+  const [customContext, setCustomContext] = useState(null);
 
   const cleanYouTubeEmbed = (embedCode) => {
     if (!embedCode.includes('youtube.com/embed/')) {
@@ -222,19 +226,71 @@ const ProjectPage = () => {
 
   useEffect(() => {
     const findProjectAndCategory = () => {
-      for (const category in projectData) {
-        const foundProject = projectData[category].projects.find(p => p.link === `/projects/${projectId}`);
-        if (foundProject) {
-          setProject(foundProject);
-          setCategoryData(projectData[category]);
+      // Check if we're in a sub-site context
+      if (subsiteId) {
+        const subsite = getSubsite(subsiteId);
+        if (!subsite) {
+          navigate('/404');
           return;
         }
+
+        // Find the project in the subsite's project list
+        const subsiteProject = subsite.projects.find(
+          p => p.originalLink === `/projects/${projectId}`
+        );
+
+        if (!subsiteProject) {
+          navigate('/404');
+          return;
+        }
+
+        // Find the original project data to get media embeds, etc.
+        for (const category in projectData) {
+          const foundProject = projectData[category].projects.find(
+            p => p.link === `/projects/${projectId}`
+          );
+          if (foundProject) {
+            // Merge original project data with subsite customizations
+            const mergedProject = {
+              ...foundProject,
+              title: subsiteProject.title || foundProject.title,
+              subtitle1: subsiteProject.subtitle1 || foundProject.subtitle1,
+              subtitle2: subsiteProject.subtitle2 || foundProject.subtitle2,
+              description: subsiteProject.description || foundProject.description,
+            };
+
+            setProject(mergedProject);
+            setSubsiteContext(subsite);
+            setCustomContext(subsiteProject.customContext || null);
+
+            // Create a mock category for header display
+            setCategoryData({
+              title: subsite.title,
+            });
+            return;
+          }
+        }
+      } else {
+        // Original behavior for non-subsite projects
+        for (const category in projectData) {
+          const foundProject = projectData[category].projects.find(
+            p => p.link === `/projects/${projectId}`
+          );
+          if (foundProject) {
+            setProject(foundProject);
+            setCategoryData(projectData[category]);
+            setSubsiteContext(null);
+            setCustomContext(null);
+            return;
+          }
+        }
       }
+
       navigate('/404');
     };
 
     findProjectAndCategory();
-  }, [projectId, navigate]);
+  }, [projectId, subsiteId, navigate]);
 
   const toggleInfo = useCallback(() => {
     setIsInfoOpen(prev => !prev);
@@ -302,6 +358,11 @@ const ProjectPage = () => {
   console.log("CustomComponent exists:", !!CustomComponent);
   console.log("CustomComponent name:", project.customComponent);
 
+  // Determine the correct back link based on context
+  const backLink = subsiteContext
+    ? `/${subsiteId}`
+    : `/${categoryData.title.toLowerCase().replace(' ', '-')}`;
+
   return (
     <PageWrapper>
       <MainContent>
@@ -310,7 +371,7 @@ const ProjectPage = () => {
           subtitle1={project.subtitle1}
           subtitle2={project.subtitle2}
           year={project.year}
-          backLink={`/${categoryData.title.toLowerCase().replace(' ', '-')}`}
+          backLink={backLink}
           showInfoButton={true}
           onInfoClick={toggleInfo}
           isInfoOpen={isInfoOpen}
@@ -329,6 +390,12 @@ const ProjectPage = () => {
         <InfoPopup ref={infoPopupRef}>
           {project.infoPopup.main && (
             <MainStatement>{project.infoPopup.main}</MainStatement>
+          )}
+          {customContext && (
+            <InfoSection>
+              <InfoHeader>For This Application</InfoHeader>
+              <div>{renderContent(customContext)}</div>
+            </InfoSection>
           )}
           <InfoSection>
             <InfoHeader>Context</InfoHeader>

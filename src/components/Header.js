@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const HeaderContainer = styled.header`
   position: sticky;
@@ -23,10 +23,19 @@ const HeaderContent = styled.div`
   max-width: 100%;
 `;
 
+const LeftSide = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  flex: 1;
+  min-width: 0;
+  justify-content: space-between;
+`;
+
 const TitleContainer = styled.div`
-  flex: ${props => props.$hasTags ? '0 0 50%' : '0 0 90%'};
   min-width: 0;
   overflow: hidden;
+  flex-shrink: 0;
 `;
 
 const Title = styled.h1`
@@ -100,6 +109,53 @@ const TagButton = styled.button`
   }
 `;
 
+const StatementContainer = styled.div`
+  max-width: clamp(500px, 30vw, 500px);
+  font-size: 14px;
+  line-height: 1.4;
+  font-family: 'Times New Roman', Times, serif;
+  flex-shrink: 1;
+
+  @media screen and (max-width: 880px) {
+    display: none;
+  }
+`;
+
+const AnimatedTextContainer = styled.div`
+  font-size: 14px;
+  font-family: 'Times New Roman', Times, serif;
+  white-space: nowrap;
+  display: grid;
+  grid-template-columns: 60px 20px 60px 20px 60px;
+  align-items: center;
+  position: relative;
+  margin-left: auto;
+  margin-right: 40px;
+
+  @media screen and (max-width: 1100px) {
+    display: none;
+  }
+`;
+
+const AnimatedWord = styled.span`
+  display: inline-block;
+  text-align: center;
+  position: absolute;
+  width: 60px;
+  transition: transform 1.2s ease-in-out;
+  transform: ${props => props.$position === 0
+    ? 'translateX(0)'
+    : props.$position === 1
+      ? 'translateX(80px)'
+      : 'translateX(160px)'};
+  left: 0;
+`;
+
+const Arrow = styled.span`
+  display: inline-block;
+  text-align: center;
+`;
+
 const HeaderButtons = styled.div`
   display: flex;
   gap: 20px;
@@ -129,19 +185,70 @@ const HeaderButton = styled.button`
   }
 `;
 
-const Header = forwardRef(({ 
-  title, 
-  subtitle1, 
-  subtitle2, 
-  year, 
-  backLink, 
-  backLinkText, 
-  showInfoButton, 
-  onInfoClick, 
+const AnimatedText = () => {
+  const words = ['human', 'tech', 'human'];
+  const [positions, setPositions] = useState([0, 1, 2]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPositions(prev => {
+        // Create a new random arrangement
+        const newPositions = [0, 1, 2];
+
+        // Fisher-Yates shuffle
+        for (let i = newPositions.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newPositions[i], newPositions[j]] = [newPositions[j], newPositions[i]];
+        }
+
+        // Make sure it's different from previous
+        if (JSON.stringify(newPositions) === JSON.stringify(prev)) {
+          // If by chance we got the same arrangement, swap first two
+          [newPositions[0], newPositions[1]] = [newPositions[1], newPositions[0]];
+        }
+
+        return newPositions;
+      });
+    }, 3000); // Change every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Create array of words with their target positions
+  const wordElements = words.map((word, originalIndex) => {
+    const currentPosition = positions.indexOf(originalIndex);
+    return (
+      <AnimatedWord key={originalIndex} $position={currentPosition}>
+        {word}
+      </AnimatedWord>
+    );
+  });
+
+  return (
+    <AnimatedTextContainer>
+      {wordElements}
+      <Arrow style={{ gridColumn: 2 }}>↔</Arrow>
+      <Arrow style={{ gridColumn: 4 }}>↔</Arrow>
+    </AnimatedTextContainer>
+  );
+};
+
+const Header = forwardRef(({
+  title,
+  subtitle1,
+  subtitle2,
+  year,
+  backLink,
+  backLinkText,
+  showInfoButton,
+  onInfoClick,
   isInfoOpen,
   tags,
   activeFilter,
-  onTagSelect 
+  onTagSelect,
+  hideBackButton,
+  statement,
+  showAnimatedText
 }, ref) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -149,14 +256,18 @@ const Header = forwardRef(({
   return (
     <HeaderContainer ref={ref}>
       <HeaderContent>
-        <TitleContainer $hasTags={tags && tags.length > 0}>
-          <Title>
-            {title}
-            {year && <span> [{year}]</span>}
-          </Title>
-          <Subtitle>{subtitle1}</Subtitle>
-          <Subtitle $second>{subtitle2}</Subtitle>
-        </TitleContainer>
+        <LeftSide>
+          <TitleContainer>
+            <Title>
+              {title}
+              {year && <span> [{year}]</span>}
+            </Title>
+            <Subtitle>{subtitle1}</Subtitle>
+            <Subtitle $second>{subtitle2}</Subtitle>
+          </TitleContainer>
+          {statement && <StatementContainer>{statement}</StatementContainer>}
+          {showAnimatedText && <AnimatedText />}
+        </LeftSide>
         {tags && onTagSelect && (
           <TagsContainer>
             {tags.map(tag => (
@@ -176,7 +287,7 @@ const Header = forwardRef(({
               INFO {isInfoOpen ? '-' : '+'}
             </HeaderButton>
           )}
-          {!isHomePage && (
+          {!isHomePage && !hideBackButton && (
             <Link to={backLink || '/'}>
               <HeaderButton $back>
                 {backLinkText || 'back'}
