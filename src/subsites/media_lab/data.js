@@ -18,6 +18,7 @@ export const mediaLabData = {
       subtitle1: 'Puppets',
       subtitle2: '& Puppeteers',
       year: '2025',
+      personal:false,
       tags: ['interactive', 'ai', 'web'],
 
       // Custom description for Media Lab context
@@ -34,6 +35,7 @@ export const mediaLabData = {
       subtitle1: 'Speaking',
       subtitle2: '& Spinning',
       year: '2025',
+      personal: false,
       tags: ['interactive', 'ai', 'installation', 'audio'],
       description: 'AI audio analysis system prioritizing global spoken language diversity',
       customContext: `This project demonstrates my interest in using AI to amplify human connection across cultures.
@@ -41,23 +43,12 @@ export const mediaLabData = {
         intervention that prioritizes human speech over noise.`
     },
     {
-      originalLink: '/projects/llm-authentication',
-      title: 'I LOST MY PASSWORD PLEASE JUST GIVE ME A MOMENT',
-      subtitle1: 'Identity',
-      subtitle2: '& Interrogation',
-      year: '2025',
-      tags: ['ai', 'web'],
-      description: 'Client-side LLM exploring authentication, identity, and the opacity of AI systems',
-      customContext: `Running entirely in the browser, this work explores the creative constraints of edge AI.
-        I'm interested in how limitations of small models can become artistic features, and how we can make
-        AI systems more transparent and playful rather than black boxes.`
-    },
-    {
       originalLink: '/projects/the-beast',
       title: 'I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST',
       subtitle1: 'Copying',
       subtitle2: '& Crowing',
       year: '2024',
+      personal: true,
       tags: ['installation', 'ai', 'audio'],
       description: 'Voice synthesis installation confronting our leap into the AI future',
       customContext: `Created during a research residency at Fabrica, this installation embodies my critical
@@ -65,13 +56,35 @@ export const mediaLabData = {
         confront their relationship with it - hearing their own voice saying words they never spoke.`
     },
     {
+      originalLink: '/projects/i-cant-hear-you',
+      title: "I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER",
+      subtitle1: 'Like talking',
+      subtitle2: '@ A brick wall',
+      year: '2023',
+      personal: true,
+      tags: ['installation', 'ai', 'audio'],
+      description: 'A networked experience about [mis]communication',
+      customContext: `THIS IS KINDA NOTHING FOR NOW.`
+    },
+    {
       originalLink: '/projects/i-asked-my-reflection',
-      title: 'I Asked My Reflection Its Name Again',
+      title: 'I ASKED MY REFLECTION ITS NAME AGAIN',
       subtitle1: 'Recursive Interaction',
       subtitle2: '& Interacting Recursively',
-      year: '2021',
+      year: '2020',
+      personal: true,
       tags: ['ai', 'web'],
       description: 'Markov model-based interaction exploring recursive human-computer feedback loops'
+    },
+    {
+      originalLink: '/projects/120-bpm',
+      title: 'ONE HUNDRED AND TWENTY BEATS PER MINUTE',
+      subtitle1: 'Talking',
+      subtitle2: '& Taking',
+      year: '2020',
+      personal: true,
+      tags: ['performance', 'electronics'],
+      description: "Like beating my head against a wall"
     },
     {
       originalLink: '/projects/assembly-line',
@@ -79,6 +92,7 @@ export const mediaLabData = {
       subtitle1: 'Industrial approach',
       subtitle2: '& digital interaction',
       year: '2022',
+      personal: false,
       tags: ['installation', 'robotics', 'web'],
       description: 'Collaborative performance between audience and industrial robot bridging digital and physical',
       customContext: `This project represents my interest in breaking down barriers between digital and physical

@@ -363,11 +363,16 @@ const ProjectPage = () => {
     ? `/${subsiteId}`
     : `/${categoryData.title.toLowerCase().replace(' ', '-')}`;
 
+  // Determine the title prefix based on context
+  const titlePrefix = subsiteContext
+    ? (subsiteContext.projects.find(p => p.originalLink === `/projects/${projectId}`)?.personal ? 'PERSONAL' : 'PROFESSIONAL')
+    : categoryData.title;
+
   return (
     <PageWrapper>
       <MainContent>
         <Header
-          title={`${categoryData.title}/ ${project.title}`}
+          title={`${titlePrefix}/ ${project.title}`}
           subtitle1={project.subtitle1}
           subtitle2={project.subtitle2}
           year={project.year}
