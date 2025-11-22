@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Sketch from '../components/Sketch';
-import { subsiteData } from '../data/subsiteData';
+import Header from '../../components/Header';
+import Sketch from '../../components/Sketch';
+import { mediaLabData } from './data';
 
 const IndexContainer = styled.div`
   background-color: #f9f9f9;
@@ -37,13 +37,13 @@ const Side = styled.div`
   direction: ${props => props.$left ? 'rtl' : 'ltr'};
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 3px;
     background-color: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: black;
-    border-radius: 20px;
+    border-radius: 0;
   }
 `;
 
@@ -155,27 +155,13 @@ const ProjectTags = styled.p`
   }
 `;
 
-const Footer = styled.footer`
-  display: flex;
-  justify-content: center;
-  padding: 0px 15px;
-  margin-bottom: 20px;
-  position: relative;
-  flex-shrink: 0;
-
-  @media screen and (max-width: 768px) {
-    padding-bottom: 15px;
-  }
-`;
 
 function MediaLabHome() {
-  const subsite = subsiteData.media_lab;
-
   // Split projects into professional and personal
-  const professionalProjects = subsite.projects.filter(p =>
+  const professionalProjects = mediaLabData.projects.filter(p =>
     p.tags && p.tags.some(tag => ['interactive', 'ai', 'installation'].includes(tag))
   );
-  const personalProjects = subsite.projects.filter(p =>
+  const personalProjects = mediaLabData.projects.filter(p =>
     p.tags && p.tags.some(tag => ['web', 'performance'].includes(tag))
   );
 
@@ -205,9 +191,6 @@ function MediaLabHome() {
                     {project.title}
                   </ProjectTitle>
                   <ProjectDescription>{project.description}</ProjectDescription>
-                  {project.tags && project.tags.length > 0 && (
-                    <ProjectTags>{project.tags.join(' • ')}</ProjectTags>
-                  )}
                 </Project>
               ))}
             </ProjectList>
@@ -224,17 +207,12 @@ function MediaLabHome() {
                     {project.title}
                   </ProjectTitle>
                   <ProjectDescription>{project.description}</ProjectDescription>
-                  {project.tags && project.tags.length > 0 && (
-                    <ProjectTags>{project.tags.join(' • ')}</ProjectTags>
-                  )}
                 </Project>
               ))}
             </ProjectList>
           </SideContent>
         </Side>
       </SplitContainer>
-
-      <Footer />
     </IndexContainer>
   );
 }

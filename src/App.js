@@ -5,7 +5,7 @@ import AboutMe from './pages/AboutMe';
 import CategoryPage from './pages/CategoryPage';
 import ProjectPage from './components/ProjectPage';
 import SubSitePage from './pages/SubSitePage';
-import MediaLabHome from './pages/MediaLabHome';
+import { Home as MediaLabHome } from './subsites/media_lab';
 import NotFound from './pages/NotFound';
 import NoiseOverlay from './components/NoiseOverlay';
 import { projectData } from './data/projectData';
