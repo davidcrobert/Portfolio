@@ -12,13 +12,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <NoiseOverlay />
+        {/* <NoiseOverlay /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutMe />} />
-          <Route path="/installation" element={<CategoryPage categoryData={projectData.installation} />} />
-          <Route path="/virtual-environments" element={<CategoryPage categoryData={projectData.virtualEnvironments} />} />
-          <Route path="/web" element={<CategoryPage categoryData={projectData.web} />} />
+          <Route path="/work" element={<CategoryPage categoryData={projectData.work} />} />
+          <Route path="/experiments" element={<CategoryPage categoryData={projectData.experiments} />} />
+          <Route path="/art" element={<CategoryPage categoryData={projectData.art} />} />
           <Route path="/projects/:projectId" element={<ProjectPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

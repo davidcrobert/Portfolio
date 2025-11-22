@@ -10,23 +10,10 @@ const AboutMeContainer = styled.div`
   font-family: 'Times New Roman', Times, serif;
 `;
 
-const ResumeLink = styled.a`
-  position: absolute;
-  padding: 10px 16px;
-  color: black;
-  text-decoration: none;
-  font-size: 20px;
-  text-transform: uppercase;
-  transition: transform 0.2s linear;
-
-  &:hover {
-    transform: skew(-20deg);
-  }
-`;
-
 const AboutSection = styled.section`
   width: 100%;
   overflow: hidden;
+  padding-top: 20px;
 `;
 
 const AboutParagraph = styled.p`
@@ -70,14 +57,12 @@ const AboutMe = () => {
         backLink="/"
       />
 
-      <div>
-        <ResumeLink href="CV-DavidRobert.pdf" target="_blank" rel="noopener noreferrer">résumé</ResumeLink>
-      </div>
-
       <AboutSection>
-        <AboutParagraph className="left">I'm a Creative Technologist at <a href="https://antimodular.com/" target="_blank" rel="noopener noreferrer">Antimodular Research</a>, working for the artist Rafael Lozano-Hemmer</AboutParagraph>
+        <AboutParagraph className="left">I'm a Creative Technologist at <a href="https://antimodular.com/" target="_blank" rel="noopener noreferrer">Atelier Lozano-Hemmer</a>, working for the artist Rafael Lozano-Hemmer</AboutParagraph>
+        <AboutParagraph className="right">I also make my own art</AboutParagraph>
+        <AboutParagraph className='left'>I was previously a Media Artist in Residence at <a href="https://www.fabrica.it/en/" target="_blank" rel="noopener noreferrer">Fabrica</a> </AboutParagraph>
         <AboutParagraph className="right">I studied Media Production [concentration in Digital Media] at Toronto Metropolitan University [TMU]</AboutParagraph>
-        <AboutParagraph className="left">I use TouchDesigner & Unreal & Unity & physical computing & Python & the web to create responsive environments</AboutParagraph>
+        <AboutParagraph className="left">I use AI & Python & the web & physical computing & Unreal & Unity & whatever else to create experiences</AboutParagraph>
         <AboutParagraph className="right">I'm originally from a small town in southern Ontario [Canada]</AboutParagraph>
         <AboutParagraph className="left">I was a Creative Technologist at TMU's <a href="https://www.ryerson.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</a></AboutParagraph>
         <AboutParagraph className="right">I currently live in Montreal [Canada]</AboutParagraph>
@@ -88,7 +73,7 @@ const AboutMe = () => {
         <AboutParagraph className="left">I was also a Research Assistant investigating <a href="http://dx.doi.org/10.14236/ewic/EVA2022.39" target="_blank" rel="noopener noreferrer">AR and spatialized sound</a> for user experience in digitally-delivered orchestral music</AboutParagraph>
         <AboutParagraph className="right">I value physical spaces</AboutParagraph>
         <AboutParagraph className="left">My dream work is to extend the lived environment through interactive technology</AboutParagraph>
-        <AboutParagraph className="right">I really like projections</AboutParagraph>
+        <AboutParagraph className="right">Honestly tech just really excites me</AboutParagraph>
       </AboutSection>
     </AboutMeContainer>
   );

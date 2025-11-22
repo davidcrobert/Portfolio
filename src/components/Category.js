@@ -1,24 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './Header';
 
+// Main container for the category page
 const CategoryContainer = styled.div`
   background-color: #f9f9f9;
   color: black;
   overscroll-behavior: contain;
-  min-height: 100vh;
+  min-height: calc(100vh - 150px);
   font-family: 'Times New Roman', Times, serif;
   display: flex;
   flex-direction: column;
 `;
 
+// Container for the list of projects
 const ProjectList = styled.section`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 `;
 
+// Project item - fixed to make sizes consistent across categories
 const Project = styled.section`
   width: 90%;
   margin-left: auto;
@@ -29,17 +32,37 @@ const Project = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: ${props => `calc((100vh - ${props.headerHeight}px) / ${Math.min(props.totalProjects, 4) + 0.5})`};
+  
+  /* Set fixed height based on viewport size, regardless of how many projects */
+  height: calc(25vh);
+  min-height: 150px;
 
   &:last-child {
     border-bottom: none;
   }
 
+  /* On larger screens, allow more height per project when there are only 1-3 projects */
+  @media screen and (min-width: 769px) {
+    height: ${props => {
+      // Adjust height based on number of projects
+      switch(props.totalProjects) {
+        case 1: return 'calc(75vh)'; // Single project gets more space
+        case 2: return 'calc(37.5vh)'; // Two projects get half the space
+        case 3: return 'calc(33vh)'; // Three projects
+        default: return 'calc(25vh)'; // More than three gets standard size
+      }
+    }};
+  }
+
+  /* Mobile-specific styling */
   @media screen and (max-width: 768px) {
-    height: ${props => `calc((100vh - ${props.headerHeight}px) / ${Math.min(props.totalProjects, 4) + 0.5})`};
+    height: 25vh;
+    min-height: 120px;
+    padding: 10px 0;
   }
 `;
 
+// Project title styling
 const ProjectTitle = styled(Link)`
   color: black;
   text-decoration: none;
@@ -53,20 +76,24 @@ const ProjectTitle = styled(Link)`
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  max-width: 60%;
+  max-width: 100%;
 
+  /* Hover effect */
   &:hover {
     cursor: help;
     transform: rotateX(35deg);
   }
 
+  /* Mobile-specific styling */
   @media screen and (max-width: 768px) {
     font-size: 18px;
     max-width: 80%;
+    margin-bottom: 10px;
     padding-bottom: 5px;
   }
 `;
 
+// Project description styling
 const ProjectDescription = styled.p`
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -74,55 +101,91 @@ const ProjectDescription = styled.p`
   text-transform: uppercase;
   font-size: 12px;
   line-height: 1.5;
+  margin-bottom: 8px;
 
+  /* Mobile-specific styling */
   @media screen and (max-width: 768px) {
     font-size: 10px;
     padding: 0 10px;
+    margin-bottom: 5px;
   }
 `;
 
-const ProjectSection = ({ project, onMouseEnter, onMouseLeave, headerHeight }) => (
-  <Project totalProjects={project.totalProjects} headerHeight={headerHeight}>
-    <ProjectTitle 
-      to={project.link}
-      onMouseEnter={() => onMouseEnter(project)}
-      onMouseLeave={onMouseLeave}
-    >
-      {project.title}
-    </ProjectTitle>
-    <ProjectDescription dangerouslySetInnerHTML={{ __html: project.description }} />
-  </Project>
-);
+// Technologies list styling
+const ProjectTechnologies = styled.p`
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 4px;
 
-const Category = ({ title, subtitle1, subtitle2, projects }) => {
+  /* Mobile-specific styling */
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
+`;
+
+// Project tags styling
+const ProjectTags = styled.p`
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 10px;
+  color: #777;
+  font-style: italic;
+
+  /* Mobile-specific styling */
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+  }
+`;
+
+// Component for an individual project in the list
+const ProjectSection = ({ project, onMouseEnter, onMouseLeave }) => {
+  // Extract tools from the infoPopup if available
+  const technologies = project.infoPopup?.tools || null;
+  
+  return (
+    <Project totalProjects={project.totalProjects}>
+      <ProjectTitle 
+        to={project.link}
+        onMouseEnter={() => onMouseEnter(project)}
+        onMouseLeave={onMouseLeave}
+      >
+        {project.title}
+      </ProjectTitle>
+      <ProjectDescription dangerouslySetInnerHTML={{ __html: project.description }} />
+      {technologies && (
+        <ProjectTechnologies>~{technologies}~</ProjectTechnologies>
+      )}
+      {project.tags && project.tags.length > 0 && (
+        <ProjectTags>{project.tags.join(' • ')}</ProjectTags>
+      )}
+    </Project>
+  );
+};
+
+// Main Category component
+const Category = ({ title, subtitle1, subtitle2, projects, tags }) => {
+  // State for tracking hovered project and mobile detection
   const [hoveredProject, setHoveredProject] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const headerRef = useRef(null);
+  const [activeFilter, setActiveFilter] = useState('all');
 
+  // Effect to detect mobile devices
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    const updateHeaderHeight = () => {
-      if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight);
-      }
-    };
-
     checkIfMobile();
-    updateHeaderHeight();
-
     window.addEventListener('resize', checkIfMobile);
-    window.addEventListener('resize', updateHeaderHeight);
 
     return () => {
       window.removeEventListener('resize', checkIfMobile);
-      window.removeEventListener('resize', updateHeaderHeight);
     };
   }, []);
 
+  // Handlers for project hover state
   const handleProjectHover = (project) => {
     if (!isMobile) {
       setHoveredProject(project);
@@ -135,29 +198,37 @@ const Category = ({ title, subtitle1, subtitle2, projects }) => {
     }
   };
 
+  // Dynamic header content based on hover state
   const headerTitle = isMobile ? title : (hoveredProject ? `${title}/ ${hoveredProject.title}` : `${title}/`);
   const headerSubtitle1 = isMobile ? subtitle1 : (hoveredProject ? hoveredProject.subtitle1 : subtitle1);
   const headerSubtitle2 = isMobile ? subtitle2 : (hoveredProject ? hoveredProject.subtitle2 : subtitle2);
   const headerYear = isMobile ? '' : (hoveredProject ? hoveredProject.year : '');
 
+  // Filter projects based on active filter
+  const filteredProjects = activeFilter === 'all' 
+    ? projects 
+    : projects.filter(project => project.tags && project.tags.includes(activeFilter));
+
   return (
     <CategoryContainer>
       <Header 
-        ref={headerRef}
         title={headerTitle}
         subtitle1={headerSubtitle1}
         subtitle2={headerSubtitle2}
         year={headerYear}
         backLink="/"
+        tags={tags}
+        activeFilter={activeFilter}
+        onTagSelect={setActiveFilter}
       />
+      
       <ProjectList>
-        {projects.map((project) => (
+        {filteredProjects.map((project) => (
           <ProjectSection 
             key={project.id} 
-            project={{...project, totalProjects: projects.length}}
+            project={{...project, totalProjects: filteredProjects.length}}
             onMouseEnter={handleProjectHover}
             onMouseLeave={handleProjectLeave}
-            headerHeight={headerHeight}
           />
         ))}
       </ProjectList>

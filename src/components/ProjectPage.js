@@ -6,10 +6,12 @@ import Header from './Header';
 import { projectData } from '../data/projectData';
 import ScavengeARMedia from './ScavengeARMedia';
 import ReflectionInteractive from './ReflectionInteractive';
+import LLMAuthentication from './LLMAuthentication';
 
 const customComponents = {
   ScavengeARMedia,
-  ReflectionInteractive
+  ReflectionInteractive,
+  LLMAuthentication
 };
 
 const PageWrapper = styled.div`
@@ -54,18 +56,36 @@ const MediaEmbed = styled.div`
     z-index: 101;
   }
 
+  /* Handle multiple videos in a container */
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
   @media screen and (min-width: 769px) {
     width: 65vw;
-    height: 0;
-    padding-bottom: 36.5625vw;
-    position: relative;
 
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
+    /* Single iframe - use the responsive container approach */
+    &:has(> iframe:only-child) {
+      height: 0;
+      padding-bottom: 36.5625vw;
+      position: relative;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    /* Multiple iframes in container - use flex layout */
+    > div iframe {
+      position: static;
       width: 100%;
-      height: 100%;
+      height: auto;
     }
   }
 
@@ -183,16 +203,18 @@ const ProjectPage = () => {
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(embedCode, 'text/html');
-    const iframe = doc.querySelector('iframe');
+    const iframes = doc.querySelectorAll('iframe');
 
-    if (iframe) {
-      let src = iframe.getAttribute('src');
-      // Add or update YouTube parameters
-      src = src.includes('?') ? `${src}&` : `${src}?`;
-      src += 'controls=1&iv_load_policy=3&rel=0';
-      iframe.setAttribute('src', src);
+    if (iframes.length > 0) {
+      iframes.forEach(iframe => {
+        let src = iframe.getAttribute('src');
+        // Add or update YouTube parameters
+        src = src.includes('?') ? `${src}&` : `${src}?`;
+        src += 'controls=1&iv_load_policy=3&rel=0';
+        iframe.setAttribute('src', src);
+      });
 
-      return iframe.outerHTML;
+      return doc.body.innerHTML; // Return the full processed HTML
     }
 
     return embedCode; // Return original embed if parsing fails
@@ -275,6 +297,10 @@ const ProjectPage = () => {
 
     return parse(content, options);
   };
+
+  console.log("Project:", project);
+  console.log("CustomComponent exists:", !!CustomComponent);
+  console.log("CustomComponent name:", project.customComponent);
 
   return (
     <PageWrapper>

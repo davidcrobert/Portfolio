@@ -8,6 +8,7 @@ const CategoryPage = ({ categoryData }) => {
       subtitle1={categoryData.subtitle1}
       subtitle2={categoryData.subtitle2}
       projects={categoryData.projects}
+      tags={categoryData.tags}
     />
   );
 };

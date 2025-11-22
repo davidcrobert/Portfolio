@@ -1,7 +1,7 @@
 export const config = {
     noiseOverlay: {
       opacity: 0.1, // Increased to make the effect more visible
-      zIndex: 100,
+      zIndex: 50,
       staticIntensity: 1.0,
       scanlineIntensity: 0.05,
       flickerProbability: 0.95,

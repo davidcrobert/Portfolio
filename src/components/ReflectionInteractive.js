@@ -16,16 +16,16 @@ const ReflectionInteractive = ({ width, height }) => {
         "MOVE YOUR MOUSE", "THROW YOUR VOICE", 'TEACH YOUR SELF', "HUG YOUR YOUNG", 
         "ENJOY YOUR WORRIES", "HOLD YOUR NOSE", "FORGET YOUR FACE", "WATCH YOUR TONGUE", 
         "MASH YOUR TEETH", "ASK YOUR REFLECTION ITS NAME", "QUIT YOUR WHINING", 
-        "SCREAM YOUR WORDS", "DROP YOUR THOUGHTS", "UNCLENCH YOUR FIST", "THROW YOUR VOICE", 
+        "SCREAM YOUR WORDS", "DROP YOUR THOUGHTS", "UNCLENCH YOUR FIST", "CATCH YOUR VOICE", 
         "DIM YOUR LIGHTS", "BEG YOUR GOD", "CLOSE YOUR EYES", "WASH YOUR WORRIES", 
         "I ASKED MY REFLECTION ITS NAME AGAIN"
       ];
 
       const font = "Times New Roman";
-      const baseCreateFrequency = 2000;
-      const fastestAdd = 200;
+      const baseCreateFrequency = 1250;
+      const fastestAdd = 50;
       const startTime = 5000;
-      const maxCursors = 130;
+      const maxCursors = 220;
       const order = 3;
 
       let movements = [];
@@ -39,7 +39,7 @@ const ReflectionInteractive = ({ width, height }) => {
 
       p.preload = () => {
         cursor = p.loadImage(
-          "https://cdn.glitch.com/edc62a79-8d78-45a8-90a2-ee7203b43e3e%2Fcursor.png?v=1606717695408"
+          "/cursor.png"
         );
       };
 
@@ -101,7 +101,17 @@ const ReflectionInteractive = ({ width, height }) => {
           let currentTime = p.millis() - beginTime;
 
           if (currentTime >= startTime) {
-            if (cursorMade === false && recorder.length <= maxCursors) {
+            // Always update and draw existing cursors
+            for (let falseCursor of recorder) {
+              if (p.frameCount % 2 === 0) {
+                markov(falseCursor);
+                borderCheck(falseCursor);
+              }
+              p.image(cursor, falseCursor.position.x, falseCursor.position.y);
+            }
+            
+            // Create new cursor if conditions are met
+            if (!cursorMade && recorder.length < maxCursors) {
               let falseCursor = {
                 current: p.random(Object.keys(ngrams)),
                 position: p.createVector(p.mouseX, p.mouseY)
@@ -109,15 +119,15 @@ const ReflectionInteractive = ({ width, height }) => {
               lastTimeCreated = currentTime;
               recorder.push(falseCursor);
               cursorMade = true;
-            } else {
-              for (let falseCursor of recorder) {
-                if (p.frameCount % 2 === 0) {
-                  markov(falseCursor);
-                  borderCheck(falseCursor);
-                }
-                p.image(cursor, falseCursor.position.x, falseCursor.position.y);
-              }
             }
+
+            // recorder.forEach(falseCursor => {
+            //   if (p.frameCount % 2 === 0) {
+            //     markov(falseCursor);
+            //     borderCheck(falseCursor);
+            //   }
+            //   p.image(cursor, falseCursor.position.x, falseCursor.position.y);
+            // });
 
             let intervalTime = p.map(recorder.length, 1, maxCursors, baseCreateFrequency, fastestAdd);
             if (currentTime > lastTimeCreated + intervalTime) cursorMade = false;
@@ -172,7 +182,7 @@ const ReflectionInteractive = ({ width, height }) => {
     };
   }, [width, height]);
 
-  return <div ref={sketchRef} style={{ width: '100%', height: '100%' }}></div>;
+  return <div ref={sketchRef} style={{ width: '100%', height: '100%', zIndex:100 }}></div>;
 };
 
 export default ReflectionInteractive;
