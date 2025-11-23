@@ -130,7 +130,7 @@ const AnimatedTextContainer = styled.div`
   align-items: center;
   position: relative;
   margin-left: auto;
-  margin-right: 40px;
+  margin-right: 100px;
 
   @media screen and (max-width: 1100px) {
     display: none;

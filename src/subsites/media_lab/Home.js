@@ -177,6 +177,35 @@ const ImagePreview = styled.div`
   }
 `;
 
+const PortfolioButton = styled(Link)`
+  position: fixed;
+  top: 25px;
+  right: 20px;
+  padding: 6px 12px;
+  background-color: transparent;
+  color: black;
+  border: 1px solid black;
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 1001;
+  transition: transform 0.2s linear;
+
+  &:hover {
+    transform: skew(-10deg);
+    cursor: help;
+  }
+
+  @media screen and (max-width: 768px) {
+    top: 15px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 9px;
+  }
+`;
+
 function MediaLabHome() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
@@ -188,7 +217,7 @@ function MediaLabHome() {
   // Preload and cache image paths for all projects
   useEffect(() => {
     const allProjects = [...professionalProjects, ...personalProjects];
-    const imageExtensions = ['jpg', 'jpeg', 'png'];
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'tif'];
 
     allProjects.forEach(project => {
       const projectId = project.originalLink.split('/').pop();
@@ -235,6 +264,7 @@ function MediaLabHome() {
     <IndexContainer>
       <Sketch />
       <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />
+      <PortfolioButton to="/">View Whole Portfolio</PortfolioButton>
       <Header
         title="David Robert"
         subtitle1="Critical Technologist"
@@ -243,7 +273,7 @@ function MediaLabHome() {
         statement="
         Our constructed environment is valuable & vulnerable.
         I deal a lot with interactive spaces & how we relate to each other in them.
-        I have a lot of thoughts [& concerns] about the body, social interaction, & embodied social interactions 
+        I have a lot of thoughts [& concerns] about the body, social interaction, & embodied social interactions
         in the age of AI.
         "
         showAnimatedText={true}
@@ -252,7 +282,7 @@ function MediaLabHome() {
       <SplitContainer>
         <Side $left>
           <SideContent>
-            <SideLabel $left>Personal</SideLabel>
+            <SideLabel $left>Personal [Individual]</SideLabel>
             <ProjectList>
               {personalProjects.map((project, index) => (
                 <Project key={index}>
@@ -272,7 +302,7 @@ function MediaLabHome() {
 
         <Side>
           <SideContent>
-            <SideLabel>Professional</SideLabel>
+            <SideLabel>Professional [Group]</SideLabel>
             <ProjectList>
               {professionalProjects.map((project, index) => (
                 <Project key={index}>

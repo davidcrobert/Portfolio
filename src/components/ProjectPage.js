@@ -15,6 +15,11 @@ const customComponents = {
   LLMAuthentication
 };
 
+// Component wrapper for custom subsite project pages
+const CustomProjectPageWrapper = ({ CustomComponent, project, subsiteContext, subsiteId }) => {
+  return <CustomComponent project={project} subsiteContext={subsiteContext} subsiteId={subsiteId} />;
+};
+
 const PageWrapper = styled.div`
   position: relative;
   min-height: 100vh;
@@ -225,7 +230,7 @@ const ProjectPage = () => {
   };
 
   useEffect(() => {
-    const findProjectAndCategory = () => {
+    const findProjectAndCategory = async () => {
       // Check if we're in a sub-site context
       if (subsiteId) {
         const subsite = getSubsite(subsiteId);
@@ -242,6 +247,25 @@ const ProjectPage = () => {
         if (!subsiteProject) {
           navigate('/404');
           return;
+        }
+
+        // Check if there's a custom project page component for this subsite
+        if (subsite.customProjectPages && subsite.customProjectPages[projectId]) {
+          try {
+            // Dynamically import the custom project page component
+            const customPageModule = await subsite.customProjectPages[projectId]();
+            const CustomPageComponent = customPageModule.default;
+
+            // Store the custom component in state for rendering
+            setProject({ customPageComponent: CustomPageComponent, ...subsiteProject });
+            setSubsiteContext(subsite);
+            setCustomContext(subsiteProject.customContext || null);
+            setCategoryData({ title: subsite.title });
+            return;
+          } catch (error) {
+            console.error(`Failed to load custom project page for ${projectId}:`, error);
+            // Fall through to default behavior
+          }
         }
 
         // Find the original project data to get media embeds, etc.
@@ -330,6 +354,19 @@ const ProjectPage = () => {
 
   if (!project || !categoryData) {
     return null;
+  }
+
+  // Check if this is a custom subsite project page
+  if (project.customPageComponent) {
+    const CustomPageComponent = project.customPageComponent;
+    return (
+      <CustomProjectPageWrapper
+        CustomComponent={CustomPageComponent}
+        project={project}
+        subsiteContext={subsiteContext}
+        subsiteId={subsiteId}
+      />
+    );
   }
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;

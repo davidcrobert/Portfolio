@@ -7,6 +7,13 @@ export const mediaLabData = {
   // Reference to dedicated home page component
   homeComponent: 'Home',
 
+  // Custom project pages (optional)
+  // Map project IDs to dynamic import functions
+  customProjectPages: {
+    'Submirrors': () => import('./projectPages/Submirrors'),
+    'the-beast': () => import('./projectPages/TheBeast'),
+  },
+
   // Curated projects for this sub-site
   projects: [
     {
@@ -67,16 +74,6 @@ export const mediaLabData = {
       customContext: `THIS IS KINDA NOTHING FOR NOW.`
     },
     {
-      originalLink: '/projects/i-asked-my-reflection',
-      title: 'I ASKED MY REFLECTION ITS NAME AGAIN',
-      subtitle1: 'Recursive Interaction',
-      subtitle2: '& Interacting Recursively',
-      year: '2020',
-      personal: true,
-      tags: ['ai', 'web'],
-      description: 'Markov model-based interaction exploring recursive human-computer feedback loops'
-    },
-    {
       originalLink: '/projects/120-bpm',
       title: 'ONE HUNDRED AND TWENTY BEATS PER MINUTE',
       subtitle1: 'Talking',
@@ -85,6 +82,16 @@ export const mediaLabData = {
       personal: true,
       tags: ['performance', 'electronics'],
       description: "Like beating my head against a wall"
+    },
+    {
+      originalLink: '/projects/i-asked-my-reflection',
+      title: 'I ASKED MY REFLECTION ITS NAME AGAIN',
+      subtitle1: 'Recursive Interaction',
+      subtitle2: '& Interacting Recursively',
+      year: '2020',
+      personal: true,
+      tags: ['ai', 'web'],
+      description: 'Markov model-based interaction exploring recursive human-computer feedback loops'
     },
     {
       originalLink: '/projects/assembly-line',
