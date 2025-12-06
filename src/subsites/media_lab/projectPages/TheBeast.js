@@ -1,163 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Header from '../../../components/Header';
-import { projectData } from '../../../data/projectData';
+import {
+  PageWrapper,
+  MainContent,
+  ProjectContent,
+  DescriptionParagraph,
+  CustomHeader,
+  CustomTitle,
+  CustomCategory,
+  CustomSubtitle,
+  MediaEmbed,
+  Gif,
+  DocImage,
+  Quote,
+  useOriginalProject,
+  cleanYouTubeEmbed,
+  getCategoryPrefix,
+  getBackLink
+} from './BaseProjectPage';
 
-const PageWrapper = styled.div`
-  position: relative;
-  min-height: 100vh;
-`;
-
-const MainContent = styled.div`
-  background-color: #f9f9f9;
-  color: black;
-  overscroll-behavior: contain;
-  min-height: 100vh;
-  font-family: 'Times New Roman', Times, serif;
-`;
-
-const ProjectContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 150px);
-  padding: 20px;
-
-  @media screen and (max-width: 768px) {
-    padding: 10px;
-  }
-`;
-
-const CustomHeader = styled.div`
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  max-width: 800px;
-  width: 100%;
-  border-bottom: 1px solid black;
-`;
-
-const CustomTitle = styled.h2`
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 24px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: black;
-  font-weight: 400;
-  margin-bottom: 10px;
-
-  @media screen and (max-width: 768px) {
-    font-size: 20px;
-  }
-`;
-
-const CustomCategory = styled.p`
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #666;
-  margin-bottom: 15px;
-
-  @media screen and (max-width: 768px) {
-    font-size: 10px;
-  }
-`;
-
-const CustomSubtitle = styled.p`
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 16px;
-  color: #333;
-  line-height: 1.8;
-
-  @media screen and (max-width: 768px) {
-    font-size: 14px;
-  }
-`;
-
-const MediaEmbed = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  iframe {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto;
-    z-index: 101;
-  }
-
-  @media screen and (min-width: 769px) {
-    width: 65vw;
-
-    &:has(> iframe:only-child) {
-      height: 0;
-      padding-bottom: 36.5625vw;
-      position: relative;
-
-      iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    iframe {
-      max-height: 70vh;
-      transform: translateY(-25%);
-    }
-  }
+// Project-specific styled component override
+const BeastQuote = styled(Quote)`
+  /* BeastQuote uses same styling as base Quote */
 `;
 
 const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
-  const [originalProject, setOriginalProject] = useState(null);
-
-  useEffect(() => {
-    for (const category in projectData) {
-      const foundProject = projectData[category].projects.find(
-        p => p.link === project.originalLink
-      );
-      if (foundProject) {
-        setOriginalProject(foundProject);
-        break;
-      }
-    }
-  }, [project]);
-
-  const cleanYouTubeEmbed = (embedCode) => {
-    if (!embedCode.includes('youtube.com/embed/')) {
-      return embedCode;
-    }
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(embedCode, 'text/html');
-    const iframes = doc.querySelectorAll('iframe');
-
-    if (iframes.length > 0) {
-      iframes.forEach(iframe => {
-        let src = iframe.getAttribute('src');
-        src = src.includes('?') ? `${src}&` : `${src}?`;
-        src += 'controls=1&iv_load_policy=3&rel=0';
-        iframe.setAttribute('src', src);
-      });
-
-      return doc.body.innerHTML;
-    }
-
-    return embedCode;
-  };
+  const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = `/${subsiteId}`;
-  const titlePrefix = project.personal ? 'PERSONAL' : 'PROFESSIONAL';
+  const backLink = getBackLink(subsiteId);
+  const titlePrefix = getCategoryPrefix(project.personal);
 
   return (
     <PageWrapper>
@@ -172,16 +48,90 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>Context</CustomTitle>
+            <CustomTitle>What is a 'bodily identity' in the age of AI?</CustomTitle>
             <CustomCategory>[individual project]</CustomCategory>
             <CustomSubtitle>
-              A proof of concept showing that custom project pages work within the subsite system
+              Produced during my time as an artist-in-residence at Fabrica,
+              <i> I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST</i> is an exploration of AI
+              bodily-hijacking and the ways in which we submit to it.
+              <br />
+              <br />
+              A screen, a microphone, and a speaker sat in an agora. The screen begged for people
+              to speak to it. Upon indulging it, it prompted them to speak to it for 60 seconds.
+              <br />
+              <br />
+              Having found a way to monologue for 60 seconds, they were greeted by a chorus of
+              former recordings of people having done the same. A few moments later, they were
+              met by their own voice saying things they had never said before.
             </CustomSubtitle>
           </CustomHeader>
 
           {originalProject.mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
           )}
+
+          <DescriptionParagraph>
+            I sat at my desk one day and received a phone call from an unknown number.
+            I picked up, said 'hello', and the call cut out. A few minutes later a call from
+            the same number came in, I picked up, said 'hello', and the call cut out.
+            <br />
+            <br />
+            I feared, in this moment, I had just supplied the necessary tools to hijack me.
+          </DescriptionParagraph>
+
+          <DocImage src="/images/projects/TheBeast/people-talking.jpg" alt="The Beast Text" />
+
+          <DescriptionParagraph>
+            We have suddenly and violently entered into a time where our bodies no longer
+            have unique claims to our identity. Anyone, at any time, can make a reliably
+            believable clone of me, or anyone else.
+            <br />
+            <br />
+            Why would we engage with a world where our corporeal selves
+            can be harvested for digital others? Why would I pick up the call?
+            <br />
+            <br />
+            <span style={{ fontFamily: 'Segoe UI', fontStyle: 'italic', textAlign: 'center' }}>Why would you succumb to The Beast?</span>
+          </DescriptionParagraph>
+
+          <BeastQuote>
+            A sparrow's been living inside of me.
+          </BeastQuote>
+
+          <Gif src="/images/projects/TheBeast/the-beast-text.gif" alt="The Beast Text stream. Please talk to me where am I don't leave me alone" />
+
+          <DescriptionParagraph>
+            Yet as the The Beast begged for people not to leave it alone, audiences still stepped up
+            and joined the cloned chorus.
+            <br />
+            <br />
+            When their cloned voices spoke back to them, it spoke of discomforts of its body,
+            struggling with its new materiality.
+          </DescriptionParagraph>
+
+          <DocImage src="/images/projects/TheBeast/setup.jpg" alt="The Beast Setup" />
+
+          <BeastQuote>
+            I've got a rock stuck in my teeth and I can't seem to get it out.
+          </BeastQuote>
+
+          <DescriptionParagraph>
+            This was as much a critique of the territory of the body in the age of AI
+            as it was an exploration of the ways we engage with it. Why do we engage with it?
+            What do we let it take from us?
+            <br />
+            <br />
+            <span style={{ fontFamily: 'Segoe UI', fontStyle: 'italic', textAlign: 'center' }}>
+              What do we choose to share with The Beast?
+            </span>
+          </DescriptionParagraph>
+
+          <Gif src="/images/projects/TheBeast/user-talking.gif" alt="User talking to mic." />
+
+          <BeastQuote>
+            I've got all these extra organs and nowhere to put them.
+          </BeastQuote>
+
         </ProjectContent>
       </MainContent>
     </PageWrapper>

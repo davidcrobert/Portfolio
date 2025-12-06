@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../components/Header';
 import Sketch from '../../components/Sketch';
+import MinimalBlinkDetection from '../../components/BlinkDetection';
+import NotePlayer from '../../components/NotePlayer';
 import { mediaLabData } from './data';
+
+// Toggle visual layer: set to 'face' for blink detector or 'sketch' for the animated line
+const VISUAL_MODE = 'face';
 
 const IndexContainer = styled.div`
   background-color: #f9f9f9;
@@ -160,14 +165,14 @@ const ImagePreview = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50vw;
+  width: 40vw;
   height: 50vh;
   z-index: 5;
   pointer-events: none;
   opacity: ${props => props.$visible ? 0.8 : 0};
   /*transition: opacity 0.3s ease-in-out;*/
   background-image: url(${props => props.$image});
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 
@@ -209,6 +214,9 @@ const PortfolioButton = styled(Link)`
 function MediaLabHome() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
+  const [playNoteTrigger, setPlayNoteTrigger] = useState(0);
+  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [faceEnabled, setFaceEnabled] = useState(true);
 
   // Split projects into professional and personal
   const personalProjects = mediaLabData.projects.filter(p => p.personal === true);
@@ -260,23 +268,96 @@ function MediaLabHome() {
     setHoveredImage(null);
   };
 
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('mediaLabAudioEnabled');
+      if (stored !== null) {
+        setAudioEnabled(stored === 'true');
+      }
+      const storedFace = localStorage.getItem('mediaLabFaceEnabled');
+      if (storedFace !== null) {
+        setFaceEnabled(storedFace === 'true');
+      }
+    } catch (e) {
+      // Ignore storage errors (e.g., privacy mode)
+    }
+  }, []);
+
+  const handleBlink = () => {
+    if (audioEnabled) {
+      setPlayNoteTrigger(prev => prev + 1);
+    }
+  };
+
+  const handleClick = () => {
+    // Allow manual start in case the browser blocks autoplay
+    if (audioEnabled) {
+      setPlayNoteTrigger(prev => prev + 1);
+    }
+  };
+
+  const toggleAudio = () => {
+    setAudioEnabled(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem('mediaLabAudioEnabled', String(next));
+      } catch (e) {
+        // Ignore storage errors
+      }
+      return next;
+    });
+  };
+
+  const toggleFace = () => {
+    setFaceEnabled(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem('mediaLabFaceEnabled', String(next));
+      } catch (e) {
+        // Ignore storage errors
+      }
+      return next;
+    });
+  };
+
   return (
-    <IndexContainer>
-      <Sketch />
+    <IndexContainer onClick={handleClick}>
+      {VISUAL_MODE === 'face' ? (
+        <MinimalBlinkDetection
+          forceEnabled
+          enabledRoutes={['/media_lab']}
+          disabled={!faceEnabled}
+          onBlink={handleBlink}
+        />
+      ) : (
+        <Sketch />
+      )}
       <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />
-      <PortfolioButton to="/">View Whole Portfolio</PortfolioButton>
+      {/* <PortfolioButton to="/">View Whole Portfolio</PortfolioButton> */}
       <Header
         title="David Robert"
         subtitle1="Critical Technologist"
         subtitle2="& Interactive Designer"
         hideBackButton={true}
+        customButtons={[
+          {
+            label: audioEnabled ? 'Blink Audio: On' : 'Blink Audio: Off',
+            onClick: toggleAudio,
+            title: 'Toggle audio playback'
+          },
+          {
+            label: faceEnabled ? 'Face Tracking: On' : 'Face Tracking: Off',
+            onClick: toggleFace,
+            title: 'Toggle face tracking'
+          }
+        ]}
         statement="
         Our constructed environment is valuable & vulnerable.
         I deal a lot with interactive spaces & how we relate to each other in them.
         I have a lot of thoughts [& concerns] about the body, social interaction, & embodied social interactions
         in the age of AI.
         "
-        showAnimatedText={true}
+        showAnimatedText={false}
       />
 
       <SplitContainer>
@@ -320,6 +401,7 @@ function MediaLabHome() {
           </SideContent>
         </Side>
       </SplitContainer>
+      <NotePlayer play={audioEnabled ? playNoteTrigger : 0} />
     </IndexContainer>
   );
 }

@@ -8,17 +8,27 @@ import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import * as FaceMeshConnections from '@mediapipe/face_mesh';
 import { useLocation } from 'react-router-dom';
 
-const MinimalBlinkDetection = ({ onBlink }) => {
+const MinimalBlinkDetection = ({
+  onBlink,
+  enabledRoutes = ['/'],
+  forceEnabled = false,
+  disabled = false,
+  className,
+  style
+}) => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
   const faceMeshRef = useRef(null);
   const cameraRef = useRef(null);
   const [blinkCount, setBlinkCount] = useState(0);
   const [isInitialized, setIsInitialized] = useState(false);
-  
+  const [isBlocked, setIsBlocked] = useState(false);
+  const silentAlertRef = useRef(null);
+
+  const isRouteEnabled = forceEnabled || enabledRoutes.includes(location.pathname);
+  const isActive = isRouteEnabled && !disabled && !isBlocked;
+
   // Define all refs properly
   const wasBlinkingRef = useRef(false);
   const lastBlinkTimeRef = useRef(0);
@@ -59,6 +69,25 @@ const MinimalBlinkDetection = ({ onBlink }) => {
     handleBlinkRef.current = handleBlink;
   });
 
+  // Silence camera alert popups while this component is active on enabled routes
+  useEffect(() => {
+    if (!isRouteEnabled) return;
+    const originalAlert = window.alert;
+    const silentAlert = (msg) => {
+      // keep a trace in the console for debugging without user interruption
+      console.warn('[BlinkDetection suppressed alert]', msg);
+    };
+    silentAlertRef.current = silentAlert;
+    window.alert = silentAlert;
+
+    return () => {
+      if (window.alert === silentAlertRef.current) {
+        window.alert = originalAlert;
+      }
+      silentAlertRef.current = null;
+    };
+  }, [isRouteEnabled]);
+
   const getEyeAspectRatio = (landmarks) => {
     const [v1, v2] = [
       Math.abs(landmarks[1].y - landmarks[5].y),
@@ -69,8 +98,8 @@ const MinimalBlinkDetection = ({ onBlink }) => {
   };
 
   useEffect(() => {
-    // Don't initialize if not on home page
-    if (!isHomePage || !canvasRef.current || !videoRef.current) {
+    // Don't initialize if not on an enabled route
+    if (!isActive || !canvasRef.current || !videoRef.current) {
       return () => {};
     }
 
@@ -97,7 +126,14 @@ const MinimalBlinkDetection = ({ onBlink }) => {
           height: window.innerHeight,
         });
 
-        await cameraRef.current.start();
+        try {
+          await cameraRef.current.start();
+        } catch (err) {
+          if (mounted) {
+            setIsBlocked(true);
+          }
+          return;
+        }
 
         // Initialize FaceMesh in parallel
         faceMeshRef.current = new FaceMesh({
@@ -206,6 +242,12 @@ const MinimalBlinkDetection = ({ onBlink }) => {
         });
 
       } catch (error) {
+        // Swallow permission/availability errors quietly so the UI doesn't show noisy logs
+        const isPermissionIssue = error?.name === 'NotAllowedError' || error?.message?.toLowerCase().includes('permission');
+        if (mounted && isPermissionIssue) {
+          setIsBlocked(true);
+          return;
+        }
         console.error('Error initializing face mesh:', error);
       }
     };
@@ -239,23 +281,27 @@ const MinimalBlinkDetection = ({ onBlink }) => {
         faceMeshRef.current = null;
       }
     };
-  }, [isHomePage]);
+  }, [isActive]);
 
-  // If not on home page, don't render anything
-  if (!isHomePage) {
+  // If the current route isn't enabled, don't render anything
+  if (!isActive) {
     return null;
   }
 
   return (
-    <div style={{ 
-      position: 'absolute', 
-      top: 0, 
-      left: 0, 
-      width: '100%', 
-      height: '100%', 
-      zIndex: 1, 
-      pointerEvents: 'none' 
-    }}>
+    <div
+      className={className}
+      style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        height: '100%', 
+        zIndex: 1, 
+        pointerEvents: 'none',
+        ...style
+      }}
+    >
       <div style={{
         position: 'fixed',
         top: 10,

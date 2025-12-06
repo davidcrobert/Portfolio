@@ -11,7 +11,13 @@ export const mediaLabData = {
   // Map project IDs to dynamic import functions
   customProjectPages: {
     'Submirrors': () => import('./projectPages/Submirrors'),
+    'shadow-tuner': () => import('./projectPages/ShadowTuner'),
     'the-beast': () => import('./projectPages/TheBeast'),
+    'i-cant-hear-you': () => import('./projectPages/ICantHearYou'),
+    '120-bpm': () => import('./projectPages/OneTwentyBPM'),
+    'i-asked-my-reflection': () => import('./projectPages/IAskedMyReflection'),
+    'assembly-line': () => import('./projectPages/AssemblyLine'),
+    'augmented-symphony': () => import('./projectPages/AugmentedSymphony'),
   },
 
   // Curated projects for this sub-site
@@ -25,11 +31,11 @@ export const mediaLabData = {
       subtitle1: 'Puppets',
       subtitle2: '& Puppeteers',
       year: '2025',
-      personal:false,
+      personal: false,
       tags: ['interactive', 'ai', 'web'],
 
       // Custom description for Media Lab context
-      description: 'Exploring AI-driven manipulation of self-perception through real-time generative puppetry',
+      description: 'What do you do when an AI takes over your control?',
 
       // Optional: custom context for info popup
       customContext: `At Media Lab, I want to continue exploring how AI can transform interactive experiences.
@@ -44,7 +50,7 @@ export const mediaLabData = {
       year: '2025',
       personal: false,
       tags: ['interactive', 'ai', 'installation', 'audio'],
-      description: 'AI audio analysis system prioritizing global spoken language diversity',
+      description: 'What does it sound like to hear the world? How can AI help us hear it?',
       customContext: `This project demonstrates my interest in using AI to amplify human connection across cultures.
         The ML system I built analyzes thousands of audio streams to surface human voices, creating a technological
         intervention that prioritizes human speech over noise.`
@@ -57,7 +63,7 @@ export const mediaLabData = {
       year: '2024',
       personal: true,
       tags: ['installation', 'ai', 'audio'],
-      description: 'Voice synthesis installation confronting our leap into the AI future',
+      description: 'How do we expect an AI-mediated world to talk back to us? Why do we succumb to The Beast?',
       customContext: `Created during a research residency at Fabrica, this installation embodies my critical
         approach to AI. Rather than simply using the technology, I create experiences that make audiences
         confront their relationship with it - hearing their own voice saying words they never spoke.`
@@ -70,7 +76,7 @@ export const mediaLabData = {
       year: '2023',
       personal: true,
       tags: ['installation', 'ai', 'audio'],
-      description: 'A networked experience about [mis]communication',
+      description: 'Will we try to help someone even if we know we probably can\'t?',
       customContext: `THIS IS KINDA NOTHING FOR NOW.`
     },
     {
@@ -81,7 +87,7 @@ export const mediaLabData = {
       year: '2020',
       personal: true,
       tags: ['performance', 'electronics'],
-      description: "Like beating my head against a wall"
+      description: "Will we embrace our discomfort in order to stop someone else's?"
     },
     {
       originalLink: '/projects/i-asked-my-reflection',
@@ -91,7 +97,7 @@ export const mediaLabData = {
       year: '2020',
       personal: true,
       tags: ['ai', 'web'],
-      description: 'Markov model-based interaction exploring recursive human-computer feedback loops'
+      description: 'SOMETHING ABOUT BEING REPLICATED AND IMMITATED'
     },
     {
       originalLink: '/projects/assembly-line',
@@ -102,6 +108,19 @@ export const mediaLabData = {
       personal: false,
       tags: ['installation', 'robotics', 'web'],
       description: 'Collaborative performance between audience and industrial robot bridging digital and physical',
+      customContext: `This project represents my interest in breaking down barriers between digital and physical
+        interaction. Users contribute remotely through a web portal, and their gestures materialize through a
+        massive industrial robot - a meditation on labor, creation, and remote collaboration.`
+    },
+    {
+      originalLink: '/projects/augmented-symphony',
+      title: 'Augmented Symphony',
+      subtitle1: 'Orchestras',
+      subtitle2: '@ Home',
+      year: '2021',
+      personal: false,
+      tags: ['ar/vr/xr'],
+      description: 'How can we replicate the physical experience of an orchestra at home?',
       customContext: `This project represents my interest in breaking down barriers between digital and physical
         interaction. Users contribute remotely through a web portal, and their gestures materialize through a
         massive industrial robot - a meditation on labor, creation, and remote collaboration.`

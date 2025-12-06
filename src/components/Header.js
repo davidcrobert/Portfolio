@@ -26,16 +26,37 @@ const HeaderContent = styled.div`
 const LeftSide = styled.div`
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 40px;
   flex: 1;
   min-width: 0;
-  justify-content: space-between;
 `;
 
 const TitleContainer = styled.div`
   min-width: 0;
   overflow: hidden;
   flex-shrink: 0;
+`;
+
+const CenterArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-width: 0;
+  align-self: stretch;
+  height: 100%;
+  padding-bottom: 6px; /* nudge toward the bottom edge */
+`;
+
+const RightSide = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
 `;
 
 const Title = styled.h1`
@@ -67,9 +88,7 @@ const TagsContainer = styled.div`
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 20px;
-  flex: 0 0 25%;
+  flex: 0 0 auto;
   overflow: visible;
   min-width: 0;
   max-height: 60px;
@@ -156,14 +175,17 @@ const Arrow = styled.span`
   text-align: center;
 `;
 
+//place buttons at the bottom of the header
+
 const HeaderButtons = styled.div`
   display: flex;
   gap: 20px;
   align-items: center;
-  flex: 0 0 120px;
+  flex: 0 0 auto;
   justify-content: flex-end;
   min-width: 0;
   flex-shrink: 0;
+
 `;
 
 const HeaderButton = styled.button`
@@ -248,7 +270,8 @@ const Header = forwardRef(({
   onTagSelect,
   hideBackButton,
   statement,
-  showAnimatedText
+  showAnimatedText,
+  customButtons
 }, ref) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -265,36 +288,49 @@ const Header = forwardRef(({
             <Subtitle>{subtitle1}</Subtitle>
             <Subtitle $second>{subtitle2}</Subtitle>
           </TitleContainer>
-          {statement && <StatementContainer>{statement}</StatementContainer>}
           {showAnimatedText && <AnimatedText />}
         </LeftSide>
-        {tags && onTagSelect && (
-          <TagsContainer>
-            {tags.map(tag => (
-              <TagButton
-                key={tag}
-                $active={activeFilter === tag}
-                onClick={() => onTagSelect(tag)}
-              >
-                {tag}
-              </TagButton>
-            ))}
-          </TagsContainer>
-        )}
-        <HeaderButtons>
-          {showInfoButton && (
-            <HeaderButton onClick={onInfoClick}>
-              INFO {isInfoOpen ? '-' : '+'}
+        <CenterArea>
+          {Array.isArray(customButtons) && customButtons.map((button, idx) => (
+            <HeaderButton
+              key={idx}
+              onClick={button.onClick}
+              title={button.title}
+            >
+              {button.label}
             </HeaderButton>
+          ))}
+        </CenterArea>
+        <RightSide>
+          {statement && <StatementContainer>{statement}</StatementContainer>}
+          {tags && onTagSelect && (
+            <TagsContainer>
+              {tags.map(tag => (
+                <TagButton
+                  key={tag}
+                  $active={activeFilter === tag}
+                  onClick={() => onTagSelect(tag)}
+                >
+                  {tag}
+                </TagButton>
+              ))}
+            </TagsContainer>
           )}
-          {!isHomePage && !hideBackButton && (
-            <Link to={backLink || '/'}>
-              <HeaderButton $back>
-                {backLinkText || 'back'}
+          <HeaderButtons>
+            {showInfoButton && (
+              <HeaderButton onClick={onInfoClick}>
+                INFO {isInfoOpen ? '-' : '+'}
               </HeaderButton>
-            </Link>
-          )}
-        </HeaderButtons>
+            )}
+            {!isHomePage && !hideBackButton && (
+              <Link to={backLink || '/'}>
+                <HeaderButton $back>
+                  {backLinkText || 'back'}
+                </HeaderButton>
+              </Link>
+            )}
+          </HeaderButtons>
+        </RightSide>
       </HeaderContent>
     </HeaderContainer>
   );
