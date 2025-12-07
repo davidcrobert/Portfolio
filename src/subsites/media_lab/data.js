@@ -97,7 +97,7 @@ export const mediaLabData = {
       year: '2020',
       personal: true,
       tags: ['ai', 'web'],
-      description: 'SOMETHING ABOUT BEING REPLICATED AND IMMITATED'
+      description: 'How would you act if there were 200 of you in a room?'
     },
     {
       originalLink: '/projects/assembly-line',

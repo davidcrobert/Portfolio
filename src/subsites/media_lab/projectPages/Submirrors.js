@@ -284,7 +284,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
           subtitle2={project.subtitle2}
           year={project.year}
           backLink={backLink}
-          showInfoButton={true}
+          showInfoButton={false}
           onInfoClick={toggleInfo}
           isInfoOpen={isInfoOpen}
         />

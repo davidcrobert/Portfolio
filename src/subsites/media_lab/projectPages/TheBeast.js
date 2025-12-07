@@ -84,7 +84,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
           <DescriptionParagraph>
             We have suddenly and violently entered into a time where our bodies no longer
             have unique claims to our identity. Anyone, at any time, can make a reliably
-            believable clone of me, or anyone else.
+            believable clone of me, or anyone else. The world is a deepfake.
             <br />
             <br />
             Why would we engage with a world where our corporeal selves
