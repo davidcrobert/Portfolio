@@ -22,6 +22,7 @@ import {
   ArtistQuoteSection,
   ArtistQuoteLabel,
   ArtistQuoteText,
+  ExternalLink,
   useOriginalProject,
   getCategoryPrefix,
   getBackLink,
@@ -128,7 +129,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How does it feel to lose control of your own reflection?</CustomTitle>
-            <CustomCategory>[professional project]</CustomCategory>
+            <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
               <i>Recurrent Waiting</i> and <i>Recurrent Kafka</i> [the Submirror series] are interactive mirror installations
               I developed for artist Rafael Lozano-Hemmer. The works explore the tension between self-perception,
@@ -229,8 +230,16 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <br /><br />
             In “Recurrent Kafka”, the mirror replicates the viewer’s image, but the reflected image—the virtual subject—gazes relentlessly at a teleprompter text that scrolls across the mirror and displays the collected works of Franz Kafka. The piece uses AI to create a live “rigged” clone of the viewer, controlling the direction of the eyes, the pose of the head, and the speed of movement. The viewer is disoriented —at once, reading Kafka’s writings while also watching their own face fixed on the ceaseless flow of words.
             <br /><br />
-            This real-time distortion is resonant with Kafka’s body of work, which is often marked by a protagonist embarking upon a deeply serious, potentially senseless, ambiguous task that is both forced upon them and impossible to complete. As with other pieces in the Submirror series, “Recurrent Kafka” questions the stability of self-image under automated observation. It asks what happens when technology doesn’t just observe us—but represents us, poorly, poetically, and without consent.
+            This real-time distortion is resonant with Kafka's body of work, which is often marked by a protagonist embarking upon a deeply serious, potentially senseless, ambiguous task that is both forced upon them and impossible to complete. As with other pieces in the Submirror series, "Recurrent Kafka" questions the stability of self-image under automated observation. It asks what happens when technology doesn't just observe us—but represents us, poorly, poetically, and without consent.
           </DescriptionParagraph>
+
+          <ExternalLink
+            href="https://www.creativeapplications.net/project/submirror-self-perception-loss-of-control-and-digital-puppetry/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Featured by Creative Applications
+          </ExternalLink>
 
         </ProjectContent>
       </MainContent>

@@ -269,6 +269,36 @@ export const ArtistQuoteText = styled.p`
   }
 `;
 
+export const ExternalLink = styled.a`
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 15px 20px;
+  border: 1px solid black;
+  background-color: transparent;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: black;
+    color: #f9f9f9;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
+    padding: 12px 15px;
+    margin: 20px auto;
+  }
+`;
+
 // ============================================================================
 // SHARED UTILITIES
 // ============================================================================

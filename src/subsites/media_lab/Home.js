@@ -117,7 +117,7 @@ const ProjectTitle = styled(Link)`
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  max-width: 100%;
+  max-width: 80%;
 
   &:hover {
     cursor: help;
@@ -126,7 +126,7 @@ const ProjectTitle = styled(Link)`
 
   @media screen and (max-width: 768px) {
     font-size: 18px;
-    max-width: 80%;
+    max-width: 65%;
     margin-bottom: 10px;
     padding-bottom: 5px;
   }
