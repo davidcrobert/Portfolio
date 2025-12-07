@@ -165,6 +165,110 @@ export const Quote = styled.p`
   }
 `;
 
+export const CreditsSection = styled.div`
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto 30px auto;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: #fafafa;
+`;
+
+export const CreditsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+`;
+
+export const CreditsColumn = styled.div`
+  font-family: 'Times New Roman', Times, serif;
+`;
+
+export const CreditsHeader = styled.h4`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #000;
+  margin-bottom: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+`;
+
+export const RoleDescription = styled.p`
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+`;
+
+export const CreditsList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+export const CreditItem = styled.li`
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const CreditName = styled.span`
+  font-weight: 600;
+`;
+
+export const CreditRole = styled.span`
+  font-style: italic;
+  color: #666;
+`;
+
+export const ArtistQuoteSection = styled.div`
+  margin: 25px 0;
+  padding-left: 20px;
+  border-left: 2px solid #333;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 15px;
+  }
+`;
+
+export const ArtistQuoteLabel = styled.p`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 600;
+`;
+
+export const ArtistQuoteText = styled.p`
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  font-style: italic;
+  margin: 0;
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
 // ============================================================================
 // SHARED UTILITIES
 // ============================================================================

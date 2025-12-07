@@ -1,279 +1,118 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled, { css, keyframes } from 'styled-components';
-import parse from 'html-react-parser';
+import React from 'react';
+import styled from 'styled-components';
 import Header from '../../../components/Header';
-import { projectData } from '../../../data/projectData';
+import {
+  PageWrapper,
+  MainContent,
+  ProjectContent,
+  DescriptionParagraph,
+  CustomHeader,
+  CustomTitle,
+  CustomCategory,
+  CustomSubtitle,
+  CreditsSection,
+  CreditsGrid,
+  CreditsColumn,
+  CreditsHeader,
+  RoleDescription,
+  CreditsList,
+  CreditItem,
+  CreditName,
+  CreditRole,
+  ArtistQuoteSection,
+  ArtistQuoteLabel,
+  ArtistQuoteText,
+  useOriginalProject,
+  getCategoryPrefix,
+  getBackLink,
+  DocImage
+} from './BaseProjectPage';
 
-const PageWrapper = styled.div`
-  position: relative;
-  min-height: 100vh;
-`;
-
-const MainContent = styled.div`
-  background-color: #f9f9f9;
-  color: black;
-  overscroll-behavior: contain;
-  min-height: 100vh;
-  font-family: 'Times New Roman', Times, serif;
-`;
-
-const ProjectContent = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 150px);
-  padding: 20px;
-  transition: filter 0.75s ease-in-out;
-
-  ${props => props.blurred && css`
-    filter: blur(5px);
-  `}
+// Project-specific styled components
+const VideoGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
 
   @media screen and (max-width: 768px) {
-    padding: 10px;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 `;
 
-const MediaEmbed = styled.div`
+const VideoContainer = styled.div`
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  border: 1px solid black;
 
   iframe {
     width: 100%;
     aspect-ratio: 16 / 9;
     height: auto;
-    z-index: 101;
-  }
-
-  @media screen and (min-width: 769px) {
-    width: 65vw;
-
-    &:has(> iframe:only-child) {
-      height: 0;
-      padding-bottom: 36.5625vw;
-      position: relative;
-
-      iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    iframe {
-      max-height: 70vh;
-      transform: translateY(-25%);
-    }
+    display: block;
   }
 `;
 
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
+const StyledDocImage = styled(DocImage)`
+  border: 1px solid black;
+  margin: 40px auto;
+  display: block;
+  transition: opacity 0.2s ease;
 
-const fadeOut = keyframes`
-  from { opacity: 1; }
-  to { opacity: 0; }
-`;
-
-const InfoPopup = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70vw;
-  height: 70vh;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 1001;
-  padding: 20px;
-  overflow-y: auto;
-  color: white;
-  opacity: 0;
-  animation: ${fadeIn} 0.75s ease-in-out forwards;
-
-  &.fadeOut {
-    animation: ${fadeOut} 0.75s ease-in-out forwards;
-  }
-
-  &::-webkit-scrollbar {
-    width: 2px;
-    background-color: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #f9f9f9;
-    border-radius: 20px;
-    border: transparent;
-  }
-
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    height: 80vh;
-    padding: 15px;
+  &:hover {
+    opacity: 0.85;
+    cursor: pointer;
   }
 `;
 
-const InfoSection = styled.div`
-  margin-bottom: 20px;
-  font-family: 'Times New Roman', Times, serif;
-`;
-
-const InfoHeader = styled.h3`
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: #f9f9f9;
-  font-size: 24px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #f9f9f9;
-
-  @media screen and (max-width: 768px) {
-    font-size: 20px;
-  }
-`;
-
-const MainStatement = styled.h2`
-  font-size: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  margin: 20px 0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 400;
-  color: #f9f9f9;
-
-  @media screen and (max-width: 768px) {
-    font-size: 18px;
-  }
-`;
-
-const ExternalLink = styled.a`
+const ImageLink = styled.a`
+  display: block;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
   text-decoration: none;
-  color: #f9f9f9;
-  font-weight: 600;
-  font-style: italic;
-  cursor: help;
 `;
 
-const CustomSection = styled.div`
-  background: linear-gradient(135deg, rgba(139, 0, 139, 0.1), rgba(75, 0, 130, 0.1));
-  padding: 15px;
-  margin-bottom: 20px;
-  border-left: 3px solid #8b008b;
-  border-radius: 5px;
+const VideoCaption = styled.p`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+`;
+
+const IntroSection = styled(DescriptionParagraph)`
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
+const EmphasisText = styled.span`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  display: block;
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
-  const navigate = useNavigate();
-  const [isInfoOpen, setIsInfoOpen] = useState(false);
-  const infoPopupRef = useRef(null);
-  const [originalProject, setOriginalProject] = useState(null);
-
-  useEffect(() => {
-    // Find the original project data
-    for (const category in projectData) {
-      const foundProject = projectData[category].projects.find(
-        p => p.link === project.originalLink
-      );
-      if (foundProject) {
-        setOriginalProject(foundProject);
-        break;
-      }
-    }
-  }, [project]);
-
-  const cleanYouTubeEmbed = (embedCode) => {
-    if (!embedCode.includes('youtube.com/embed/')) {
-      return embedCode;
-    }
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(embedCode, 'text/html');
-    const iframes = doc.querySelectorAll('iframe');
-
-    if (iframes.length > 0) {
-      iframes.forEach(iframe => {
-        let src = iframe.getAttribute('src');
-        src = src.includes('?') ? `${src}&` : `${src}?`;
-        src += 'controls=1&iv_load_policy=3&rel=0';
-        iframe.setAttribute('src', src);
-      });
-
-      return doc.body.innerHTML;
-    }
-
-    return embedCode;
-  };
-
-  const toggleInfo = useCallback(() => {
-    setIsInfoOpen(prev => !prev);
-  }, []);
-
-  const closeInfoPopup = useCallback(() => {
-    const infoPopup = infoPopupRef.current;
-    if (infoPopup) {
-      infoPopup.classList.add('fadeOut');
-      setTimeout(() => {
-        setIsInfoOpen(false);
-      }, 750);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleEscKey = (event) => {
-      if (event.key === 'Escape' && isInfoOpen) {
-        closeInfoPopup();
-      }
-    };
-
-    const handleOutsideClick = (event) => {
-      if (infoPopupRef.current && !infoPopupRef.current.contains(event.target) && isInfoOpen) {
-        closeInfoPopup();
-      }
-    };
-
-    document.addEventListener('keydown', handleEscKey);
-    document.addEventListener('mousedown', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('keydown', handleEscKey);
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [isInfoOpen, closeInfoPopup]);
-
-  const renderContent = (content) => {
-    const options = {
-      replace: (domNode) => {
-        if (domNode.name === 'a') {
-          return (
-            <ExternalLink
-              href={domNode.attribs.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {domNode.children[0].data}
-            </ExternalLink>
-          );
-        }
-      }
-    };
-
-    return parse(content, options);
-  };
+  const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = `/${subsiteId}`;
-  const titlePrefix = project.personal ? 'PERSONAL' : 'PROFESSIONAL';
+  const backLink = getBackLink(subsiteId);
+  const titlePrefix = getCategoryPrefix(project.personal);
 
   return (
     <PageWrapper>
@@ -284,43 +123,117 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
           subtitle2={project.subtitle2}
           year={project.year}
           backLink={backLink}
-          showInfoButton={false}
-          onInfoClick={toggleInfo}
-          isInfoOpen={isInfoOpen}
         />
 
-        <ProjectContent blurred={isInfoOpen}>
-          {originalProject.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
-          )}
+        <ProjectContent>
+          <CustomHeader>
+            <CustomTitle>How does it feel to lose control of your own reflection?</CustomTitle>
+            <CustomCategory>[professional project]</CustomCategory>
+            <CustomSubtitle>
+              <i>Recurrent Waiting</i> and <i>Recurrent Kafka</i> [the Submirror series] are interactive mirror installations
+              I developed for artist Rafael Lozano-Hemmer. The works explore the tension between self-perception,
+              loss of control, and digital puppetry.
+              <ArtistQuoteSection>
+                <ArtistQuoteLabel>In the artist's words:</ArtistQuoteLabel>
+                <ArtistQuoteText>
+                  "These mirrors are recalcitrant, they do not reflect faithfully; they act with intention,
+                  manipulating the viewer's image to reveal a version of the self that is no longer entirely their own."
+                </ArtistQuoteText>
+              </ArtistQuoteSection>
+            </CustomSubtitle>
+          </CustomHeader>
+
+          <VideoGrid>
+            <div>
+              <VideoContainer>
+                <iframe
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/u4MBTA7A7M8?si=3W3V2xiWlXZ1lUoo&controls=1&iv_load_policy=3&rel=0"
+                  title="Recurrent Waiting"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </VideoContainer>
+              <VideoCaption>Recurrent Waiting</VideoCaption>
+            </div>
+            <div>
+              <VideoContainer>
+                <iframe
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/k5isAs7JQi0?si=m7spuju15Pgmy-4p&controls=1&iv_load_policy=3&rel=0"
+                  title="Recurrent Kafka"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </VideoContainer>
+              <VideoCaption>Recurrent Kafka</VideoCaption>
+            </div>
+          </VideoGrid>
+
+          <CreditsSection>
+            <CreditsGrid>
+              <CreditsColumn>
+                <CreditsHeader>My Role</CreditsHeader>
+                <RoleDescription>
+                  Sole developer for AI puppeteering system. Built the LivePortrait integration for real-time facial manipulation,
+                  including finding efficiencies for use in real-time video feed.
+                  Created Python-based puppet software, and developed TouchDesigner compositing / puppeteering
+                  pipeline. Built initial prototype of installation in ComfyUI.
+                </RoleDescription>
+              </CreditsColumn>
+              <CreditsColumn>
+                <CreditsHeader>Credits</CreditsHeader>
+                <CreditsList>
+                  <CreditItem>
+                    <CreditName>Rafael Lozano-Hemmer</CreditName> — <CreditRole>Artist</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>David Robert</CreditName> — <CreditRole>Sole Developer</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>Lauria Clarke, Emily Green, Jade Séguéla, Stephan Schulz, William Sutton, Matthieu Vanier</CreditName> — <CreditRole>Production</CreditRole>
+                  </CreditItem>
+                </CreditsList>
+              </CreditsColumn>
+            </CreditsGrid>
+          </CreditsSection>
+
+
+
+          <ImageLink href="https://www.lozano-hemmer.com/recurrent_waiting.php" target="_blank" rel="noopener noreferrer">
+            <StyledDocImage src="/images/projects/Submirrors/recurrent_waiting.jpg" alt="Recurrent Waiting" />
+          </ImageLink>
+
+          <DescriptionParagraph>
+            <EmphasisText>From Atelier Lozano-Hemmer:</EmphasisText>
+            “Recurrent Waiting” is an interactive mirror installation from the ongoing Submirror series, a body of work that explores the tension between self-perception, loss of control, and digital puppetry. These mirrors are recalcitrant, they do not reflect faithfully; they act with intention, manipulating the viewer’s image to reveal a version of the self that is no longer entirely their own.
+            <br /><br />
+            In “Recurrent Waiting”, the mirror replicates the viewer’s image, but the reflection blinks erratically, accompanied by faint signalling sounds. This blinking follows a timed sequence that transmits Lucky’s monologue from Samuel Beckett’s “Waiting for Godot” in Morse code. The result is a fragmented, involuntary form of communication—technically generated by the viewer’s presence, yet entirely outside their conscious intent. The experience is uncanny: your reflection blinks compulsively, as if trying to convey something urgent from behind the glass.
+            <br /><br />
+            Drawing on Beckett’s themes of absurdity and existential dislocation, the work transforms the mirror into a stage where the viewer becomes both puppet and performer, animated by a script they neither authored nor control. As with other pieces in the Submirror series, “Recurrent Waiting” questions the stability of self-image under automated observation. It asks what happens when technology doesn’t just observe us—but represents us, poorly, poetically, and without consent.
+          </DescriptionParagraph>
+
+          <ImageLink href="https://www.lozano-hemmer.com/recurrent_kafka.php" target="_blank" rel="noopener noreferrer">
+            <StyledDocImage src="/images/projects/Submirrors/recurrent_kafka.jpg" alt="Recurrent Kafka" />
+          </ImageLink>
+
+          <DescriptionParagraph>
+            <EmphasisText>From Atelier Lozano-Hemmer:</EmphasisText>
+            “Recurrent Kafka” is an interactive mirror installation from the ongoing Submirror series, a body of work that explores the tension between self-perception, loss of control, and digital puppetry. These mirrors are recalcitrant, they do not reflect faithfully; they act with intention, manipulating the viewer’s image to reveal a version of the self that is no longer entirely their own.
+            <br /><br />
+            In “Recurrent Kafka”, the mirror replicates the viewer’s image, but the reflected image—the virtual subject—gazes relentlessly at a teleprompter text that scrolls across the mirror and displays the collected works of Franz Kafka. The piece uses AI to create a live “rigged” clone of the viewer, controlling the direction of the eyes, the pose of the head, and the speed of movement. The viewer is disoriented —at once, reading Kafka’s writings while also watching their own face fixed on the ceaseless flow of words.
+            <br /><br />
+            This real-time distortion is resonant with Kafka’s body of work, which is often marked by a protagonist embarking upon a deeply serious, potentially senseless, ambiguous task that is both forced upon them and impossible to complete. As with other pieces in the Submirror series, “Recurrent Kafka” questions the stability of self-image under automated observation. It asks what happens when technology doesn’t just observe us—but represents us, poorly, poetically, and without consent.
+          </DescriptionParagraph>
+
         </ProjectContent>
       </MainContent>
-
-      {isInfoOpen && (
-        <InfoPopup ref={infoPopupRef}>
-          {originalProject.infoPopup.main && (
-            <MainStatement>{originalProject.infoPopup.main}</MainStatement>
-          )}
-
-          {/* Custom section for Media Lab context */}
-          <CustomSection>
-            <InfoHeader>Why This Matters for Media Lab</InfoHeader>
-            <div>{renderContent(project.customContext || 'This project demonstrates my approach to interactive technology and human-computer interaction.')}</div>
-          </CustomSection>
-
-          <InfoSection>
-            <InfoHeader>Context</InfoHeader>
-            <div>{renderContent(originalProject.infoPopup.context)}</div>
-          </InfoSection>
-          <InfoSection>
-            <InfoHeader>Tech</InfoHeader>
-            <div>{renderContent(originalProject.infoPopup.tech)}</div>
-          </InfoSection>
-          <InfoSection>
-            <InfoHeader>{originalProject.infoPopup.tools}</InfoHeader>
-          </InfoSection>
-        </InfoPopup>
-      )}
     </PageWrapper>
   );
 };

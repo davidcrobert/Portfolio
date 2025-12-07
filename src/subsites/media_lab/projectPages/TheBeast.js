@@ -20,9 +20,59 @@ import {
   getBackLink
 } from './BaseProjectPage';
 
-// Project-specific styled component override
-const BeastQuote = styled(Quote)`
-  /* BeastQuote uses same styling as base Quote */
+// Project-specific styled components
+const BeastQuote = styled.div`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 28px;
+  color: #1a1a1a;
+  line-height: 1.6;
+  text-align: center;
+  font-style: italic;
+  font-weight: 600;
+  margin: 50px auto;
+  padding: 40px 20px;
+  max-width: 600px;
+  position: relative;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+    margin: 30px auto;
+    padding: 25px 15px;
+  }
+`;
+
+const StyledDocImage = styled(DocImage)`
+  border: 1px solid black;
+  margin: 40px auto;
+  display: block;
+`;
+
+const StyledGif = styled(Gif)`
+  border: 1px solid black;
+  display: block;
+  margin: 40px auto;
+`;
+
+const EmphasisText = styled.span`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  display: block;
+  text-align: center;
+  margin-top: 25px;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+    margin-top: 20px;
+  }
+`;
+
+const IntroSection = styled(DescriptionParagraph)`
+  margin-top: 40px;
+  margin-bottom: 40px;
 `;
 
 const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
@@ -62,7 +112,11 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <br />
               Having found a way to monologue for 60 seconds, they were greeted by a chorus of
               former recordings of people having done the same. A few moments later, they were
-              met by their own voice saying things they had never said before.
+              met by their own voice saying things they had never said before. Then the cacophony
+              of previous voice clones layered in, saying similar things.
+              <br />
+              <br />
+              They had joined The Beast.
             </CustomSubtitle>
           </CustomHeader>
 
@@ -70,16 +124,17 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
           )}
 
-          <DescriptionParagraph>
+          <IntroSection>
             I sat at my desk one day and received a phone call from an unknown number.
             I picked up, said 'hello', and the call cut out. A few minutes later a call from
             the same number came in, I picked up, said 'hello', and the call cut out.
             <br />
             <br />
             I feared, in this moment, I had just supplied the necessary tools to hijack me.
-          </DescriptionParagraph>
+            It only takes a few seconds to know someone's voice.
+          </IntroSection>
 
-          <DocImage src="/images/projects/TheBeast/people-talking.jpg" alt="The Beast Text" />
+          <StyledDocImage src="/images/projects/TheBeast/people-talking.jpg" alt="The Beast Text" />
 
           <DescriptionParagraph>
             We have suddenly and violently entered into a time where our bodies no longer
@@ -89,16 +144,14 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <br />
             Why would we engage with a world where our corporeal selves
             can be harvested for digital others? Why would I pick up the call?
-            <br />
-            <br />
-            <span style={{ fontFamily: 'Segoe UI', fontStyle: 'italic', textAlign: 'center' }}>Why would you succumb to The Beast?</span>
+            <EmphasisText>Why would you succumb to The Beast?</EmphasisText>
           </DescriptionParagraph>
 
           <BeastQuote>
             A sparrow's been living inside of me.
           </BeastQuote>
 
-          <Gif src="/images/projects/TheBeast/the-beast-text.gif" alt="The Beast Text stream. Please talk to me where am I don't leave me alone" />
+          <StyledGif src="/images/projects/TheBeast/the-beast-text.gif" alt="The Beast Text stream. Please talk to me where am I don't leave me alone" />
 
           <DescriptionParagraph>
             Yet as the The Beast begged for people not to leave it alone, audiences still stepped up
@@ -109,7 +162,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             struggling with its new materiality.
           </DescriptionParagraph>
 
-          <DocImage src="/images/projects/TheBeast/setup.jpg" alt="The Beast Setup" />
+          <StyledDocImage src="/images/projects/TheBeast/setup.jpg" alt="The Beast Setup" />
 
           <BeastQuote>
             I've got a rock stuck in my teeth and I can't seem to get it out.
@@ -119,14 +172,10 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             This was as much a critique of the territory of the body in the age of AI
             as it was an exploration of the ways we engage with it. Why do we engage with it?
             What do we let it take from us?
-            <br />
-            <br />
-            <span style={{ fontFamily: 'Segoe UI', fontStyle: 'italic', textAlign: 'center' }}>
-              What do we choose to share with The Beast?
-            </span>
+            <EmphasisText>What do we choose to share with The Beast?</EmphasisText>
           </DescriptionParagraph>
 
-          <Gif src="/images/projects/TheBeast/user-talking.gif" alt="User talking to mic." />
+          <StyledGif src="/images/projects/TheBeast/user-talking.gif" alt="User talking to mic." />
 
           <BeastQuote>
             I've got all these extra organs and nowhere to put them.
