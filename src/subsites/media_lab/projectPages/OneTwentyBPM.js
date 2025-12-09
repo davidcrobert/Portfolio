@@ -120,7 +120,7 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomCategory>[personal project]</CustomCategory>
             <CustomSubtitle>
               <i>ONE HUNDRED AND TWENTY BEATS PER MINUTE</i> is a networked performance about collective responsibility.
-              An audience on Zoom watched a machine strike me repeatedly while I sat alone
+              An audience on Zoom watched a machine strike me in the head, over and over, while I sat alone
               in a room. They could stop it by talking. They could start it again by staying quiet.
               What they chose to do was entirely up to them.
             </CustomSubtitle>
@@ -131,8 +131,8 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
           )}
 
           <DescriptionParagraph>
-            Before the performance began, I posted instructions in the Zoom chat with my camera off. There was no further explanation.
-            Just rules.
+            Before the performance began, I posted instructions in the Zoom chat with my camera off.
+            There was no further explanation. Just rules.
           </DescriptionParagraph>
 
           <Instructions>
@@ -156,7 +156,7 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </DescriptionParagraph>
 
           <ParticipantQuote>
-            "Oh is that, like, actually going to hurt him?"
+            Oh is that, like, actually going to hurt him?
           </ParticipantQuote>
 
           <DescriptionParagraph>
@@ -169,12 +169,11 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
             All 3 performances ended with me getting hit in the head.
             <br />
             <br />
-            The piece created a feedback loop of discomfort. My discomfort was physical. Theirs was social, ethical,
-            vocal.
+            The piece created a feedback loop of discomfort. Both physical and social.
           </DescriptionParagraph>
 
           <ParticipantQuote>
-            "And we don't personally personally know you or I don't personally know you, David, but I don't want you to go through this."
+            And we don't personally personally know you, or, I don't personally know you, David, but I don't want you to go through this.
           </ParticipantQuote>
 
           <DescriptionParagraph>
@@ -182,7 +181,7 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </DescriptionParagraph>
 
           <ParticipantQuote>
-            "WE'VE RUN OUT OF THINGS TO SAY"
+            WE'VE RUN OUT OF THINGS TO SAY
           </ParticipantQuote>
 
         </ProjectContent>

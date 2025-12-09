@@ -113,14 +113,15 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomTitle>How can a person-robot system feel creatively collaborative?</CustomTitle>
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
-              <i>Assembly Line</i> is a window installation I was the lead developer on, created for Toronto Metropolitan
-              University's <InlineLink href="https://www.torontomu.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</InlineLink>. The piece combines 3D projection mapping with an industrial KUKA
+              <i>Assembly Line</i> is a window installation I was lead developer on, created for Toronto Metropolitan
+              University&apos;s <InlineLink href="https://www.torontomu.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</InlineLink>.
+              The piece combines 3D projection mapping with an industrial KUKA
               robot to create collaborative artwork between machine and audience.
               <br />
               <br />
               Visitors draw gestures through workshop windows on a web portal. These 2D inputs are
-              "manufactured" into temporary 3D forms by the robot before dissolving away, exploring the ephemeral
-              nature of digital labor and co-creation.
+              “manufactured” into temporary 3D forms by the robot before dissolving away, exploring the
+              ephemeral nature of digital labour and the manufactured form.
             </CustomSubtitle>
           </CustomHeader>
 
@@ -133,10 +134,10 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Lead developer for the entire installation. Built the 3D projection mapping and choreography in
-                  TouchDesigner, including live tracking of the robot's position. Developed the Node.js backend that
-                  bridges the web portal to the physical installation. Created the basic drawing interface in p5.js
-                  for gesture capture.
+                  Lead developer for the installation. Built the 3D projection mapping and choreography in
+                  TouchDesigner, including live tracking of the robot&apos;s position. Developed the Node.js backend
+                  that bridges the web portal to the physical installation. Created the basic drawing interface in
+                  p5.js for gesture capture.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>
@@ -166,15 +167,15 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </IntroSection>
 
           <DescriptionParagraph>
-            The solution was <i>Assembly Line</i>—a massive KUKA industrial robot performing repetitive motions
+            The solution was <i>Assembly Line</i> — a massive KUKA industrial robot performing repetitive motions
             behind a workshop window, its movements synchronized with 3D projection mapping. Passersby could draw
-            gestures on their phones. Their marks would appear in the projection,
-            get "picked up" by the robot's motion, transform into 3D forms, and then slowly dissolve.
+            gestures on their phones. Their marks would appear in the projection, get “picked up” by the robot's
+            motion, transform into 3D forms, and then slowly dissolve.
             <br />
             <br />
             The technical challenge was creating a networked pipeline: p5.js to record their drawings, Node.js to route
-            the data from phone to installation, and TouchDesigner to orchestrate projection mapping while tracking the robot's physical
-            position with HTC VIVE trackers.
+            the data from phone to installation, and TouchDesigner to orchestrate projection mapping while tracking the robot's
+            physical position with HTC VIVE trackers.
             <EmphasisText>That which is made is inevitably unmade.</EmphasisText>
           </DescriptionParagraph>
 

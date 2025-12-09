@@ -102,7 +102,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
           )}
 
-          <IntroSection>
+          <DescriptionParagraph>
             I separated people. One participant went alone into a large, dark studio. Their phone was taken.
             They sat in a high chair with only a microphone and a wall of projected green lines for company.
             The rest of the group stayed in a warmly lit room, seated in a semi-circle, facing each other.
@@ -110,7 +110,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <br />
             They were connected by an audio stream. The group could hear the participant. The participant could hear nothing.
             <EmphasisText>What they did was up to them.</EmphasisText>
-          </IntroSection>
+          </DescriptionParagraph>
 
           <DescriptionParagraph>
             The participant sat in silence, watching green lines shift and pulse on the wall. A real-time
@@ -120,7 +120,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </DescriptionParagraph>
 
           <ParticipantQuote>
-            "It's lonely down here, it really is."
+            It's lonely down here, it really is.
           </ParticipantQuote>
 
           <DescriptionParagraph>
@@ -130,7 +130,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </DescriptionParagraph>
 
           <ParticipantQuote>
-            "The hardest part is knowing what to say to you."
+            The hardest part is knowing what to say to you.
           </ParticipantQuote>
 
           <DescriptionParagraph>
@@ -149,7 +149,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </DescriptionParagraph>
 
           <ParticipantQuote>
-            "Now I'm at this point where it doesn't even feel like I'm interacting with humans anymore."
+            Now I'm at this point where it doesn't even feel like I'm interacting with humans anymore.
           </ParticipantQuote>
 
         </ProjectContent>

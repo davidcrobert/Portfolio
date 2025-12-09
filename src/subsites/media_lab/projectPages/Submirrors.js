@@ -183,10 +183,10 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Sole developer for AI puppeteering system. Built the LivePortrait integration for real-time facial manipulation,
-                  including finding efficiencies for use in real-time video feed.
-                  Created Python-based puppet software, and developed TouchDesigner compositing / puppeteering
-                  pipeline. Built initial prototype of installation in ComfyUI.
+                  Sole developer of the AI puppeteering system. Built the LivePortrait integration for real-time facial
+                  manipulation, including optimizations for live video feeds. Created Python-based puppet software and
+                  developed the TouchDesigner compositing / puppeteering pipeline. Built the initial installation prototype
+                  in ComfyUI.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>

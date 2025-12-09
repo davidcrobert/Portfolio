@@ -91,11 +91,10 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
               from the principal investigators on how to enhance the digital delivery of
               orchestral music, I proposed and built an AR application that transforms any
               room into a personalized concert hall.
-              <br />
-              <br />
-              The project allows users to place individual orchestra instruments around their space
-              and walk through their own arranged symphony, experiencing spatial audio and interactive control
-              over their listening experience.
+              <br /><br />
+              The project allows users to place individual orchestra instruments around their
+              space and walk through their own arranged symphony, experiencing spatial audio
+              and interactive control over their listening experience.
             </CustomSubtitle>
           </CustomHeader>
 
@@ -108,10 +107,10 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Sole developer and main experience designer. Proposed the AR spatial audio solution in response
-                  to the research question. Developed the entire Unity application with AR Foundation for iOS and
-                  Android. Designed the interaction model and spatial audio system. Co-authored the research paper
-                  presented at EVA London 2022.
+                  Sole developer and primary experience designer. Proposed the AR spatial-audio solution
+                  in response to the research question. Developed the entire Unity application using
+                  AR Foundation for iOS and Android. Designed the interaction model and spatial audio
+                  system. Co-authored the research paper presented at EVA London 2022.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>
@@ -135,39 +134,37 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
           </StyledCreditsSection>
 
           <IntroSection>
-            During the pandemic, orchestras faced a crisis: how do you deliver live performance
-            through a screen? Traditional video streaming flattens the spatial dimensionality of orchestral music.
-            Instruments occupy a physical space, sound moves around you, and this was being lost.
-            <br />
-            <br />
-            I proposed that we reconstruct the spatial experience at home, with added affordances of the medium.
-
+            During the pandemic, orchestras faced a crisis: how do you deliver an orchestral performance
+            through a screen? Traditional video streaming flattens the spatial dimensionality of
+            orchestral music. Instruments occupy physical space, sound moves around you, and that
+            experience was being lost.
+            <br /><br />
+            I proposed reconstructing the spatial experience at home, extended by the affordances made
+            possible by the medium.
           </IntroSection>
 
           <DescriptionParagraph>
             <i>Augmented Symphony</i> uses AR to let users place individual instruments anywhere in their
-            physical space. Walk closer to the strings section and their volume increases.
-            Move toward the brass and feel the horns swell. You become the conductor of your own arrangement,
-            experiencing the music not as a fixed recording, but as a malleable spatial environment.
-            <br />
-            <br />
-            Built in Unity with AR Foundation, the app works across iOS and Android devices, using spatial audio
-            to create realistic positional sound. Each instrument tracks independently, creating an immersive,
-            spatial soundscape.
+            physical space. Walk closer to the strings and their volume increases. Move toward the brass
+            and feel the horns swell. You become the conductor of your own arrangement, experiencing the
+            music not as a fixed recording but as a malleable spatial environment.
+            <br /><br />
+            Built in Unity with AR Foundation, the app works across iOS and Android, using spatial audio
+            to create realistic positional sound. Each instrument tracks independently, producing an
+            immersive, dynamic soundscape.
           </DescriptionParagraph>
 
           <StyledDocImage src="/images/projects/augmented-symphony.png" alt="Augmented Symphony AR Interface" />
 
           <DescriptionParagraph>
-            The research contribution was exploring how interactivity and spatial agency could enhance digital
-            music listening. The goal was not replicating the concert hall, but reimagining it for the home. Users could create
-            arrangements to their personal liking, focusing on specific instruments, experiencing the music from perspectives
-            no physical concert could offer.
-            <br />
-            <br />
-            The project was presented at EVA London 2022 alongside a research paper examining how AR and spatial
-            audio could transform home listening experiences. This went past just digital delivery,
-            exploring spatial interaction design and embodied musical experience.
+            The research contribution was exploring how interactivity and spatial agency could enhance
+            digital music listening. The goal was not to replicate the concert hall, but to reimagine it
+            for the home. Users could create arrangements to their liking, focus on specific instruments,
+            or experience the orchestra from perspectives no physical venue could offer.
+            <br /><br />
+            The project was presented at EVA London 2022 alongside a research paper examining how AR and
+            spatial audio can transform home listening. It goes beyond digital delivery toward a model of
+            spatial interaction design and embodied musical experience.
           </DescriptionParagraph>
 
           <ExternalLink

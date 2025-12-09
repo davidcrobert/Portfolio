@@ -95,19 +95,16 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomTitle>What does the world really sound like?</CustomTitle>
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
-              <i>Shadow Tuner</i> is an interactive installation I helped developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
-              when we built a scaled-down version of the piece first presented as a massive public artwork in Abu Dhabi.
-              In its new form it is a spherical LED display.
-              <br />
-              <br />
-              It transforms the visitor's body into a global antenna, casting shadows across a spinning Earth to tune into thousands of live radio
-              stations worldwide.
-              <br />
-              <br />
-              Originally the piece played back any audio - in the scaled down version that I developed,
-              the piece features a custom AI system that analyzes audio streams in real-time, separating
-              spoken word from music. This surfaced human voices to emphasize a more localized understanding
-              of the stations that are playing.
+              <i>Shadow Tuner</i> is an interactive installation I helped develop for artist
+              <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
+              adapting a massive public artwork originally presented in Abu Dhabi into a scaled-down spherical LED display.
+              <br /><br />
+              The piece transforms the visitor's body into a global antenna: as their shadow moves across a spinning Earth,
+              it tunes into thousands of live radio stations worldwide.
+              <br /><br />
+              In the new version I worked on, a custom AI system analyzes each audio stream, separating spoken
+              word from music. This foregrounds human voices and gives each region of the planet a more localized,
+              conversational texture.
             </CustomSubtitle>
           </CustomHeader>
 
@@ -126,6 +123,9 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
                   Designed audio database schema and implemented data storage system for efficient retrieval of
                   radio station metadata and audio streams.
                   Assisted with depth-camera tracking system in TouchDesigner for shadow-based interaction.
+                  <br />
+                  <br />
+                  Also planned out, sourced, and assembled hardware components.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>
@@ -158,11 +158,10 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
           <DescriptionParagraph>
             Thousands of radio stations broadcast simultaneously across the globe. News, music, poetry,
-            debates create an overwhelming cacophony of human expression. How do you develop a sense
-            of place? How do you tune in to the voices? How do you find the conversations hidden in the noise?
-            <br />
-            <br />
-            This was the challenge: build an AI that could listen to the world and surface speech.
+            debates — a lot of signal, a lot of noise. How do you develop a sense of place?
+            How do you tune into the voices? How do you find the conversations hidden in the noise?
+            <br /><br />
+            Our solution, and my job, was to build an AI system that could listen to the world and surface speech.
           </DescriptionParagraph>
 
           <ImageLink href="https://www.lozano-hemmer.com/shadow_tuner.php" target="_blank" rel="noopener noreferrer">
@@ -170,15 +169,14 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </ImageLink>
 
           <DescriptionParagraph>
-            The installation displays a rotating Earth—either projected onto a massive inflatable sphere
-            in public spaces, or shown on a custom spherical LED display. As visitors move in front of it,
-            their 'shadows' fall across continents and oceans. Each shadow triggers live radio stations from
-            the cities it touches.
-            <br />
-            <br />
-            The AI analyzer I built constantly monitors these streams, only playing audio that is human speech
-            as opposed to music or other audio content. This was so that each region of the globe had a local texture,
-            rather than hearing Top 40 hits anywhere you go.
+            The installation displays a rotating Earth — projected onto a massive inflatable sphere in public
+            spaces or rendered on a custom spherical LED display. As visitors move in front of it, their
+            shadows sweep across continents and oceans. Each shadow triggers live radio stations from the
+            regions it touches.
+            <br /><br />
+            The AI analyzer I built continuously monitors these streams, playing only human speech rather
+            than music or ambient audio. This gives each region its own linguistic texture, rather than
+            hearing the same pop songs no matter where you stand.
           </DescriptionParagraph>
 
           <ImageLink href="https://www.lozano-hemmer.com/shadow_tuner.php" target="_blank" rel="noopener noreferrer">
@@ -186,14 +184,13 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </ImageLink>
 
           <DescriptionParagraph>
-            This required building a resilient pipeline that could download and analyze thousands of
-            geo-located radio streams in real-time, handle network failures gracefully, and make quick
-            decisions about audio content. The result is a global polyphony that emphasizes linguistic
-            diversity. You can hear the news in Arabic, conversations in Mandarin, poetry in Portuguese.
-            <br />
-            <br />
+            This required building a resilient pipeline capable of downloading and analyzing thousands of
+            geo-located radio streams in real time, handling network failures gracefully, and making quick
+            decisions about audio content. The result is a global polyphony that foregrounds linguistic and
+            cultural diversity: the news in Arabic, conversations in Mandarin, poetry in Portuguese.
+            <br /><br />
             Your body becomes the tuning dial. Your shadow becomes the antenna. And the AI ensures that
-            what you hear is not just noise, but the conversations of the world.
+            what you hear is not just noise, but the world speaking for itself.
           </DescriptionParagraph>
 
         </ProjectContent>
