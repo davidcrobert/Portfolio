@@ -24,7 +24,8 @@ import {
   useOriginalProject,
   cleanYouTubeEmbed,
   getCategoryPrefix,
-  getBackLink
+  getBackLink,
+  InlineLink
 } from './BaseProjectPage';
 
 const IntroSection = styled(DescriptionParagraph)`
@@ -94,7 +95,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomTitle>What does the world really sound like?</CustomTitle>
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
-              <i>Shadow Tuner</i> is an interactive installation I helped developed for artist Rafael Lozano-Hemmer,
+              <i>Shadow Tuner</i> is an interactive installation I helped developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
               when we built a scaled-down version of the piece first presented as a massive public artwork in Abu Dhabi.
               In its new form it is a spherical LED display.
               <br />

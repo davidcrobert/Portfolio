@@ -26,7 +26,8 @@ import {
   useOriginalProject,
   getCategoryPrefix,
   getBackLink,
-  DocImage
+  DocImage,
+  InlineLink
 } from './BaseProjectPage';
 
 // Project-specific styled components
@@ -132,7 +133,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
               <i>Recurrent Waiting</i> and <i>Recurrent Kafka</i> [the Submirror series] are interactive mirror installations
-              I developed for artist Rafael Lozano-Hemmer. The works explore the tension between self-perception,
+              I developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>. The works explore the tension between self-perception,
               loss of control, and digital puppetry.
               <ArtistQuoteSection>
                 <ArtistQuoteLabel>In the artist's words:</ArtistQuoteLabel>

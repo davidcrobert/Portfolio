@@ -25,7 +25,8 @@ import {
   useOriginalProject,
   cleanYouTubeEmbed,
   getCategoryPrefix,
-  getBackLink
+  getBackLink,
+  InlineLink
 } from './BaseProjectPage';
 
 const IntroSection = styled(DescriptionParagraph)`
@@ -113,7 +114,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
               <i>Assembly Line</i> is a window installation I was the lead developer on, created for Toronto Metropolitan
-              University's Design + Technology LAB. The piece combines 3D projection mapping with an industrial KUKA
+              University's <InlineLink href="https://www.torontomu.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</InlineLink>. The piece combines 3D projection mapping with an industrial KUKA
               robot to create collaborative artwork between machine and audience.
               <br />
               <br />

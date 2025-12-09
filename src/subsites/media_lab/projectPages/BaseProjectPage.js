@@ -148,7 +148,7 @@ export const DocImage = styled.img`
   max-width: 550px;
   margin: 20px auto;
   height: auto;
-  aspect-ratio: 16 / 9;
+  display: block;
 `;
 
 export const Quote = styled.p`
@@ -296,6 +296,18 @@ export const ExternalLink = styled.a`
     font-size: 11px;
     padding: 12px 15px;
     margin: 20px auto;
+  }
+`;
+
+export const InlineLink = styled.a`
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.6;
+    cursor: pointer;
   }
 `;
 

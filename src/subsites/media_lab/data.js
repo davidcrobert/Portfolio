@@ -107,7 +107,7 @@ export const mediaLabData = {
       year: '2022',
       personal: false,
       tags: ['installation', 'robotics', 'web'],
-      description: 'UHHH RESEARCH QUESTION? Mention robots',
+      description: 'How can we repurpose an industrial robot for creative collaboration?',
       customContext: `This project represents my interest in breaking down barriers between digital and physical
         interaction. Users contribute remotely through a web portal, and their gestures materialize through a
         massive industrial robot - a meditation on labor, creation, and remote collaboration.`

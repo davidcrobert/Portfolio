@@ -136,7 +136,6 @@ const ProjectDescription = styled.p`
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 1px;
-  text-transform: uppercase;
   font-size: 12px;
   line-height: 1.5;
   margin-bottom: 8px;
@@ -352,10 +351,7 @@ function MediaLabHome() {
           }
         ]}
         statement="
-        Our constructed environment is valuable & vulnerable.
-        I deal a lot with interactive spaces & how we relate to each other in them.
-        I have a lot of thoughts [& concerns] about the body, social interaction, & embodied social interactions
-        in the age of AI.
+        What else is there to say?
         "
         showAnimatedText={false}
       />

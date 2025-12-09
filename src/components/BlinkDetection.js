@@ -35,10 +35,10 @@ const MinimalBlinkDetection = ({
   const blinkStartTimeRef = useRef(0);
   const onBlinkRef = useRef(onBlink);
   const setBlinkCountRef = useRef(setBlinkCount);
-  
+
   const MIN_BLINK_DURATION = 50;
   const MIN_TIME_BETWEEN_BLINKS = 300;
-  
+
   // EAR-related refs
   const baselineEAR = useRef(0.25);
   const framesCountRef = useRef(0);
@@ -100,7 +100,7 @@ const MinimalBlinkDetection = ({
   useEffect(() => {
     // Don't initialize if not on an enabled route
     if (!isActive || !canvasRef.current || !videoRef.current) {
-      return () => {};
+      return () => { };
     }
 
     let mounted = true;
@@ -155,7 +155,7 @@ const MinimalBlinkDetection = ({
 
         faceMeshRef.current.onResults((results) => {
           if (!mounted) return;
-          
+
           try {
             ctx.save();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -163,7 +163,7 @@ const MinimalBlinkDetection = ({
             if (results.multiFaceLandmarks && results.multiFaceLandmarks[0]) {
               const landmarks = results.multiFaceLandmarks[0];
 
-              const alpha = 0.6;
+              const alpha = 0.25;
               const drawingStyles = {
                 faceOval: { color: `rgba(0, 0, 0, ${alpha})`, lineWidth: 0.5 },
                 eyes: { color: `rgba(0, 0, 0, ${alpha})`, lineWidth: 0.5 },
@@ -188,7 +188,7 @@ const MinimalBlinkDetection = ({
                 landmarks[362], landmarks[385], landmarks[387],
                 landmarks[263], landmarks[373], landmarks[380]
               ]);
-              
+
               const rightEAR = getEyeAspectRatio([
                 landmarks[33], landmarks[160], landmarks[158],
                 landmarks[133], landmarks[153], landmarks[144]
@@ -198,7 +198,7 @@ const MinimalBlinkDetection = ({
 
               // Update baseline during initial calibration
               if (framesCountRef.current < INITIAL_CALIBRATION_FRAMES) {
-                baselineEAR.current = (baselineEAR.current * framesCountRef.current + avgEAR) / 
+                baselineEAR.current = (baselineEAR.current * framesCountRef.current + avgEAR) /
                   (framesCountRef.current + 1);
                 framesCountRef.current++;
               }
@@ -224,12 +224,12 @@ const MinimalBlinkDetection = ({
                 if (wasBlinkingRef.current) {
                   const blinkDuration = currentTime - blinkStartTimeRef.current;
                   const timeSinceLastBlink = currentTime - lastBlinkTimeRef.current;
-                  
+
                   if (blinkDuration >= MIN_BLINK_DURATION && timeSinceLastBlink >= MIN_TIME_BETWEEN_BLINKS) {
                     handleBlinkRef.current();
                     lastBlinkTimeRef.current = currentTime;
                   }
-                  
+
                   wasBlinkingRef.current = false;
                 }
               }
@@ -266,12 +266,12 @@ const MinimalBlinkDetection = ({
     return () => {
       mounted = false;
       window.removeEventListener('resize', handleResize);
-      
+
       if (cameraRef.current) {
         cameraRef.current.stop();
         cameraRef.current = null;
       }
-      
+
       if (faceMeshRef.current) {
         try {
           faceMeshRef.current.close();
@@ -291,13 +291,13 @@ const MinimalBlinkDetection = ({
   return (
     <div
       className={className}
-      style={{ 
-        position: 'absolute', 
-        top: 0, 
-        left: 0, 
-        width: '100%', 
-        height: '100%', 
-        zIndex: 1, 
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 1,
         pointerEvents: 'none',
         ...style
       }}
@@ -322,9 +322,9 @@ const MinimalBlinkDetection = ({
       />
       <canvas
         ref={canvasRef}
-        style={{ 
-          width: '100%', 
-          height: '100%', 
+        style={{
+          width: '100%',
+          height: '100%',
           pointerEvents: 'none',
           opacity: isInitialized ? 1 : 0,
           transition: 'opacity 0.3s ease-in-out'

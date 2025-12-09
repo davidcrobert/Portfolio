@@ -14,6 +14,7 @@ import {
   Gif,
   DocImage,
   Quote,
+  InlineLink,
   useOriginalProject,
   cleanYouTubeEmbed,
   getCategoryPrefix,
@@ -75,6 +76,28 @@ const IntroSection = styled(DescriptionParagraph)`
   margin-bottom: 40px;
 `;
 
+const ImageGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
+  align-items: center;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+`;
+
+const VerticalImage = styled.img`
+  width: 100%;
+  height: auto;
+  border: 1px solid black;
+  display: block;
+`;
+
 const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
   const originalProject = useOriginalProject(project);
 
@@ -101,16 +124,16 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             <CustomTitle>What is a 'bodily identity' in the age of AI?</CustomTitle>
             <CustomCategory>[individual project]</CustomCategory>
             <CustomSubtitle>
-              Produced during my time as an artist-in-residence at Fabrica,
+              Produced during my time as an artist-in-residence at the <InlineLink href="https://www.fabrica.it/" target="_blank" rel="noopener noreferrer">Fabrica research center</InlineLink>,
               <i> I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST</i> is an exploration of AI
-              bodily-hijacking and the ways in which we submit to it.
+              bodily hijacking and the ways in which we submit to it.
               <br />
               <br />
               A screen, a microphone, and a speaker sat in an agora. The screen begged for people
-              to speak to it. Upon indulging it, it prompted them to speak to it for 60 seconds.
+              to speak to it. When they did, it asked them to keep talking for 60 seconds.
               <br />
               <br />
-              Having found a way to monologue for 60 seconds, they were greeted by a chorus of
+              Having found a way to monologue for a full minute, they were greeted by a chorus of
               former recordings of people having done the same. A few moments later, they were
               met by their own voice saying things they had never said before. Then the cacophony
               of previous voice clones layered in, saying similar things.
@@ -130,16 +153,16 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             the same number came in, I picked up, said 'hello', and the call cut out.
             <br />
             <br />
-            I feared, in this moment, I had just supplied the necessary tools to hijack me.
+            In that moment I feared I had just supplied the necessary tools to hijack me.
             It only takes a few seconds to know someone's voice.
           </IntroSection>
 
-          <StyledDocImage src="/images/projects/TheBeast/people-talking.jpg" alt="The Beast Text" />
+          <StyledDocImage src="/images/projects/TheBeast/people-talking.JPG" alt="People talking to The Beast" />
 
           <DescriptionParagraph>
             We have suddenly and violently entered into a time where our bodies no longer
-            have unique claims to our identity. Anyone, at any time, can make a reliably
-            believable clone of me, or anyone else. The world is a deepfake.
+            have unique claims to our identity. Anyone, at any time, can make a
+            convincing clone of me, or anyone else. The world is a deepfake.
             <br />
             <br />
             Why would we engage with a world where our corporeal selves
@@ -154,7 +177,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
           <StyledGif src="/images/projects/TheBeast/the-beast-text.gif" alt="The Beast Text stream. Please talk to me where am I don't leave me alone" />
 
           <DescriptionParagraph>
-            Yet as the The Beast begged for people not to leave it alone, audiences still stepped up
+            Yet as The Beast begged for people not to leave it alone, audiences still stepped up
             and joined the cloned chorus.
             <br />
             <br />
@@ -162,7 +185,11 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             struggling with its new materiality.
           </DescriptionParagraph>
 
-          <StyledDocImage src="/images/projects/TheBeast/setup.jpg" alt="The Beast Setup" />
+          <ImageGrid>
+            <VerticalImage src="/images/projects/TheBeast/mic_vertical.jpg" alt="Microphone setup" />
+            <StyledDocImage src="/images/projects/TheBeast/setup.jpg" alt="The Beast Setup" />
+            <VerticalImage src="/images/projects/TheBeast/person_vertical.jpg" alt="Person interacting" />
+          </ImageGrid>
 
           <BeastQuote>
             I've got a rock stuck in my teeth and I can't seem to get it out.

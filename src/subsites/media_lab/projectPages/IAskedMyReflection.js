@@ -39,6 +39,41 @@ const InteractiveContainer = styled.div`
   }
 `;
 
+const IntroSection = styled(DescriptionParagraph)`
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
+const ReflectionQuote = styled(Quote)`
+  font-size: 24px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  max-width: 600px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+    padding: 20px 15px;
+    margin: 30px auto;
+  }
+`;
+
+const EmphasisText = styled.span`
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  display: block;
+  text-align: center;
+  margin-top: 25px;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+    margin-top: 20px;
+  }
+`;
+
 const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) => {
   const originalProject = useOriginalProject(project);
 
@@ -75,11 +110,11 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
             <ReflectionInteractive />
           </InteractiveContainer>
 
-          <Quote>
-            A cursor is our digital avatar - a projection of our body in the digital realm.
-          </Quote>
+          <ReflectionQuote>
+            A cursor is our digital avatar.<br /> A projection of our body in the digital realm.
+          </ReflectionQuote>
 
-          <DescriptionParagraph>
+          <IntroSection>
             The cursors imitate users' behavior based on their previous movements using a Markov chain model.
             As cursors appear and users become aware of the role they play in their movement, this affects
             how they interact with the site. Which will in turn affect the cursors. Which will in turn
@@ -88,16 +123,16 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
             <br />
             This project explores a sort of recursive interaction with AI. The ways in which
             intelligent systems transform our behaviour and how we transform them.
-          </DescriptionParagraph>
+          </IntroSection>
 
           <DescriptionParagraph>
             As the experience progresses, users receive less and less actionable commands.
             It's their call what they want to do with that.
           </DescriptionParagraph>
 
-          <Quote>
-            Ask your reflection its name.
-          </Quote>
+          <ReflectionQuote>
+            Ask your reflection its name.<br /> I asked my reflection its name again.
+          </ReflectionQuote>
         </ProjectContent>
       </MainContent>
     </PageWrapper>
