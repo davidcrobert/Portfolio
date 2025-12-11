@@ -116,8 +116,8 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>Will we embrace our discomfort in order to stop someone else's?</CustomTitle>
-            <CustomCategory>[personal project]</CustomCategory>
+            <CustomTitle>Will we accept our discomfort in order to stop someone else's?</CustomTitle>
+            <CustomCategory>[individual project]</CustomCategory>
             <CustomSubtitle>
               <i>ONE HUNDRED AND TWENTY BEATS PER MINUTE</i> is a networked performance about collective responsibility.
               An audience on Zoom watched a machine strike me in the head, over and over, while I sat alone
@@ -152,7 +152,7 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
             discomfort. An inability to be the first one to start talking.
             <br />
             <br />
-            With time people came out of their shells. Started talking to each other.
+            With time people came out of their shells. They started talking to each other.
           </DescriptionParagraph>
 
           <ParticipantQuote>

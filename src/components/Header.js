@@ -294,7 +294,10 @@ const Header = forwardRef(({
           {Array.isArray(customButtons) && customButtons.map((button, idx) => (
             <HeaderButton
               key={idx}
-              onClick={button.onClick}
+              onClick={(e) => {
+                e.stopPropagation();
+                button.onClick();
+              }}
               title={button.title}
             >
               {button.label}

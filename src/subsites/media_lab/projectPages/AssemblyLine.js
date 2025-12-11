@@ -110,7 +110,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>How can a person-robot system feel creatively collaborative?</CustomTitle>
+            <CustomTitle>How can a human-robot system feel creatively collaborative?</CustomTitle>
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
               <i>Assembly Line</i> is a window installation I was lead developer on, created for Toronto Metropolitan
@@ -167,7 +167,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </IntroSection>
 
           <DescriptionParagraph>
-            The solution was <i>Assembly Line</i> — a massive KUKA industrial robot performing repetitive motions
+            The solution was <i>Assembly Line</i>. A massive KUKA industrial robot performed repetitive motions
             behind a workshop window, its movements synchronized with 3D projection mapping. Passersby could draw
             gestures on their phones. Their marks would appear in the projection, get “picked up” by the robot's
             motion, transform into 3D forms, and then slowly dissolve.

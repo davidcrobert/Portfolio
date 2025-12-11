@@ -168,7 +168,7 @@ export const Quote = styled.p`
 export const CreditsSection = styled.div`
   max-width: 800px;
   width: 100%;
-  margin: 0 auto 30px auto;
+  margin: 40px auto 30px auto;
   padding: 20px;
   border: 1px solid black;
   background-color: #fafafa;

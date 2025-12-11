@@ -163,7 +163,7 @@ const MinimalBlinkDetection = ({
             if (results.multiFaceLandmarks && results.multiFaceLandmarks[0]) {
               const landmarks = results.multiFaceLandmarks[0];
 
-              const alpha = 0.15;
+              const alpha = 0.125;
               const drawingStyles = {
                 faceOval: { color: `rgba(0, 0, 0, ${alpha})`, lineWidth: 0.5 },
                 eyes: { color: `rgba(0, 0, 0, ${alpha})`, lineWidth: 0.5 },

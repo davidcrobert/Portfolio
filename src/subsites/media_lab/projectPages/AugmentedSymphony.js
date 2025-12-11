@@ -107,7 +107,7 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Sole developer and primary experience designer. Proposed the AR spatial-audio solution
+                  Developer and experience designer. Proposed the AR spatial-audio solution
                   in response to the research question. Developed the entire Unity application using
                   AR Foundation for iOS and Android. Designed the interaction model and spatial audio
                   system. Co-authored the research paper presented at EVA London 2022.
@@ -117,10 +117,10 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
                 <CreditsHeader>Credits</CreditsHeader>
                 <CreditsList>
                   <CreditItem>
-                    <CreditName>Dr. Cintia Cristia</CreditName> — <CreditRole>Lead Researcher</CreditRole>
+                    <CreditName>David Bouchard</CreditName> — <CreditRole>Researcher</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>David Bouchard</CreditName> — <CreditRole>Researcher</CreditRole>
+                    <CreditName>Dr. Cintia Cristia</CreditName> — <CreditRole>Researcher</CreditRole>
                   </CreditItem>
                   <CreditItem>
                     <CreditName>Michael Bergmann</CreditName> — <CreditRole>Researcher</CreditRole>
@@ -134,7 +134,7 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
           </StyledCreditsSection>
 
           <IntroSection>
-            During the pandemic, orchestras faced a crisis: how do you deliver an orchestral performance
+            During the pandemic, orchestras faced a problem: how do you deliver an orchestral performance
             through a screen? Traditional video streaming flattens the spatial dimensionality of
             orchestral music. Instruments occupy physical space, sound moves around you, and that
             experience was being lost.
@@ -162,8 +162,7 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
             for the home. Users could create arrangements to their liking, focus on specific instruments,
             or experience the orchestra from perspectives no physical venue could offer.
             <br /><br />
-            The project was presented at EVA London 2022 alongside a research paper examining how AR and
-            spatial audio can transform home listening. It goes beyond digital delivery toward a model of
+            The project was presented at EVA London 2022 alongside a short paper. The project goes beyond simple digital delivery toward a model of
             spatial interaction design and embodied musical experience.
           </DescriptionParagraph>
 

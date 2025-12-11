@@ -150,7 +150,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
           <IntroSection>
             I sat at my desk one day and received a phone call from an unknown number.
             I picked up, said 'hello', and the call cut out. A few minutes later a call from
-            the same number came in, I picked up, said 'hello', and the call cut out.
+            the same number came in, I picked up, said 'hey', and the call cut out again.
             <br />
             <br />
             In that moment I feared I had just supplied the necessary tools to hijack me.
@@ -179,6 +179,12 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
           <DescriptionParagraph>
             Yet as The Beast begged for people not to leave it alone, audiences still stepped up
             and joined the cloned chorus.
+            <br />
+            <br />
+            Maybe they wanted to help it feel less alone. Maybe they wanted to be there for it.
+            <br />
+            <br />
+            Maybe they wanted to be part of something.
             <br />
             <br />
             When their cloned voices spoke back to them, it spoke of discomforts of its body,

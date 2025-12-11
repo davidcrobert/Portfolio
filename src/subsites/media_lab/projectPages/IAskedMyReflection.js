@@ -97,8 +97,8 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>If there are enough of you, can you lose track of yourself?</CustomTitle>
-            <CustomCategory>[personal project]</CustomCategory>
+            <CustomTitle>How would you act if there were 200 of you in a room?</CustomTitle>
+            <CustomCategory>[individual project]</CustomCategory>
             <CustomSubtitle>
               In <i>I ASKED MY REFLECTION ITS NAME AGAIN</i>, users are given a simple
               direction to move their mouse. As time goes on, more and more cursors
@@ -126,13 +126,17 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
           </IntroSection>
 
           <DescriptionParagraph>
-            As the experience progresses, users receive less and less actionable commands.
+            As the experience progresses, users receive inactionable commands.
             It's their call what they want to do with that.
           </DescriptionParagraph>
 
           <ReflectionQuote>
-            Ask your reflection its name.<br /> I asked my reflection its name again.
+            Ask your reflection its name.
           </ReflectionQuote>
+          <ReflectionQuote>
+            I asked my reflection its name again.
+          </ReflectionQuote>
+
         </ProjectContent>
       </MainContent>
     </PageWrapper>

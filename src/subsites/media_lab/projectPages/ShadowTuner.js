@@ -92,11 +92,11 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>What does the world really sound like?</CustomTitle>
+            <CustomTitle>How can AI help us hear what the world really sounds like?</CustomTitle>
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
-              <i>Shadow Tuner</i> is an interactive installation I helped develop for artist
-              <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
+              <i>Shadow Tuner</i> is an interactive installation I helped develop for
+              artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
               adapting a massive public artwork originally presented in Abu Dhabi into a scaled-down spherical LED display.
               <br /><br />
               The piece transforms the visitor's body into a global antenna: as their shadow moves across a spinning Earth,
@@ -120,8 +120,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
                   Developed the AI analyzer to differentiate spoken word from music across thousands of live
                   radio streams. Re-architected the audio downloading pipeline for greater resiliency and
                   cross-platform compatibility.
-                  Designed audio database schema and implemented data storage system for efficient retrieval of
-                  radio station metadata and audio streams.
+                  Designed audio database schema and implemented data storage system.
                   Assisted with depth-camera tracking system in TouchDesigner for shadow-based interaction.
                   <br />
                   <br />
@@ -158,7 +157,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
           <DescriptionParagraph>
             Thousands of radio stations broadcast simultaneously across the globe. News, music, poetry,
-            debates — a lot of signal, a lot of noise. How do you develop a sense of place?
+            debates. A lot of signal, a lot of noise. How do you develop a sense of place?
             How do you tune into the voices? How do you find the conversations hidden in the noise?
             <br /><br />
             Our solution, and my job, was to build an AI system that could listen to the world and surface speech.
@@ -169,7 +168,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </ImageLink>
 
           <DescriptionParagraph>
-            The installation displays a rotating Earth — projected onto a massive inflatable sphere in public
+            The installation displays a rotating Earth, either projected onto a massive inflatable sphere in public
             spaces or rendered on a custom spherical LED display. As visitors move in front of it, their
             shadows sweep across continents and oceans. Each shadow triggers live radio stations from the
             regions it touches.
@@ -186,11 +185,11 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
           <DescriptionParagraph>
             This required building a resilient pipeline capable of downloading and analyzing thousands of
             geo-located radio streams in real time, handling network failures gracefully, and making quick
-            decisions about audio content. The result is a global polyphony that foregrounds linguistic and
-            cultural diversity: the news in Arabic, conversations in Mandarin, poetry in Portuguese.
+            decisions about audio content. The result is a global polyphony that foregrounds linguistic
+            diversity: the news in Arabic, conversations in Mandarin, poetry in Portuguese.
             <br /><br />
             Your body becomes the tuning dial. Your shadow becomes the antenna. And the AI ensures that
-            what you hear is not just noise, but the world speaking for itself.
+            what you hear is not just noise, but the world speaking.
           </DescriptionParagraph>
 
         </ProjectContent>

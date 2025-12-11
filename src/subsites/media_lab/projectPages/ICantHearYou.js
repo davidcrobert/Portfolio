@@ -89,11 +89,10 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>Will we try to help someone even if we know we probably can't?</CustomTitle>
-            <CustomCategory>[personal project]</CustomCategory>
+            <CustomCategory>[individual project]</CustomCategory>
             <CustomSubtitle>
               <i>I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER</i> is a networked performance
-              about miscommunication and the limits of empathy. One person sits alone in a dark room, unable to hear
-              a group trying to speak to them. The group can hear the isolated person, but the person cannot hear the group,
+              about miscommunication and the limits of empathy. One person sits alone in a dark room. A group sits together elsewhere. The group can hear the isolated person, but the person cannot hear the group,
               seeing only a translation in the form of abstract visual patterns on the wall.
             </CustomSubtitle>
           </CustomHeader>
@@ -115,8 +114,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
           <DescriptionParagraph>
             The participant sat in silence, watching green lines shift and pulse on the wall. A real-time
             visualization of the group's attempts to communicate. They could see that something was being said,
-            but the content remained inaccessible. The group could hear the participant try to understand,
-            try to connect.
+            but the content remained inaccessible. The group could hear the participant try to understand.
           </DescriptionParagraph>
 
           <ParticipantQuote>
@@ -124,9 +122,10 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </ParticipantQuote>
 
           <DescriptionParagraph>
-            This asymmetry created a peculiar dynamic. The group surely knew there was no way to actually converse.
-            And yet they tried. And even though there was no meaning to actually extract, the participant
-            responded to silence, to patterns, to nothing.
+            This asymmetry created an interesting dynamic. The group surely knew there was no way to actually converse.
+            And yet they tried. The participant knew there was no meaning to actually extract. And yet they tried.
+            <br /><br />
+            The group spoke to deaf ears and the participant responded to silence.
           </DescriptionParagraph>
 
           <ParticipantQuote>
@@ -134,18 +133,14 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </ParticipantQuote>
 
           <DescriptionParagraph>
-            Each performance lasted about 20 minutes.
+            Each performance lasted 20 minutes.
             As time passed, the isolated participant's sense of the situation would shift. The breakdown of human communication
-            had collapsed, and now they were just conversing with an abstraction. A digital being of sorts. What began as confusion
-            became something stranger. They were, well, alone.
+            had collapsed, and now they were just conversing with an abstraction. A digital being.
           </DescriptionParagraph>
 
           <DescriptionParagraph>
             The piece asks: if we know our efforts to help are futile, will we still try? Do we not want this person to be alone?
-            <br />
-            <br />
-            How groups handle discomfort is an important thing. What are we willing to do for others, and how far does it go?
-            How long are we able to maintain a trust, a human connection, when we are so separated?
+            <EmphasisText>We'll have to speak a little louder</EmphasisText>
           </DescriptionParagraph>
 
           <ParticipantQuote>

@@ -35,7 +35,7 @@ export const mediaLabData = {
       tags: ['interactive', 'ai', 'web'],
 
       // Custom description for Media Lab context
-      description: 'What do you do when an AI takes over your control?',
+      description: 'How does it feel to lose control of your own reflection?',
 
       // Optional: custom context for info popup
       customContext: `At Media Lab, I want to continue exploring how AI can transform interactive experiences.
@@ -50,7 +50,7 @@ export const mediaLabData = {
       year: '2025',
       personal: false,
       tags: ['interactive', 'ai', 'installation', 'audio'],
-      description: 'What does it sound like to hear the world? How can AI help us hear it?',
+      description: 'How can AI help us hear what the world really sounds like?',
       customContext: `This project demonstrates my interest in using AI to amplify human connection across cultures.
         The ML system I built analyzes thousands of audio streams to surface human voices, creating a technological
         intervention that prioritizes human speech over noise.`
@@ -63,7 +63,7 @@ export const mediaLabData = {
       year: '2024',
       personal: true,
       tags: ['installation', 'ai', 'audio'],
-      description: 'How do we expect an AI-mediated world to talk back to us? Why do we succumb to The Beast?',
+      description: 'What is a \'bodily identity\' in the age of AI?',
       customContext: `Created during a research residency at Fabrica, this installation embodies my critical
         approach to AI. Rather than simply using the technology, I create experiences that make audiences
         confront their relationship with it - hearing their own voice saying words they never spoke.`
@@ -87,7 +87,7 @@ export const mediaLabData = {
       year: '2020',
       personal: true,
       tags: ['performance', 'electronics'],
-      description: "Will we embrace our discomfort in order to stop someone else's?"
+      description: "Will we accept our own discomfort in order to stop someone else's?"
     },
     {
       originalLink: '/projects/i-asked-my-reflection',
@@ -107,7 +107,7 @@ export const mediaLabData = {
       year: '2022',
       personal: false,
       tags: ['installation', 'robotics', 'web'],
-      description: 'How can we repurpose an industrial robot for creative collaboration?',
+      description: 'How can a human-robot system feel creatively collaborative?',
       customContext: `This project represents my interest in breaking down barriers between digital and physical
         interaction. Users contribute remotely through a web portal, and their gestures materialize through a
         massive industrial robot - a meditation on labor, creation, and remote collaboration.`
@@ -120,7 +120,7 @@ export const mediaLabData = {
       year: '2021',
       personal: false,
       tags: ['ar/vr/xr'],
-      description: 'How can we replicate the physical experience of an orchestra at home?',
+      description: 'How do you bring the orchestra home?',
       customContext: `This project represents my interest in breaking down barriers between digital and physical
         interaction. Users contribute remotely through a web portal, and their gestures materialize through a
         massive industrial robot - a meditation on labor, creation, and remote collaboration.`

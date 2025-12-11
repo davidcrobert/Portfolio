@@ -344,11 +344,11 @@ function MediaLabHome() {
             onClick: toggleAudio,
             title: 'Toggle audio playback'
           },
-          {
-            label: faceEnabled ? 'Face Tracking: On' : 'Face Tracking: Off',
-            onClick: toggleFace,
-            title: 'Toggle face tracking'
-          }
+          // {
+          //   label: faceEnabled ? 'Face Tracking: On' : 'Face Tracking: Off',
+          //   onClick: toggleFace,
+          //   title: 'Toggle face tracking'
+          // }
         ]}
         statement="
         What else is there to say?
@@ -397,7 +397,7 @@ function MediaLabHome() {
           </SideContent>
         </Side>
       </SplitContainer>
-      <NotePlayer play={audioEnabled ? playNoteTrigger : 0} />
+      <NotePlayer play={playNoteTrigger} />
     </IndexContainer>
   );
 }
