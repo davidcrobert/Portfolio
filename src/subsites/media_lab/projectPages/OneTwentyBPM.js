@@ -45,7 +45,7 @@ const Instructions = styled.div`
   text-align: left;
   
   max-width: 500px;
-  background-color: #fafafa;
+  background-color: #f2f2f2;
 
   @media screen and (max-width: 768px) {
     font-size: 12px;

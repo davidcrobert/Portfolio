@@ -14,7 +14,7 @@ export const PageWrapper = styled.div`
 `;
 
 export const MainContent = styled.div`
-  background-color: #f9f9f9;
+  background-color: #f2f2f2;
   color: black;
   overscroll-behavior: contain;
   min-height: 100vh;
@@ -45,6 +45,7 @@ export const DescriptionParagraph = styled.p`
   margin: 20px auto;
   border: 1px solid black;
   padding: 10px;
+  background-color: #fafafa;
 
   @media screen and (max-width: 768px) {
     font-size: 14px;
@@ -58,6 +59,7 @@ export const CustomHeader = styled.div`
   max-width: 800px;
   width: 100%;
   border-bottom: 1px solid black;
+  background-color: #f2f2f2;
 `;
 
 export const CustomTitle = styled.h2`
@@ -116,6 +118,7 @@ export const MediaEmbed = styled.div`
 
     &:has(> iframe:only-child) {
       height: 0;
+      padding: 0;
       padding-bottom: 36.5625vw;
       position: relative;
 

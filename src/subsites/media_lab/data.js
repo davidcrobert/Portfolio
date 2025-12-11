@@ -32,7 +32,7 @@ export const mediaLabData = {
       subtitle2: '& Puppeteers',
       year: '2025',
       personal: false,
-      tags: ['interactive', 'ai', 'web'],
+      tags: ['ai'],
 
       // Custom description for Media Lab context
       description: 'How does it feel to lose control of your own reflection?',
@@ -49,7 +49,7 @@ export const mediaLabData = {
       subtitle2: '& Spinning',
       year: '2025',
       personal: false,
-      tags: ['interactive', 'ai', 'installation', 'audio'],
+      tags: ['ai', 'installation', 'audio'],
       description: 'How can AI help us hear what the world really sounds like?',
       customContext: `This project demonstrates my interest in using AI to amplify human connection across cultures.
         The ML system I built analyzes thousands of audio streams to surface human voices, creating a technological
@@ -75,7 +75,7 @@ export const mediaLabData = {
       subtitle2: '@ A brick wall',
       year: '2023',
       personal: true,
-      tags: ['installation', 'ai', 'audio'],
+      tags: ['installation', 'audio'],
       description: 'Will we try to help someone even if we know we probably can\'t?',
       customContext: `THIS IS KINDA NOTHING FOR NOW.`
     },

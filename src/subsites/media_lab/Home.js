@@ -147,18 +147,6 @@ const ProjectDescription = styled.p`
   }
 `;
 
-const ProjectTags = styled.p`
-  text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 10px;
-  color: #777;
-  font-style: italic;
-
-  @media screen and (max-width: 768px) {
-    font-size: 9px;
-  }
-`;
-
 const ImagePreview = styled.div`
   position: fixed;
   top: 50%;
@@ -169,11 +157,11 @@ const ImagePreview = styled.div`
   z-index: 5;
   pointer-events: none;
   opacity: ${props => props.$visible ? 0.8 : 0};
-  /*transition: opacity 0.3s ease-in-out;*/
   background-image: url(${props => props.$image});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  border: 1px solid black;
 
   @media screen and (max-width: 768px) {
     width: 70vw;
@@ -208,6 +196,27 @@ const PortfolioButton = styled(Link)`
     padding: 5px 10px;
     font-size: 9px;
   }
+`;
+
+const ProjectMeta = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 10px;
+  color: #3a3a3a;
+  margin-top: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const MetaSeparator = styled.span`
+  width: 14px;
+  height: 1px;
+  background-color: #000;
+  display: inline-block;
 `;
 
 function MediaLabHome() {
@@ -351,7 +360,7 @@ function MediaLabHome() {
           // }
         ]}
         statement="
-        What else is there to say?
+        Thanks for coming by!
         "
         showAnimatedText={false}
       />
@@ -371,6 +380,11 @@ function MediaLabHome() {
                     {project.title}
                   </ProjectTitle>
                   <ProjectDescription>{project.description}</ProjectDescription>
+                  <ProjectMeta>
+                    {project.year && <span>{project.year}</span>}
+                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                  </ProjectMeta>
                 </Project>
               ))}
             </ProjectList>
@@ -391,6 +405,11 @@ function MediaLabHome() {
                     {project.title}
                   </ProjectTitle>
                   <ProjectDescription>{project.description}</ProjectDescription>
+                  <ProjectMeta>
+                    {project.year && <span>{project.year}</span>}
+                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                  </ProjectMeta>
                 </Project>
               ))}
             </ProjectList>
