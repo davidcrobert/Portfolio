@@ -345,7 +345,7 @@ function MediaLabHome() {
       <Header
         title="David Robert"
         subtitle1="Critical Technologist"
-        subtitle2="& Interactive Designer"
+        subtitle2="& Interactive Systems Designer"
         hideBackButton={true}
         customButtons={[
           {
