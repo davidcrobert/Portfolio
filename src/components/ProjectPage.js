@@ -295,7 +295,32 @@ const ProjectPage = () => {
           }
         }
       } else {
-        // Original behavior for non-subsite projects
+        // Check for main portfolio custom project pages
+        try {
+          const { mainPortfolioConfig } = await import('../data/mainPortfolioData');
+          if (mainPortfolioConfig.customProjectPages && mainPortfolioConfig.customProjectPages[projectId]) {
+            const customPageModule = await mainPortfolioConfig.customProjectPages[projectId]();
+            const CustomPageComponent = customPageModule.default;
+
+            for (const category in projectData) {
+              const foundProject = projectData[category].projects.find(
+                p => p.link === `/projects/${projectId}`
+              );
+              if (foundProject) {
+                setProject({ customPageComponent: CustomPageComponent, ...foundProject });
+                setCategoryData(projectData[category]);
+                setSubsiteContext(null);
+                setCustomContext(null);
+                return;
+              }
+            }
+          }
+        } catch (error) {
+          console.error(`Failed to load custom project page for ${projectId}:`, error);
+          // Fall through to default behavior
+        }
+
+        // Default behavior for non-subsite projects
         for (const category in projectData) {
           const foundProject = projectData[category].projects.find(
             p => p.link === `/projects/${projectId}`
@@ -398,7 +423,7 @@ const ProjectPage = () => {
   // Determine the correct back link based on context
   const backLink = subsiteContext
     ? `/${subsiteId}`
-    : `/${categoryData.title.toLowerCase().replace(' ', '-')}`;
+    : '/';
 
   // Determine the title prefix based on context
   const titlePrefix = subsiteContext

@@ -242,7 +242,7 @@ export const CreditRole = styled.span`
 export const ArtistQuoteSection = styled.div`
   margin: 25px 0;
   padding-left: 20px;
-  border-left: 2px solid #333;
+  
 
   @media screen and (max-width: 768px) {
     padding-left: 15px;
@@ -353,9 +353,13 @@ export const useOriginalProject = (project) => {
   const [originalProject, setOriginalProject] = useState(null);
 
   useEffect(() => {
+    // Support both subsite projects (originalLink) and main portfolio projects (link)
+    const lookupLink = project.originalLink || project.link;
+    if (!lookupLink) return;
+
     for (const category in projectData) {
       const foundProject = projectData[category].projects.find(
-        p => p.link === project.originalLink
+        p => p.link === lookupLink
       );
       if (foundProject) {
         setOriginalProject(foundProject);
@@ -382,5 +386,5 @@ export const getCategoryPrefix = (personal) => {
  * @returns {string} - The back link path
  */
 export const getBackLink = (subsiteId) => {
-  return `/${subsiteId}`;
+  return subsiteId ? `/${subsiteId}` : '/';
 };

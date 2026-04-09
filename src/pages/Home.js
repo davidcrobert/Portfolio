@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Sketch from '../components/Sketch';
 import Header from '../components/Header';
-import NotePlayer from '../components/NotePlayer';
-import MinimalBlinkDetection from '../components/BlinkDetection';
-import WelcomeOverlay from '../components/WelcomeOverlay';
+import Sketch from '../components/Sketch';
+import { projectData } from '../data/projectData';
+import { mainPortfolioConfig } from '../data/mainPortfolioData';
 
 const IndexContainer = styled.div`
   background-color: #f9f9f9;
@@ -19,60 +18,189 @@ const IndexContainer = styled.div`
   position: relative;
 `;
 
-const Nav = styled.nav`
-  margin: 0;
-  margin-top: -35px;
-  width: 100%;
-  flex-grow: 1;
+const SplitContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 25px;
-  align-content: center;
-  justify-content: center;
-  text-align: center;
-  gap: 280px; // Adjusted gap for three items
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: 30px;
-    gap: 30px;
   }
 `;
 
-const NavLink = styled(Link)`
+const Side = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  direction: ${props => props.$left ? 'rtl' : 'ltr'};
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 0;
+  }
+`;
+
+const SideContent = styled.div`
+  direction: ltr;
+`;
+
+const SideLabel = styled.div`
+  text-align: center;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 8px;
+  border-bottom: 1px solid black;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  z-index: 10;
+
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    padding: 6px;
+  }
+`;
+
+const ProjectList = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Project = styled.section`
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(25vh);
+  min-height: 150px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 25vh;
+    min-height: 120px;
+    padding: 10px 0;
+  }
+`;
+
+const ProjectTitle = styled(Link)`
   color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 24px;
+  display: inline-block;
   text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 1px black solid;
   transition: transform 0.2s linear;
-  margin: 15px;
+  margin-bottom: 20px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
 
   &:hover {
     cursor: help;
-    transform: rotateX(50deg);
+    transform: rotateX(35deg);
   }
 
   @media screen and (max-width: 768px) {
     font-size: 18px;
-    margin: 10px;
+    max-width: 65%;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
   }
+`;
+
+const ProjectDescription = styled.p`
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+    padding: 0 10px;
+    margin-bottom: 5px;
+  }
+`;
+
+const ImagePreview = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40vw;
+  height: 50vh;
+  z-index: 5;
+  pointer-events: none;
+  opacity: ${props => props.$visible ? 0.8 : 0};
+  background-image: url(${props => props.$image});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid black;
+  transition: opacity 0.2s ease;
+
+  @media screen and (max-width: 768px) {
+    width: 70vw;
+    height: 40vh;
+  }
+`;
+
+const ProjectMeta = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 10px;
+  color: #3a3a3a;
+  margin-top: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const MetaSeparator = styled.span`
+  width: 14px;
+  height: 1px;
+  background-color: #000;
+  display: inline-block;
 `;
 
 const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0px 15px;
-  margin-bottom: 0;
-  position: relative;
   flex-shrink: 0;
+  border-top: 1px solid black;
+  height: 44px;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
+    height: auto;
     gap: 10px;
-    padding-bottom: 15px;
+    padding: 10px 15px;
   }
 `;
 
@@ -85,6 +213,7 @@ const FooterLink = styled(Link)`
 
   &:hover {
     cursor: help;
+    transform: skew(20deg);
   }
 
   @media screen and (max-width: 768px) {
@@ -95,7 +224,6 @@ const FooterLink = styled(Link)`
 const ContactLink = styled.a`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: lowercase;
-  padding-bottom: 20px;
   color: black;
   text-decoration: none;
   font-size: 20px;
@@ -108,13 +236,6 @@ const ContactLink = styled.a`
 
   @media screen and (max-width: 768px) {
     font-size: 18px;
-    padding-bottom: 0;
-  }
-`;
-
-const LeftSkew = styled(FooterLink)`
-  &:hover {
-    transform: skew(20deg);
   }
 `;
 
@@ -137,115 +258,143 @@ const ResumeLink = styled.a`
     font-size: 18px;
     position: static;
     transform: none;
-    
+
     &:hover {
       transform: rotateX(50deg);
     }
   }
 `;
 
-// New styled component for the BLINK message
-const BlinkMessage = styled.div`
-  text-align: center;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-top: 10px;
-  visibility: ${props => props.isVisible ? 'visible' : 'hidden'};
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transition: opacity 0.5s ease-out;
-  animation: pulse 2s infinite;
-  height: 36px; /* Fixed height to prevent layout shifts */
-  
-  @keyframes pulse {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 20px;
-    margin-top: 5px;
-    height: 30px; /* Adjusted height for mobile */
-  }
-`;
-
 function Home() {
-  const [playNoteTrigger, setPlayNoteTrigger] = useState(0);
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [initialVisit, setInitialVisit] = useState(false);
-  // Add a state to track the number of blinks
-  const [blinkCount, setBlinkCount] = useState(0);
+  const [hoveredImage, setHoveredImage] = useState(null);
+  const [imageCache, setImageCache] = useState({});
+  const [activeFilter, setActiveFilter] = useState('all');
 
-  // Check if this is the first visit when component mounts
+  const artProjects = projectData.art.projects;
+  const workProjects = projectData.work.projects;
+
+  // Preload and cache image paths for all projects
   useEffect(() => {
-    const hasVisited = sessionStorage.getItem('hasVisitedPortfolio');
-    if (!hasVisited) {
-      setShowOverlay(true);
-      setInitialVisit(true);
-    }
-  }, []);
+    const allProjects = [...artProjects, ...workProjects];
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'tif'];
 
-  const handleBlink = () => {
-    setPlayNoteTrigger(prev => prev + 1);
-    // Increment the blink count
-    setBlinkCount(prev => prev + 1);
+    allProjects.forEach(project => {
+      const projectId = project.link.split('/').pop();
+
+      const tryLoadImage = (index = 0) => {
+        if (index >= imageExtensions.length) {
+          setImageCache(prev => ({ ...prev, [projectId]: null }));
+          return;
+        }
+        const ext = imageExtensions[index];
+        const imagePath = `/images/projects/${projectId}.${ext}`;
+        const img = new Image();
+        img.onload = () => {
+          setImageCache(prev => ({ ...prev, [projectId]: imagePath }));
+        };
+        img.onerror = () => {
+          tryLoadImage(index + 1);
+        };
+        img.src = imagePath;
+      };
+
+      tryLoadImage();
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleProjectHover = (projectLink) => {
+    const projectId = projectLink.split('/').pop();
+    setHoveredImage(imageCache[projectId] || null);
   };
 
-  const handleClick = () => {
-    setPlayNoteTrigger(prev => prev + 1);
+  const handleProjectLeave = () => {
+    setHoveredImage(null);
   };
 
-  const handleOverlayEnter = () => {
-    setShowOverlay(false);
-    // Mark as visited in sessionStorage
-    sessionStorage.setItem('hasVisitedPortfolio', 'true');
-    // Trigger the first note play when overlay is dismissed
-    setPlayNoteTrigger(prev => prev + 1);
-  };
+  const filteredArt = activeFilter === 'all'
+    ? artProjects
+    : artProjects.filter(p => p.tags && p.tags.includes(activeFilter));
+
+  const filteredWork = activeFilter === 'all'
+    ? workProjects
+    : workProjects.filter(p => p.tags && p.tags.includes(activeFilter));
 
   return (
-    <>
-      {showOverlay && initialVisit && <WelcomeOverlay onEnter={handleOverlayEnter} />}
-      <IndexContainer>
-        {/* <Sketch /> */}
-        <MinimalBlinkDetection onBlink={handleBlink} />
-        <Header 
+    <IndexContainer>
+        <Sketch bottomBoundarySelector="footer" />
+        <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />
+        <Header
           title="David Robert"
-          subtitle1="Creative technologist"
-          subtitle2="& Interactive Designer"
+          subtitle1="Creative Technologist"
+          subtitle2="& Interactive Systems Designer"
+          hideBackButton={true}
+          tags={mainPortfolioConfig.tags}
+          activeFilter={activeFilter}
+          onTagSelect={setActiveFilter}
         />
-        
-        {/* Always render the BLINK message but control visibility with props */}
-        <BlinkMessage isVisible={1}>BLINK</BlinkMessage>
-        
-        <Nav>
-          <NavLink to="/work">↳ Work</NavLink>
-          {/* <NavLink to="/experiments" className="experiments">↓ Experiments</NavLink> */}
-          <NavLink to="/art">↲ Art</NavLink>
-        </Nav>
+
+        <SplitContainer>
+          <Side $left>
+            <SideContent>
+              <SideLabel>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
+              <ProjectList>
+                {filteredWork.map((project, index) => (
+                  <Project key={project.id ?? index}>
+                    <ProjectTitle
+                      to={project.link}
+                      onMouseEnter={() => handleProjectHover(project.link)}
+                      onMouseLeave={handleProjectLeave}
+                    >
+                      {project.title}
+                    </ProjectTitle>
+                    <ProjectDescription>{project.description}</ProjectDescription>
+                    <ProjectMeta>
+                      {project.year && <span>{project.year}</span>}
+                      {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                      {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                    </ProjectMeta>
+                  </Project>
+                ))}
+              </ProjectList>
+            </SideContent>
+          </Side>
+
+          <Side>
+            <SideContent>
+              <SideLabel>{mainPortfolioConfig.leftColumnLabel}</SideLabel>
+              <ProjectList>
+                {filteredArt.map((project, index) => (
+                  <Project key={project.id ?? index}>
+                    <ProjectTitle
+                      to={project.link}
+                      onMouseEnter={() => handleProjectHover(project.link)}
+                      onMouseLeave={handleProjectLeave}
+                    >
+                      {project.title}
+                    </ProjectTitle>
+                    <ProjectDescription>{project.description}</ProjectDescription>
+                    <ProjectMeta>
+                      {project.year && <span>{project.year}</span>}
+                      {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                      {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                    </ProjectMeta>
+                  </Project>
+                ))}
+              </ProjectList>
+            </SideContent>
+          </Side>
+        </SplitContainer>
 
         <Footer>
-          <LeftSkew to="/about">About Me</LeftSkew>
+          <FooterLink to="/about">About Me</FooterLink>
           <ResumeLink href="CV-DavidRobert.pdf" target="_blank" rel="noopener noreferrer">
             résumé
           </ResumeLink>
-          <ContactLink 
-            href="mailto:david.connor.r@gmail.com"
-          >
+          <ContactLink href="mailto:david.connor.r@gmail.com">
             david.connor.r[at]gmail.com
           </ContactLink>
         </Footer>
-        
-        <NotePlayer play={showOverlay ? 0 : playNoteTrigger} />
       </IndexContainer>
-    </>
   );
 }
 

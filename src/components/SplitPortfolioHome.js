@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../../components/Header';
-import Sketch from '../../components/Sketch';
-import { mediaLabData } from './data';
+import Header from './Header';
+import Sketch from './Sketch';
 
 const IndexContainer = styled.div`
   background-color: #f9f9f9;
@@ -185,25 +184,54 @@ const MetaSeparator = styled.span`
   display: inline-block;
 `;
 
-function MediaLabHome() {
+const EmptyState = styled.div`
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+`;
+
+const getProjectLink = (project, projectPathPrefix) => {
+  const sourceLink = project.originalLink || project.link;
+  const slug = sourceLink.split('/').pop();
+  return `${projectPathPrefix}/${slug}`;
+};
+
+const getProjectSlug = (project) => {
+  const sourceLink = project.originalLink || project.link;
+  return sourceLink.split('/').pop();
+};
+
+function SplitPortfolioHome({
+  title,
+  subtitle1,
+  subtitle2,
+  sections,
+  tags,
+  statement,
+  customButtons,
+  showAnimatedText = false,
+  projectPathPrefix = '/projects'
+}) {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
+  const [activeFilter, setActiveFilter] = useState('all');
 
-  // Split projects into professional and personal
-  const personalProjects = mediaLabData.projects.filter(p => p.personal === true);
-  const professionalProjects = mediaLabData.projects.filter(p => p.personal !== true);
-
-  // Preload and cache image paths for all projects
   useEffect(() => {
+    const allProjects = sections.flatMap(section => section.projects);
     const imageExtensions = ['jpg', 'jpeg', 'png', 'tif'];
 
-    mediaLabData.projects.forEach(project => {
-      const projectId = project.originalLink.split('/').pop();
+    allProjects.forEach(project => {
+      const projectId = getProjectSlug(project);
 
-      // Try each extension in order
       const tryLoadImage = (index = 0) => {
         if (index >= imageExtensions.length) {
-          // No image found for any extension
           setImageCache(prev => ({ ...prev, [projectId]: null }));
           return;
         }
@@ -217,7 +245,6 @@ function MediaLabHome() {
         };
 
         img.onerror = () => {
-          // Try next extension
           tryLoadImage(index + 1);
         };
 
@@ -226,11 +253,10 @@ function MediaLabHome() {
 
       tryLoadImage();
     });
-  }, []);
+  }, [sections]);
 
-  const handleProjectHover = (projectLink) => {
-    const projectId = projectLink.split('/').pop();
-    // Use cached image path (will be null if no image exists)
+  const handleProjectHover = (project) => {
+    const projectId = getProjectSlug(project);
     setHoveredImage(imageCache[projectId] || null);
   };
 
@@ -238,74 +264,66 @@ function MediaLabHome() {
     setHoveredImage(null);
   };
 
+  const mergedButtons = customButtons || [];
+
+  const filteredSections = sections.map(section => ({
+    ...section,
+    projects: activeFilter === 'all'
+      ? section.projects
+      : section.projects.filter(project => project.tags?.includes(activeFilter))
+  }));
+
   return (
     <IndexContainer>
       <Sketch />
       <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />
       <Header
-        title="David Robert"
-        subtitle1="Critical Technologist"
-        subtitle2="& Interactive Systems Designer"
+        title={title}
+        subtitle1={subtitle1}
+        subtitle2={subtitle2}
         hideBackButton={true}
-        statement="
-        Thanks for coming by!
-        "
-        showAnimatedText={false}
+        customButtons={mergedButtons}
+        statement={statement}
+        showAnimatedText={showAnimatedText}
+        tags={tags}
+        activeFilter={activeFilter}
+        onTagSelect={setActiveFilter}
       />
 
       <SplitContainer>
-        <Side $left>
-          <SideContent>
-            <SideLabel $left>Personal [Individual]</SideLabel>
-            <ProjectList>
-              {personalProjects.map((project, index) => (
-                <Project key={index}>
-                  <ProjectTitle
-                    to={`/media_lab/projects/${project.originalLink.split('/').pop()}`}
-                    onMouseEnter={() => handleProjectHover(project.originalLink)}
-                    onMouseLeave={handleProjectLeave}
-                  >
-                    {project.title}
-                  </ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <ProjectMeta>
-                    {project.year && <span>{project.year}</span>}
-                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
-                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
-                  </ProjectMeta>
-                </Project>
-              ))}
-            </ProjectList>
-          </SideContent>
-        </Side>
-
-        <Side>
-          <SideContent>
-            <SideLabel>Professional [Group]</SideLabel>
-            <ProjectList>
-              {professionalProjects.map((project, index) => (
-                <Project key={index}>
-                  <ProjectTitle
-                    to={`/media_lab/projects/${project.originalLink.split('/').pop()}`}
-                    onMouseEnter={() => handleProjectHover(project.originalLink)}
-                    onMouseLeave={handleProjectLeave}
-                  >
-                    {project.title}
-                  </ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <ProjectMeta>
-                    {project.year && <span>{project.year}</span>}
-                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
-                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
-                  </ProjectMeta>
-                </Project>
-              ))}
-            </ProjectList>
-          </SideContent>
-        </Side>
+        {filteredSections.map((section, index) => (
+          <Side key={section.label} $left={index === 0}>
+            <SideContent>
+              <SideLabel>{section.label}</SideLabel>
+              <ProjectList>
+                {section.projects.length > 0 ? (
+                  section.projects.map(project => (
+                    <Project key={project.link || project.originalLink}>
+                      <ProjectTitle
+                        to={getProjectLink(project, projectPathPrefix)}
+                        onMouseEnter={() => handleProjectHover(project)}
+                        onMouseLeave={handleProjectLeave}
+                      >
+                        {project.title}
+                      </ProjectTitle>
+                      <ProjectDescription>{project.description}</ProjectDescription>
+                      <ProjectMeta>
+                        {project.year && <span>{project.year}</span>}
+                        {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                        {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                      </ProjectMeta>
+                    </Project>
+                  ))
+                ) : (
+                  <EmptyState>No projects match this filter.</EmptyState>
+                )}
+              </ProjectList>
+            </SideContent>
+          </Side>
+        ))}
       </SplitContainer>
     </IndexContainer>
   );
 }
 
-export default MediaLabHome;
+export default SplitPortfolioHome;

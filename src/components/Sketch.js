@@ -1,12 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import p5 from 'p5';
 
-const Sketch = () => {
+const Sketch = ({ bottomBoundarySelector }) => {
   const sketchContainerRef = useRef();
 
   useEffect(() => {
     let canvas = null;
-    const headerHeight = document.querySelector('header').offsetHeight;
+    const headerElement = document.querySelector('header');
+    const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+    const getBottomBoundary = () => {
+      if (!bottomBoundarySelector) {
+        return window.innerHeight;
+      }
+
+      const boundaryElement = document.querySelector(bottomBoundarySelector);
+      return boundaryElement ? boundaryElement.getBoundingClientRect().top : window.innerHeight;
+    };
 
     const sketch = (p) => {
       let pillarPoints = [];
@@ -16,13 +25,14 @@ const Sketch = () => {
       let yPos = headerHeight;
       let direction = 1;
       const strokeWeight = 0.6;
+      let bottomBoundary = getBottomBoundary();
 
       p.setup = () => {
         canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         canvas.position(0, 0);
         canvas.style('z-index', '2');
         p.clear();
-        highestY = p.height;
+        highestY = bottomBoundary;
       };
 
       p.draw = () => {
@@ -31,9 +41,9 @@ const Sketch = () => {
         yPos += direction;
         highestY = p.max(yPos, highestY);
 
-        if (yPos > p.height) {
+        if (yPos > bottomBoundary) {
           direction *= -1;
-          yPos = p.height;
+          yPos = bottomBoundary;
         } else if (yPos < headerHeight) {
           direction *= -1;
           yPos = headerHeight;
@@ -56,6 +66,9 @@ const Sketch = () => {
 
       p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
+        bottomBoundary = getBottomBoundary();
+        highestY = p.max(highestY, bottomBoundary);
+        yPos = p.min(yPos, bottomBoundary);
         redrawPillar();
       };
 
@@ -95,7 +108,7 @@ const Sketch = () => {
         left: 0, 
         width: '100%', 
         height: '100%', 
-        zIndex: 2, 
+        zIndex: 11, 
         pointerEvents: 'none' 
       }} 
     />

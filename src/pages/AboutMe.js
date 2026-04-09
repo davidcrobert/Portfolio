@@ -50,7 +50,7 @@ const AboutParagraph = styled.p`
 const AboutMe = () => {
   return (
     <AboutMeContainer>
-      <Header 
+      <Header
         title="About Me"
         subtitle1="Professionally"
         subtitle2="& Personally"
@@ -67,7 +67,7 @@ const AboutMe = () => {
         <AboutParagraph className="left">I was a Creative Technologist at TMU's <a href="https://www.ryerson.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</a></AboutParagraph>
         <AboutParagraph className="right">I currently live in Montreal [Canada]</AboutParagraph>
         <AboutParagraph className="left">I was a Research Assistant in the <a href="https://www.torontomu.ca/bergmann/research/tripl/" target="_blank" rel="noopener noreferrer">Technology Research in Performance Lab</a> on a project involving improvised human-AI co-performances using the OpenAI API</AboutParagraph>
-        <AboutParagraph className="right">I'm interested in food and fashion</AboutParagraph>
+        <AboutParagraph className="right">I'm passionate about architecture & performance & film & fashion (& technology)</AboutParagraph>
         <AboutParagraph className="left">I was previously a Creative Developer Intern at <a href="https://www.jam3.com/" target="_blank" rel="noopener noreferrer">Jam3</a></AboutParagraph>
         <AboutParagraph className="right">I like techno and classical music</AboutParagraph>
         <AboutParagraph className="left">I was also a Research Assistant investigating <a href="http://dx.doi.org/10.14236/ewic/EVA2022.39" target="_blank" rel="noopener noreferrer">AR and spatialized sound</a> for user experience in digitally-delivered orchestral music</AboutParagraph>

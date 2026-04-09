@@ -39,15 +39,12 @@ const TitleContainer = styled.div`
 
 const CenterArea = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
+  justify-content: center;
   flex: 0 0 auto;
   min-width: 0;
-  align-self: stretch;
+  align-self: center;
   height: 100%;
-  padding-bottom: 6px; /* nudge toward the bottom edge */
 `;
 
 const RightSide = styled.div`
