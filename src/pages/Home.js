@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Sketch from '../components/Sketch';
+import FloatingImages from '../components/FloatingImagesFixed';
 import { projectData } from '../data/projectData';
 import { mainPortfolioConfig } from '../data/mainPortfolioData';
 
@@ -143,28 +144,6 @@ const ProjectDescription = styled.p`
   }
 `;
 
-const ImagePreview = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40vw;
-  height: 50vh;
-  z-index: 5;
-  pointer-events: none;
-  opacity: ${props => props.$visible ? 0.8 : 0};
-  background-image: url(${props => props.$image});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 1px solid black;
-  transition: opacity 0.2s ease;
-
-  @media screen and (max-width: 768px) {
-    width: 70vw;
-    height: 40vh;
-  }
-`;
 
 const ProjectMeta = styled.div`
   display: inline-flex;
@@ -266,7 +245,7 @@ const ResumeLink = styled.a`
 `;
 
 function Home() {
-  const [hoveredImage, setHoveredImage] = useState(null);
+  const [hoveredProjectId, setHoveredProjectId] = useState(null);
   const [imageCache, setImageCache] = useState({});
   const [activeFilter, setActiveFilter] = useState('all');
 
@@ -302,13 +281,20 @@ function Home() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const floatingImages = useMemo(() =>
+    Object.entries(imageCache)
+      .filter(([, src]) => src)
+      .map(([id, src]) => ({ id, src })),
+    [imageCache]
+  );
+
   const handleProjectHover = (projectLink) => {
     const projectId = projectLink.split('/').pop();
-    setHoveredImage(imageCache[projectId] || null);
+    setHoveredProjectId(projectId);
   };
 
   const handleProjectLeave = () => {
-    setHoveredImage(null);
+    setHoveredProjectId(null);
   };
 
   const filteredArt = activeFilter === 'all'
@@ -322,7 +308,7 @@ function Home() {
   return (
     <IndexContainer>
         <Sketch bottomBoundarySelector="footer" />
-        <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />
+        <FloatingImages images={floatingImages} summonedId={hoveredProjectId} />
         <Header
           title="David Robert"
           subtitle1="Creative Technologist"
