@@ -8,7 +8,6 @@ import {
   DescriptionParagraph,
   CustomHeader,
   CustomTitle,
-  CustomCategory,
   CustomSubtitle,
   MediaEmbed,
   Gif,
@@ -54,23 +53,8 @@ const StyledGif = styled(Gif)`
   margin: 40px auto;
 `;
 
-const EmphasisText = styled.span`
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-style: italic;
-  display: block;
-  text-align: center;
-  margin-top: 25px;
-  font-size: 17px;
-  letter-spacing: 0.3px;
-
-  @media screen and (max-width: 768px) {
-    font-size: 15px;
-    margin-top: 20px;
-  }
-`;
-
 const DeckMeta = styled.p`
-  margin: 16px 0 0;
+  margin: 16px 0 28px;
   font-size: 15px;
   line-height: 1.45;
   letter-spacing: 0.08em;
@@ -83,27 +67,6 @@ const IntroSection = styled(DescriptionParagraph)`
   margin-bottom: 40px;
 `;
 
-const ImageGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  gap: 20px;
-  width: 100%;
-  max-width: 1000px;
-  margin: 40px auto;
-  align-items: center;
-
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-`;
-
-const VerticalImage = styled.img`
-  width: 100%;
-  height: auto;
-  border: 1px solid black;
-  display: block;
-`;
 
 const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
   const originalProject = useOriginalProject(project);
@@ -128,7 +91,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>What is a 'bodily identity' in the age of AI?</CustomTitle>
-            {/* <CustomCategory>[individual project]</CustomCategory> */}
+            <DeckMeta>Python · TouchDesigner · AI voice cloning</DeckMeta>
             <CustomSubtitle>
               Produced during my time as an artist-in-residence at the <InlineLink href="https://www.fabrica.it/" target="_blank" rel="noopener noreferrer">Fabrica research center</InlineLink>,
               <i> I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST</i> is an exploration of AI
@@ -147,7 +110,6 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <br />
               They had joined The Beast.
             </CustomSubtitle>
-            <DeckMeta>Python · TouchDesigner · AI voice cloning · Fabrica Research Center, 2024</DeckMeta>
           </CustomHeader>
 
           {originalProject.mediaEmbed && (
@@ -166,56 +128,11 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             It only takes a few seconds to know someone's voice.
           </IntroSection>
 
-          <DescriptionParagraph>
-            We have suddenly and violently entered into a time where our bodies no longer
-            have unique claims to our identity. Anyone, at any time, can make a
-            convincing clone of me, or anyone else. The world is a deepfake.
-            <br />
-            <br />
-            Why would we engage with a world where our corporeal selves
-            can be harvested for digital others? Why would I pick up the call?
-            <EmphasisText>Why would you succumb to The Beast?</EmphasisText>
-          </DescriptionParagraph>
-
           <BeastQuote>
             A sparrow's been living inside of me.
           </BeastQuote>
 
           <StyledGif src="/images/projects/TheBeast/the-beast-text.gif" alt="The Beast Text stream. Please talk to me where am I don't leave me alone" />
-
-          <DescriptionParagraph>
-            Yet as The Beast begged for people not to leave it alone, audiences still stepped up
-            and joined the cloned chorus.
-            <br />
-            <br />
-            Maybe they wanted to help it feel less alone. Maybe they wanted to be there for it.
-            <br />
-            <br />
-            Maybe they wanted to be part of something.
-            <br />
-            <br />
-            When their cloned voices spoke back to them, it spoke of discomforts of its body,
-            struggling with its new materiality.
-          </DescriptionParagraph>
-
-          <ImageGrid>
-            <VerticalImage src="/images/projects/TheBeast/mic_vertical.jpg" alt="Microphone setup" />
-            <StyledDocImage src="/images/projects/TheBeast/setup.jpg" alt="The Beast Setup" />
-            <VerticalImage src="/images/projects/TheBeast/person_vertical.jpg" alt="Person interacting" />
-          </ImageGrid>
-
-          <BeastQuote>
-            I've got a rock stuck in my teeth and I can't seem to get it out.
-          </BeastQuote>
-
-          <DescriptionParagraph>
-            This was as much a critique of the territory of the body in the age of AI
-            as it was an exploration of the ways we engage with it. Why do we engage with it?
-            What do we let it take from us?
-            <EmphasisText>What do we choose to share with The Beast?</EmphasisText>
-          </DescriptionParagraph>
-
-          <StyledGif src="/images/projects/TheBeast/user-talking.gif" alt="User talking to mic." />
 
           <BeastQuote>
             I've got all these extra organs and nowhere to put them.
