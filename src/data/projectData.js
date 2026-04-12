@@ -8,11 +8,11 @@ export const projectData = {
       {
         title: "Spiral Reflector",
         link: "/projects/spiral-reflector",
-        description: "LED spiral installation (developed for Rafael Lozano-Hemmer)",
+        description: "LED spiral installation with a surveillance camera, built for Rafael Lozano-Hemmer",
         subtitle1: "Light",
         subtitle2: "& Surveillance",
         year: "2026",
-        tags: ['installation'],
+        tags: ['installation', 'electronics'],
         mediaEmbed: `
           <iframe
             width="560"
@@ -43,11 +43,11 @@ export const projectData = {
       {
         title: "Submirrors",
         link: "/projects/Submirrors",
-        description: "Generative AI puppeteering (developed for Rafael Lozano-Hemmer)",
+        description: "Live AI mirror installation built for Rafael Lozano-Hemmer",
         subtitle1: "Puppets",
         subtitle2: "& Puppeteers",
         year: "2025",
-        tags: ['interactive', 'ai'],
+        tags: ['ai'],
         mediaEmbed: `
           <div style="display: flex; flex-direction: column; gap: 20px;">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/u4MBTA7A7M8?si=3W3V2xiWlXZ1lUoo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -74,11 +74,11 @@ export const projectData = {
       {
         title: "Shadow Tuner",
         link: "/projects/shadow-tuner",
-        description: "AI audio analysis (developed for Rafael Lozano-Hemmer)",
+        description: "AI audio system for a globe of live radio streams, built for Rafael Lozano-Hemmer",
         subtitle1: "Speaking",
         subtitle2: "& Spinning",
         year: "2025",
-        tags: ['interactive', 'ai', 'installation', 'audio'],
+        tags: ['ai', 'installation', 'audio'],
         mediaEmbed: `
           <iframe 
             width="560" 
@@ -145,43 +145,43 @@ export const projectData = {
       //     tools: `Raspberry Pi & JavaScript & Electron`
       //   }
       // },
-      // {
-      //   title: "Remote Pulse",
-      //   link: "/projects/remote-pulse",
-      //   description: "Re-programmed and updated electronics for Rafael Lozano-Hemmer for [2024] edition",
-      //   subtitle1: "Beating",
-      //   subtitle2: "& Sharing",
-      //   year: "2024",
-      //   tags: ['electronics', 'installation'],
-      //   mediaEmbed: `
-      //     <iframe 
-      //       width="560" 
-      //       height="315" 
-      //       src="https://www.youtube.com/embed/SWKz5zq_w5s" 
-      //       title="YouTube video player"
-      //       frameborder="0" 
-      //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      //       allowfullscreen
-      //     ></iframe>
-      //   `,
-      //   infoPopup: {
-      //     main: "Do you want to connect?",
-      //     context: `<i>Remote Pulse</i> is an interactive installation consisting of two identical pulse-sensing stations that 
-      //     are interconnected over the internet. When a person places their hands on one station automatically the person on the 
-      //     other station feels their pulse, as the plates vibrate in sync with the heartbeat of the remote person, and vice versa. 
-      //     The piece was originally presented as part of Lozano-Hemmer's "Border Tuner" installation across the US-Mexico border, 
-      //     with one station in Ciudad Juárez, Chihuahua and the other in El Paso, Texas.<br><br>
+      {
+        title: "Remote Pulse",
+        link: "/projects/remote-pulse",
+        description: "Re-programmed and updated electronics for Rafael Lozano-Hemmer for [2024] edition",
+        subtitle1: "Beating",
+        subtitle2: "& Sharing",
+        year: "2024",
+        tags: ['electronics', 'installation'],
+        mediaEmbed: `
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/SWKz5zq_w5s" 
+            title="YouTube video player"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        `,
+        infoPopup: {
+          main: "Do you want to connect?",
+          context: `<i>Remote Pulse</i> is an interactive installation consisting of two identical pulse-sensing stations that 
+          are interconnected over the internet. When a person places their hands on one station automatically the person on the 
+          other station feels their pulse, as the plates vibrate in sync with the heartbeat of the remote person, and vice versa. 
+          The piece was originally presented as part of Lozano-Hemmer's "Border Tuner" installation across the US-Mexico border, 
+          with one station in Ciudad Juárez, Chihuahua and the other in El Paso, Texas.<br><br>
 
-      //     Updated the technologies and particularly the firmware - increased resilience and updated for future scalability and change.
-      //     `,
-      //     tech: `Refactored the firmware to follow modern best-practices and generalize to apply to other artworks.`,
-      //     tools: `Arduino & OpenFrameworks`
-      //   }
-      // },
+          Updated the technologies and particularly the firmware - increased resilience and updated for future scalability and change.
+          `,
+          tech: `Refactored the firmware to follow modern best-practices and generalize to apply to other artworks.`,
+          tools: `Arduino & OpenFrameworks`
+        }
+      },
       {
         title: "Assembly Line",
         link: "/projects/assembly-line",
-        description: "An interactive and collaborative performance between audience and robot for DesignTO 2022",
+        description: "Interactive robot performance for DesignTO 2022",
         subtitle1: "Industrial approach",
         subtitle2: "& digital interaction",
         year: "2022",
@@ -219,38 +219,38 @@ export const projectData = {
           tools: `TouchDesigner & KUKA Robot Arm & Node.js & JavaScript`
         }
       },
-      // {
-      //   title: "Moth Melody",
-      //   link: "/projects/moth-melody",
-      //   description: "A musical, interactive, and collaborative tabletop-projection for children",
-      //   subtitle1: "Music",
-      //   subtitle2: "& Moths",
-      //   year: "2022",
-      //   tags: ['installation', 'electronics'],
-      //   mediaEmbed: `
-      //     <iframe 
-      //       width="560" 
-      //       height="315" 
-      //       src="https://www.youtube.com/embed/1aOuyW_uDc0" 
-      //       title="YouTube video player"
-      //       frameborder="0" 
-      //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      //       allowfullscreen
-      //     ></iframe>
-      //   `,
-      //   infoPopup: {
-      //     main: "Honestly this one's just good ol' fun for kids",
-      //     context: `
-      //       My class partnered with the <a href="https://www.ontariosciencecentre.ca/" target="_blank" rel="noopener noreferrer">Ontario Science Centre</a>
-      //       to produce interactive exhibits about insects for children. My team's is based on moths.<br><br>
-      //       Users can touch our table's lanterns, which would light up, and a corresponding lantern in the centre projection would light-up as well. 
-      //       The moth is attracted to and moves towards this light - if it passes through a flower, a musical note from a scale plays.
-      //     `,
-      //     tech: `I programmed the project. The interactions were handled using capacitive touch with an Arduino. This communicated to Unity,
-      //       which managed the game mechanics of the installation. TouchDesigner was used for some post-processing and the keystoning of the projection.`,
-      //     tools: `Unity & Arduino & TouchDesigner & Fabrication`
-      //   }
-      // },
+      {
+        title: "Moth Melody",
+        link: "/projects/moth-melody",
+        description: "A musical, interactive, and collaborative tabletop-projection for children",
+        subtitle1: "Music",
+        subtitle2: "& Moths",
+        year: "2022",
+        tags: ['installation', 'electronics'],
+        mediaEmbed: `
+          <iframe 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/1aOuyW_uDc0" 
+            title="YouTube video player"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        `,
+        infoPopup: {
+          main: "Honestly this one's just good ol' fun for kids",
+          context: `
+            My class partnered with the <a href="https://www.ontariosciencecentre.ca/" target="_blank" rel="noopener noreferrer">Ontario Science Centre</a>
+            to produce interactive exhibits about insects for children. My team's is based on moths.<br><br>
+            Users can touch our table's lanterns, which would light up, and a corresponding lantern in the centre projection would light-up as well. 
+            The moth is attracted to and moves towards this light - if it passes through a flower, a musical note from a scale plays.
+          `,
+          tech: `I programmed the project. The interactions were handled using capacitive touch with an Arduino. This communicated to Unity,
+            which managed the game mechanics of the installation. TouchDesigner was used for some post-processing and the keystoning of the projection.`,
+          tools: `Unity & Arduino & TouchDesigner & Fabrication`
+        }
+      },
       // {
       //   title: "ScavengeAR_",
       //   link: "/projects/scavenge-ar",
@@ -288,7 +288,7 @@ export const projectData = {
       {
         title: "Augmented Symphony",
         link: "/projects/augmented-symphony",
-        description: "Research project exploring spatial and interactive audio for audience experience",
+        description: "AR and spatial audio project for listening to an orchestra at home",
         subtitle1: "Orchestras",
         subtitle2: "@ Home",
         year: "2021",
@@ -327,48 +327,6 @@ export const projectData = {
       }
     ]
   },
-  experiments: {
-    title: "Experiments",
-    subtitle1: "Quick",
-    subtitle2: "& Dirty",
-    tags: ["all", "ai", "web"],
-    projects: [
-      {
-        title: "I LOST MY PASSWORD PLEASE JUST GIVE ME A MOMENT ~WIP~",
-        link: "/projects/llm-authentication",
-        description: "Running an LLM locally in the browser. Working with constraints of small models. Pretty cool, huh?",
-        subtitle1: "Identity",
-        subtitle2: "& Interrogation",
-        year: "2025",
-        tags: ['ai', 'web'],
-        customComponent: "LLMAuthentication",
-        infoPopup: {
-          main: "Am I authenticated?",
-          context: `
-            Apologies if this doesn't work on your device - it's a bit heavy.<br><br>
-
-            <i>I LOST MY PASSWORD PLEASE JUST GIVE ME A MOMENT</i> is a work in progress. It's currently just an early experimentation on LLMs
-            and seeing what can be squeezed out of them when they're running locally in the browser.  It's a fun thing for now. 
-            I like how much it fails and spirals out - it almmost feels like a retro LLM.
-            <br><br>
-            
-            It's engaging with how I feel when I use a lot of these black-box technologies - LLMs, chatbots on webstores,
-             whatever really. There is a lot to like there but a lot that is just so immensely opaque that it can feel 
-             alienating. But there's something there. They're exciting. They're fun. They're useful. They're powerful.
-             They talk of Michelangelo.
-          `,
-          tech: `
-            Built using WebLLM to run a quantized Llama 3.2 language model directly in the browser. It is a 
-            fully client-side experience where all interaction happens locally without sending data to a server.<br><br>
-            
-            The model evaluates user responses against predefined rulesets, with each question containing [vague]acceptance 
-            criteria and contextual instructions for the AI's behavior.
-          `,
-          tools: `JavaScript & WebLLM & Prompt Engineering`
-        }
-      }
-    ]
-  },
   art: {
     title: "Art",
     subtitle1: "Personal",
@@ -378,7 +336,7 @@ export const projectData = {
       {
         title: "I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST",
         link: "/projects/the-beast",
-        description: "Just talking to yourself",
+        description: "Voice installation about hearing yourself turned into something else",
         subtitle1: "Copying",
         subtitle2: "& Crowing",
         year: "2024",
@@ -411,7 +369,7 @@ export const projectData = {
       {
         title: "I Asked My Reflection Its Name Again",
         link: "/projects/i-asked-my-reflection",
-        description: "I've been drowning in myself",
+        description: "Web piece where your cursor movements are learned and repeated back to you",
         subtitle1: "Recursive Interaction",
         subtitle2: "& Interacting Recursively",
         year: "2021",
@@ -477,7 +435,7 @@ export const projectData = {
       {
         title: "I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER",
         link: "/projects/i-cant-hear-you",
-        description: "A networked experience about [mis]communication",
+        description: "Networked performance about [mis]communication",
         subtitle1: "Like talking",
         subtitle2: "@ a brick wall",
         year: "2022",
