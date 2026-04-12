@@ -6,8 +6,13 @@ const Sketch = ({ bottomBoundarySelector }) => {
 
   useEffect(() => {
     let canvas = null;
-    const headerElement = document.querySelector('header');
-    const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+    let p5Instance = null;
+
+    const getHeaderHeight = () => {
+      const headerElement = document.querySelector('header');
+      return headerElement ? headerElement.offsetHeight : 0;
+    };
+
     const getBottomBoundary = () => {
       if (!bottomBoundarySelector) {
         return window.innerHeight;
@@ -19,27 +24,76 @@ const Sketch = ({ bottomBoundarySelector }) => {
 
     const sketch = (p) => {
       let pillarPoints = [];
-      let highestY;
       let previousPoint = null;
-      let xPos = null;
-      let yPos = headerHeight;
+      let xRatio = null;
+      let yPos = 0;
       let direction = 1;
       const strokeWeight = 0.6;
+      let headerHeight = getHeaderHeight();
       let bottomBoundary = getBottomBoundary();
+
+      const getDrawableHeight = () => {
+        const drawableHeight = bottomBoundary - headerHeight;
+        return drawableHeight > 0 ? drawableHeight : 1;
+      };
+
+      const getNormalizedY = (y) => {
+        return p.constrain((y - headerHeight) / getDrawableHeight(), 0, 1);
+      };
+
+      const denormalizePoint = (point) => {
+        const centerBandHalfWidth = 40;
+        return {
+          x: p.map(
+            point.xRatio,
+            0,
+            1,
+            p.width * 0.5 - centerBandHalfWidth,
+            p.width * 0.5 + centerBandHalfWidth
+          ),
+          y: headerHeight + point.yRatio * getDrawableHeight()
+        };
+      };
+
+      const drawSegment = (fromPoint, toPoint) => {
+        p.strokeWeight(strokeWeight);
+        p.stroke(0);
+        p.line(fromPoint.x, fromPoint.y, toPoint.x, toPoint.y);
+      };
+
+      const redrawPillar = () => {
+        p.clear();
+
+        if (pillarPoints.length < 2) {
+          return;
+        }
+
+        for (let i = 1; i < pillarPoints.length; i += 1) {
+          drawSegment(denormalizePoint(pillarPoints[i - 1]), denormalizePoint(pillarPoints[i]));
+        }
+      };
+
+      const refreshBounds = () => {
+        headerHeight = getHeaderHeight();
+        bottomBoundary = getBottomBoundary();
+        yPos = p.constrain(yPos, headerHeight, bottomBoundary);
+      };
 
       p.setup = () => {
         canvas = p.createCanvas(p.windowWidth, p.windowHeight);
         canvas.position(0, 0);
         canvas.style('z-index', '2');
+        refreshBounds();
         p.clear();
-        highestY = bottomBoundary;
+        yPos = headerHeight;
       };
 
       p.draw = () => {
-        if (xPos === null) return;
+        if (xRatio === null) return;
+
+        refreshBounds();
 
         yPos += direction;
-        highestY = p.max(yPos, highestY);
 
         if (yPos > bottomBoundary) {
           direction *= -1;
@@ -48,17 +102,17 @@ const Sketch = ({ bottomBoundarySelector }) => {
           direction *= -1;
           yPos = headerHeight;
         }
-        
-        xPos = p.lerp(p.pmouseX, p.mouseX, 0.25);
-        pillarPoints.push({ x: xPos, y: yPos });
 
-        let mappedX = p.map(xPos, 0, p.width, p.width * 0.5 - 40, p.width * 0.5 + 40);
-        let currentPoint = { x: mappedX, y: yPos };
+        const smoothedX = p.lerp(p.pmouseX, p.mouseX, 0.25);
+        const currentPoint = {
+          xRatio: p.constrain(smoothedX / p.width, 0, 1),
+          yRatio: getNormalizedY(yPos)
+        };
+
+        pillarPoints.push(currentPoint);
 
         if (previousPoint) {
-          p.strokeWeight(strokeWeight);
-          p.stroke(0);
-          p.line(currentPoint.x, currentPoint.y, previousPoint.x, previousPoint.y);
+          drawSegment(denormalizePoint(previousPoint), denormalizePoint(currentPoint));
         }
 
         previousPoint = currentPoint;
@@ -66,37 +120,31 @@ const Sketch = ({ bottomBoundarySelector }) => {
 
       p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
-        bottomBoundary = getBottomBoundary();
-        highestY = p.max(highestY, bottomBoundary);
-        yPos = p.min(yPos, bottomBoundary);
+        refreshBounds();
         redrawPillar();
       };
 
       p.mouseMoved = () => {
-        if (xPos === null) {
-          xPos = p.mouseX;
+        if (xRatio === null) {
+          xRatio = p.constrain(p.mouseX / p.width, 0, 1);
+          previousPoint = {
+            xRatio,
+            yRatio: getNormalizedY(yPos)
+          };
         }
-      };
-
-      const redrawPillar = () => {
-        p.strokeWeight(strokeWeight);
-        p.stroke(0);
-        pillarPoints.forEach(point => {
-          let mappedX = p.map(point.x, 0, p.width, p.width * 0.5 - 40, p.width * 0.5 + 40);
-          let mappedY = p.map(point.y, 0, highestY, 0, p.height);
-          p.point(mappedX, mappedY);
-        });
       };
     };
 
-    new p5(sketch, sketchContainerRef.current);
+    p5Instance = new p5(sketch, sketchContainerRef.current);
 
     return () => {
-      if (canvas) {
+      if (p5Instance) {
+        p5Instance.remove();
+      } else if (canvas) {
         canvas.remove();
       }
     };
-  }, []);
+  }, [bottomBoundarySelector]);
 
   return (
     <div 
