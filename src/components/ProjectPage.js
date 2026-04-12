@@ -7,12 +7,10 @@ import { projectData } from '../data/projectData';
 import { getSubsite } from '../data/subsiteData';
 import ScavengeARMedia from './ScavengeARMedia';
 import ReflectionInteractive from './ReflectionInteractive';
-import LLMAuthentication from './LLMAuthentication';
 
 const customComponents = {
   ScavengeARMedia,
-  ReflectionInteractive,
-  LLMAuthentication
+  ReflectionInteractive
 };
 
 // Component wrapper for custom subsite project pages
@@ -452,7 +450,7 @@ const ProjectPage = () => {
           )}
         </ProjectContent>
       </MainContent>
-      
+
       {isInfoOpen && (
         <InfoPopup ref={infoPopupRef}>
           {project.infoPopup.main && (
