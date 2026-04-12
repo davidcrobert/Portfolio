@@ -5,9 +5,7 @@ import {
   PageWrapper,
   MainContent,
   ProjectContent,
-  DescriptionParagraph,
   CustomHeader,
-  CustomTitle,
   CustomCategory,
   CustomSubtitle,
   MediaEmbed,
@@ -20,9 +18,6 @@ import {
   CreditItem,
   CreditName,
   CreditRole,
-  ArtistQuoteSection,
-  ArtistQuoteLabel,
-  ArtistQuoteText,
   ExternalLink,
   InlineLink,
   cleanYouTubeEmbed,
@@ -31,21 +26,39 @@ import {
 
 const ImageGallery = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
   width: 100%;
-  max-width: 750px;
-  margin: 50px auto;
+  max-width: 960px;
+  margin: 30px auto 40px;
 
   @media screen and (max-width: 768px) {
-    gap: 4px;
+    grid-auto-flow: column;
+    grid-auto-columns: 72vw;
+    grid-template-columns: none;
+    gap: 8px;
+    margin: 24px auto 32px;
+    padding-bottom: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
   }
 `;
 
 const GalleryCell = styled.div`
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   background-color: #111;
+  scroll-snap-align: start;
 
   img {
     width: 100%;
@@ -83,24 +96,27 @@ const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>What does surveillance look like when it's the spectacle?</CustomTitle>
             <CustomCategory>[professional / group project]</CustomCategory>
             <CustomSubtitle>
-              <i>Spiral Reflector</i> is a large-scale LED installation I developed as a software engineer
-              for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
-              exhibited at the Museo de Arte Moderno in Mexico City.
-              300 metres of LED lights in a tubular diffuser form a spiral seven-metres in diameter. A PTZ camera at the
-              center continuously rotates and captures images that are rendered to the single-line 'canvas', casting bright points
-              down the spiral.
-              <ArtistQuoteSection>
-                <ArtistQuoteLabel>In the artist's words:</ArtistQuoteLabel>
-                <ArtistQuoteText>
-                  "The work explores visibility's seductive allure — recognition, inclusion, self-imaging —
-                  while critiquing predatory surveillance and contemporary metrics cultures."
-                </ArtistQuoteText>
-              </ArtistQuoteSection>
+              <i>Spiral Reflector</i> is a large-scale LED installation I developed as a software
+              engineer for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
+              exhibited at the Museo de Arte Moderno in Mexico City. 300 metres of LED lights in a
+              tubular diffuser form a spiral seven-metres in diameter. A PTZ camera at the center
+              continuously rotates and captures images that are rendered to the single-line
+              'canvas', casting bright points down the spiral.
             </CustomSubtitle>
           </CustomHeader>
+
+          <ImageGallery>
+            {GALLERY_IMAGES.map(n => (
+              <GalleryCell key={n}>
+                <img
+                  src={`/images/projects/SpiralReflector/${n}.jpg`}
+                  alt={`Spiral Reflector ${n}`}
+                />
+              </GalleryCell>
+            ))}
+          </ImageGallery>
 
           {project.mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(project.mediaEmbed) }} />
@@ -121,32 +137,21 @@ const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
                 <CreditsHeader>Credits</CreditsHeader>
                 <CreditsList>
                   <CreditItem>
-                    <CreditName>Rafael Lozano-Hemmer</CreditName> — <CreditRole>Artist</CreditRole>
+                    <CreditName>Rafael Lozano-Hemmer</CreditName> - <CreditRole>Artist</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>David Robert</CreditName> — <CreditRole>Software</CreditRole>
+                    <CreditName>David Robert</CreditName> - <CreditRole>Software</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>Stephan Schultz & William Sutton</CreditName> — <CreditRole>Hardware</CreditRole>
+                    <CreditName>Stephan Schultz & William Sutton</CreditName> - <CreditRole>Hardware</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>Antimodular Studio & Proyectos Especiales – Arte Abierto</CreditName> — <CreditRole>Production</CreditRole>
+                    <CreditName>Antimodular Studio & Proyectos Especiales - Arte Abierto</CreditName> - <CreditRole>Production</CreditRole>
                   </CreditItem>
                 </CreditsList>
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
-
-          <ImageGallery>
-            {GALLERY_IMAGES.map(n => (
-              <GalleryCell key={n}>
-                <img
-                  src={`/images/projects/SpiralReflector/${n}.jpg`}
-                  alt={`Spiral Reflector ${n}`}
-                />
-              </GalleryCell>
-            ))}
-          </ImageGallery>
 
           <ExternalLink
             href="https://www.lozano-hemmer.com/spiral_reflector.php"

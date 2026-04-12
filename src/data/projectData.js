@@ -8,7 +8,7 @@ export const projectData = {
       {
         title: "Spiral Reflector",
         link: "/projects/spiral-reflector",
-        description: "LED spiral installation with a surveillance camera, built for Rafael Lozano-Hemmer",
+        description: "A DMX-controlled linear LED spiral that maps a surveillance camera's image as a 2D canvas",
         subtitle1: "Light",
         subtitle2: "& Surveillance",
         year: "2026",
@@ -26,7 +26,7 @@ export const projectData = {
           ></iframe>
         `,
         infoPopup: {
-          main: "The watching spiral",
+          main: "Lorum ipsum",
           context: `
             <i>Spiral Reflector</i> is an installation I developed as a software engineer for artist Rafael Lozano-Hemmer,
             exhibited at the Museo de Arte Moderno in Mexico City.<br><br>
@@ -34,8 +34,7 @@ export const projectData = {
             periodically "flushes" and absorbs light as it pans, casting a scanning line that tracks its attention across the room.
           `,
           tech: `
-            Developed the software in OpenFrameworks and Python.<br><br>
-            Built the control system in TouchDesigner that coordinates the LED behaviour with the camera pan.
+            Developed the software in TouchDesigner and Python.
           `,
           tools: `TouchDesigner & Python`
         }
@@ -43,7 +42,7 @@ export const projectData = {
       {
         title: "Submirrors",
         link: "/projects/Submirrors",
-        description: "Live AI mirror installation built for Rafael Lozano-Hemmer",
+        description: "AI applied to a live camera feed - mirrors that puppet and distort a viewer's own facial expression in real time",
         subtitle1: "Puppets",
         subtitle2: "& Puppeteers",
         year: "2025",
@@ -74,7 +73,7 @@ export const projectData = {
       {
         title: "Shadow Tuner",
         link: "/projects/shadow-tuner",
-        description: "AI audio system for a globe of live radio streams, built for Rafael Lozano-Hemmer",
+        description: "A spherical screen streaming thousands of geo-located live radio stations, with an AI classifier that prioritizes spoken word over music",
         subtitle1: "Speaking",
         subtitle2: "& Spinning",
         year: "2025",
@@ -148,7 +147,7 @@ export const projectData = {
       {
         title: "Remote Pulse",
         link: "/projects/remote-pulse",
-        description: "Re-programmed and updated electronics for Rafael Lozano-Hemmer for [2024] edition",
+        description: "Refactored Arduino firmware for a networked biometric installation — heartbeats transmitted over MQTT between two synchronized stations across cities, countries, and the world",
         subtitle1: "Beating",
         subtitle2: "& Sharing",
         year: "2024",
@@ -181,7 +180,7 @@ export const projectData = {
       {
         title: "Assembly Line",
         link: "/projects/assembly-line",
-        description: "Interactive robot performance for DesignTO 2022",
+        description: "Audience-submitted gestures projected onto a KUKA industrial robot arm, \"physically\" instantiated and destroyed in real time",
         subtitle1: "Industrial approach",
         subtitle2: "& digital interaction",
         year: "2022",
@@ -222,7 +221,7 @@ export const projectData = {
       {
         title: "Moth Melody",
         link: "/projects/moth-melody",
-        description: "A musical, interactive, and collaborative tabletop-projection for children",
+        description: "Capacitive-touch lanterns trigger a moth's flight path and musical notes across a collaborative tabletop projection, built for the Ontario Science Centre",
         subtitle1: "Music",
         subtitle2: "& Moths",
         year: "2022",
@@ -288,7 +287,7 @@ export const projectData = {
       {
         title: "Augmented Symphony",
         link: "/projects/augmented-symphony",
-        description: "AR and spatial audio project for listening to an orchestra at home",
+        description: "An AR mobile app for spatially arranging and walking through a full orchestra at home, with instrument-accurate positional audio",
         subtitle1: "Orchestras",
         subtitle2: "@ Home",
         year: "2021",
@@ -336,7 +335,7 @@ export const projectData = {
       {
         title: "I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST",
         link: "/projects/the-beast",
-        description: "Voice installation about hearing yourself turned into something else",
+        description: "An installation that records your voice, then puts words in your mouth",
         subtitle1: "Copying",
         subtitle2: "& Crowing",
         year: "2024",
@@ -369,7 +368,7 @@ export const projectData = {
       {
         title: "I Asked My Reflection Its Name Again",
         link: "/projects/i-asked-my-reflection",
-        description: "Web piece where your cursor movements are learned and repeated back to you",
+        description: "A Markov model learns a user's mouse behavior in real time, spawning cursor-clones that imitate - and gradually reshape - how they move",
         subtitle1: "Recursive Interaction",
         subtitle2: "& Interacting Recursively",
         year: "2021",
@@ -389,49 +388,48 @@ export const projectData = {
           tools: `JavaScript & p5.js`
         }
       },
-      // {
-      //   title: "AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL",
-      //   link: "/projects/an-ant",
-      //   // description: "It's been awhile since I saw my own life",
-      //   description: "An isolated and ephemeral social performance",
-      //   subtitle1: "Isolated",
-      //   subtitle2: "& Fleeting",
-      //   year: "2023",
-      //   tags: ['installation', 'ai'],
-      //   mediaEmbed: `
-      //     <iframe 
-      //       width="560" 
-      //       height="315" 
-      //       src="https://www.youtube.com/embed/AfoHMi5Gyms" 
-      //       title="YouTube video player"
-      //       frameborder="0" 
-      //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      //       allowfullscreen
-      //     ></iframe>
-      //   `,
-      //   infoPopup: {
-      //     main: "Are you an intelligent actor?",
-      //     context: `A group of people were brought into a room. There was pizza. People got comfortable.<br>
-      //               In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.<br><br>
+      {
+        title: "AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL",
+        link: "/projects/an-ant",
+        description: "Python eye-detection triggers a boid simulation - visible only while the participant's eyes are closed",
+        subtitle1: "Isolated",
+        subtitle2: "& Fleeting",
+        year: "2023",
+        tags: ['installation', 'ai'],
+        mediaEmbed: `
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/AfoHMi5Gyms"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        `,
+        infoPopup: {
+          main: "Are you an intelligent actor?",
+          context: `A group of people were brought into a room. There was pizza. People got comfortable.<br>
+                    In the middle of the room was a chair facing an open laptop. Across the far wall was a blank, white projection.<br><br>
 
-      //               A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas, 
-      //               as well as the words "CLOSE YOUR EYES."<br>
-      //               They put the headphones in front of them on - they were silent.<br><br>
+                    A member of the audience was invited to sit down in the chair. At this point a mesh of their face appeared on the white canvas,
+                    as well as the words "CLOSE YOUR EYES."<br>
+                    They put the headphones in front of them on - they were silent.<br><br>
 
-      //               When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation.<br>
-      //               The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids.<br>
-      //               When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.<br><br>
+                    When the participant-performer closed their eyes, the white faded out and revealed a visual driven by a boid-swarm simulation.<br>
+                    The headphones played the static audio of an old Hi-8 tape. Landmarks on the face acted as repellants to the boids.<br>
+                    When the participant-performer opened their eyes the visual disappeared and was replaced by the white screen before they could see the outcome.<br><br>
 
-      //               The title <i>AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL</i>  is in reference to 
-      //               <a href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
-      //               `,
-      //     tech: `Background is a feedback loop of a boid simulation run in Unity.<br>
-      //               Visual effects are done in TouchDesigner.<br>
-      //               Python is used to detect whether the participant-performer's eyes are open or closed.<br>
-      //               `,
-      //     tools: `TouchDesigner & Unity & Python`
-      //   }
-      // },
+                    The title <i>AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL</i>  is in reference to
+                    <a href="https://philosophy.as.uky.edu/sites/default/files/Brains%20in%20a%20Vat%20-%20Hilary%20Putnam.pdf" target="_blank" rel="noopener noreferrer">this</a> Hilary Putnam essay.
+                    `,
+          tech: `Background is a feedback loop of a boid simulation run in Unity.<br>
+                    Visual effects are done in TouchDesigner.<br>
+                    Python is used to detect whether the participant-performer's eyes are open or closed.<br>
+                    `,
+          tools: `Unity & Python & TouchDesigner`
+        }
+      },
       {
         title: "I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER",
         link: "/projects/i-cant-hear-you",

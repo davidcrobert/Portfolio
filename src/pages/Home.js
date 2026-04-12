@@ -302,13 +302,17 @@ function Home() {
     setHoveredProjectId(null);
   };
 
-  const filteredArt = activeFilter === 'all'
-    ? artProjects
-    : artProjects.filter(p => p.tags && p.tags.includes(activeFilter));
+  const filteredArt = useMemo(() => (
+    activeFilter === 'all'
+      ? artProjects
+      : artProjects.filter(p => p.tags && p.tags.includes(activeFilter))
+  ), [activeFilter, artProjects]);
 
-  const filteredWork = activeFilter === 'all'
-    ? workProjects
-    : workProjects.filter(p => p.tags && p.tags.includes(activeFilter));
+  const filteredWork = useMemo(() => (
+    activeFilter === 'all'
+      ? workProjects
+      : workProjects.filter(p => p.tags && p.tags.includes(activeFilter))
+  ), [activeFilter, workProjects]);
 
   const formatTools = (project) => {
     const tools = project.infoPopup?.tools;
@@ -323,17 +327,12 @@ function Home() {
     return formatted ? `[${formatted}]` : null;
   };
 
-  const floatingImages = useMemo(() => (
-    [...filteredArt, ...filteredWork]
-      .map((project) => {
-        const projectId = project.link.split('/').pop();
-        return {
-          id: projectId,
-          src: imageCache[projectId]
-        };
-      })
-      .filter((image) => image.src)
-  ), [filteredArt, filteredWork, imageCache]);
+  const floatingImages = useMemo(() =>
+    Object.entries(imageCache)
+      .filter(([, src]) => src)
+      .map(([id, src]) => ({ id, src })),
+    [imageCache]
+  );
 
   const activeImageIds = useMemo(() => new Set([
     ...filteredArt.map(p => p.link.split('/').pop()),
@@ -342,7 +341,7 @@ function Home() {
 
   return (
     <IndexContainer>
-      <Sketch bottomBoundarySelector="footer" />
+      {/* <Sketch bottomBoundarySelector="footer" /> */}
       <FloatingImages images={floatingImages} summonedId={hoveredProjectId} activeImageIds={activeImageIds} />
       <Header
         title="David Robert"
