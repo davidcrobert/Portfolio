@@ -37,7 +37,7 @@ export const projectData = {
             Developed the software in OpenFrameworks and Python.<br><br>
             Built the control system in TouchDesigner that coordinates the LED behaviour with the camera pan.
           `,
-          tools: `OpenFrameworks & Python & TouchDesigner`
+          tools: `TouchDesigner & Python`
         }
       },
       {
@@ -363,7 +363,7 @@ export const projectData = {
           - saying words they never said. As time goes on, previously generated utterances start layering atop each other until 
           the next person uses it.`,
           tech: `The images, playback, and interaction are managed through TouchDesigner`,
-          tools: `TouchDesigner & Python & Machine Learning`
+          tools: `TouchDesigner & Python`
         }
       },
       {

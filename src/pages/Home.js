@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Sketch from '../components/Sketch';
-import FloatingImages from '../components/FloatingImagesFixed';
+import FloatingImages from '../components/FloatingImages';
 import { projectData } from '../data/projectData';
 import { mainPortfolioConfig } from '../data/mainPortfolioData';
 
@@ -159,6 +159,18 @@ const ProjectMeta = styled.div`
   flex-wrap: wrap;
 `;
 
+const ProjectTools = styled.div`
+  margin-top: 14px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 9px;
+  line-height: 1.3;
+  color: #3a3a3a;
+
+  @media screen and (max-width: 768px) {
+    font-size: 8px;
+  }
+`;
+
 const MetaSeparator = styled.span`
   width: 14px;
   height: 1px;
@@ -281,13 +293,6 @@ function Home() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const floatingImages = useMemo(() =>
-    Object.entries(imageCache)
-      .filter(([, src]) => src)
-      .map(([id, src]) => ({ id, src })),
-    [imageCache]
-  );
-
   const handleProjectHover = (projectLink) => {
     const projectId = projectLink.split('/').pop();
     setHoveredProjectId(projectId);
@@ -305,82 +310,114 @@ function Home() {
     ? workProjects
     : workProjects.filter(p => p.tags && p.tags.includes(activeFilter));
 
+  const formatTools = (project) => {
+    const tools = project.infoPopup?.tools;
+    if (!tools) return null;
+
+    const formatted = tools
+      .split('&')
+      .map((tool) => tool.trim())
+      .filter(Boolean)
+      .join(' · ');
+
+    return formatted ? `[${formatted}]` : null;
+  };
+
+  const floatingImages = useMemo(() => (
+    [...filteredArt, ...filteredWork]
+      .map((project) => {
+        const projectId = project.link.split('/').pop();
+        return {
+          id: projectId,
+          src: imageCache[projectId]
+        };
+      })
+      .filter((image) => image.src)
+  ), [filteredArt, filteredWork, imageCache]);
+
+  const activeImageIds = useMemo(() => new Set([
+    ...filteredArt.map(p => p.link.split('/').pop()),
+    ...filteredWork.map(p => p.link.split('/').pop()),
+  ]), [filteredArt, filteredWork]);
+
   return (
     <IndexContainer>
-        <Sketch bottomBoundarySelector="footer" />
-        <FloatingImages images={floatingImages} summonedId={hoveredProjectId} />
-        <Header
-          title="David Robert"
-          subtitle1="Creative Technologist"
-          subtitle2="& Interactive Systems Designer"
-          hideBackButton={true}
-          tags={mainPortfolioConfig.tags}
-          activeFilter={activeFilter}
-          onTagSelect={setActiveFilter}
-        />
+      <Sketch bottomBoundarySelector="footer" />
+      <FloatingImages images={floatingImages} summonedId={hoveredProjectId} activeImageIds={activeImageIds} />
+      <Header
+        title="David Robert"
+        subtitle1="Creative Technologist"
+        subtitle2="& Interactive Systems Designer"
+        hideBackButton={true}
+        tags={mainPortfolioConfig.tags}
+        activeFilter={activeFilter}
+        onTagSelect={setActiveFilter}
+      />
 
-        <SplitContainer>
-          <Side $left>
-            <SideContent>
-              <SideLabel>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
-              <ProjectList>
-                {filteredWork.map((project, index) => (
-                  <Project key={project.id ?? index}>
-                    <ProjectTitle
-                      to={project.link}
-                      onMouseEnter={() => handleProjectHover(project.link)}
-                      onMouseLeave={handleProjectLeave}
-                    >
-                      {project.title}
-                    </ProjectTitle>
-                    <ProjectDescription>{project.description}</ProjectDescription>
-                    <ProjectMeta>
-                      {project.year && <span>{project.year}</span>}
-                      {project.year && project.tags?.length ? <MetaSeparator /> : null}
-                      {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
-                    </ProjectMeta>
-                  </Project>
-                ))}
-              </ProjectList>
-            </SideContent>
-          </Side>
+      <SplitContainer>
+        <Side $left>
+          <SideContent>
+            <SideLabel>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
+            <ProjectList>
+              {filteredWork.map((project, index) => (
+                <Project key={project.id ?? index}>
+                  <ProjectTitle
+                    to={project.link}
+                    onMouseEnter={() => handleProjectHover(project.link)}
+                    onMouseLeave={handleProjectLeave}
+                  >
+                    {project.title}
+                  </ProjectTitle>
+                  <ProjectDescription>{project.description}</ProjectDescription>
+                  <ProjectMeta>
+                    {project.year && <span>{project.year}</span>}
+                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                  </ProjectMeta>
+                  {formatTools(project) ? <ProjectTools>{formatTools(project)}</ProjectTools> : null}
+                </Project>
+              ))}
+            </ProjectList>
+          </SideContent>
+        </Side>
 
-          <Side>
-            <SideContent>
-              <SideLabel>{mainPortfolioConfig.leftColumnLabel}</SideLabel>
-              <ProjectList>
-                {filteredArt.map((project, index) => (
-                  <Project key={project.id ?? index}>
-                    <ProjectTitle
-                      to={project.link}
-                      onMouseEnter={() => handleProjectHover(project.link)}
-                      onMouseLeave={handleProjectLeave}
-                    >
-                      {project.title}
-                    </ProjectTitle>
-                    <ProjectDescription>{project.description}</ProjectDescription>
-                    <ProjectMeta>
-                      {project.year && <span>{project.year}</span>}
-                      {project.year && project.tags?.length ? <MetaSeparator /> : null}
-                      {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
-                    </ProjectMeta>
-                  </Project>
-                ))}
-              </ProjectList>
-            </SideContent>
-          </Side>
-        </SplitContainer>
+        <Side>
+          <SideContent>
+            <SideLabel>{mainPortfolioConfig.leftColumnLabel}</SideLabel>
+            <ProjectList>
+              {filteredArt.map((project, index) => (
+                <Project key={project.id ?? index}>
+                  <ProjectTitle
+                    to={project.link}
+                    onMouseEnter={() => handleProjectHover(project.link)}
+                    onMouseLeave={handleProjectLeave}
+                  >
+                    {project.title}
+                  </ProjectTitle>
+                  <ProjectDescription>{project.description}</ProjectDescription>
+                  <ProjectMeta>
+                    {project.year && <span>{project.year}</span>}
+                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                  </ProjectMeta>
+                  {formatTools(project) ? <ProjectTools>{formatTools(project)}</ProjectTools> : null}
+                </Project>
+              ))}
+            </ProjectList>
+          </SideContent>
+        </Side>
+      </SplitContainer>
 
-        <Footer>
-          <FooterLink to="/about">About Me</FooterLink>
-          <ResumeLink href="CV-DavidRobert.pdf" target="_blank" rel="noopener noreferrer">
-            résumé
-          </ResumeLink>
-          <ContactLink href="mailto:david.connor.r@gmail.com">
-            david.connor.r[at]gmail.com
-          </ContactLink>
-        </Footer>
-      </IndexContainer>
+      <Footer>
+        <FooterLink to="/about">About Me</FooterLink>
+        <ResumeLink href="CV-DavidRobert.pdf" target="_blank" rel="noopener noreferrer">
+          résumé
+        </ResumeLink>
+        <ContactLink href="mailto:david.connor.r@gmail.com">
+          david.connor.r[at]gmail.com
+        </ContactLink>
+      </Footer>
+    </IndexContainer>
   );
 }
 
