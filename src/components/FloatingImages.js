@@ -8,11 +8,11 @@ const SUMMONED_H_RATIO = 0.5;
 const DRIFT_SPEED = 0.28;
 const MAX_OFFSCREEN_RATIO = 0.6;
 
-function FloatingImages({ images, summonedId }) {
-  const refs = useRef([]);
-  const pos = useRef([]);
-  const vel = useRef([]);
-  const sizes = useRef([]);
+function FloatingImages({ images, summonedId, activeImageIds }) {
+  const refs = useRef({});
+  const pos = useRef({});
+  const vel = useRef({});
+  const sizes = useRef({});
   const imagesRef = useRef(images);
   const summonedIdRef = useRef(summonedId);
   const prevSummonedIdRef = useRef(null);
@@ -42,48 +42,51 @@ function FloatingImages({ images, summonedId }) {
 
   useEffect(() => {
     images.forEach((img, i) => {
-      if (pos.current[i] === undefined) {
-        const size = SIZES[i % SIZES.length];
+      if (pos.current[img.id] === undefined) {
+        const size = sizes.current[img.id] || SIZES[i % SIZES.length];
         const { top, bottom } = getVisibleBounds();
         const floatingHeight = size * 0.75;
-        pos.current[i] = {
+        pos.current[img.id] = {
           x: Math.random() * (window.innerWidth - size),
           y: top + Math.random() * Math.max(bottom - top - floatingHeight, 0),
         };
-        vel.current[i] = {
+        vel.current[img.id] = {
           vx: (Math.random() - 0.5) * DRIFT_SPEED,
           vy: (Math.random() - 0.5) * DRIFT_SPEED,
         };
-        sizes.current[i] = size;
+        sizes.current[img.id] = size;
       }
 
-      const el = refs.current[i];
+      const el = refs.current[img.id];
       if (!el) return;
 
-      el.style.left = `${pos.current[i].x}px`;
-      el.style.top = `${pos.current[i].y}px`;
-      el.style.width = `${sizes.current[i]}px`;
-      el.style.height = `${sizes.current[i] * 0.75}px`;
+      el.style.left = `${pos.current[img.id].x}px`;
+      el.style.top = `${pos.current[img.id].y}px`;
+      el.style.width = `${sizes.current[img.id]}px`;
+      el.style.height = `${sizes.current[img.id] * 0.75}px`;
       el.style.zIndex = '3';
 
       requestAnimationFrame(() => {
         if (!el) return;
         el.style.transition = 'opacity 1.5s ease';
+        if (!activeImageIds?.has(img.id)) {
+          el.style.opacity = '0';
+          return;
+        }
         el.style.opacity = summonedIdRef.current === img.id ? String(SUMMON_OPACITY) : String(FLOAT_OPACITY);
       });
     });
-  }, [images]);
+  }, [images, activeImageIds]);
 
   useEffect(() => {
     if (summonedId) {
-      const idx = images.findIndex(img => img.id === summonedId);
       prevSummonedIdRef.current = summonedId;
 
-      images.forEach((img, i) => {
-        const el = refs.current[i];
+      images.forEach((img) => {
+        const el = refs.current[img.id];
         if (!el) return;
 
-        if (i === idx) {
+        if (img.id === summonedId) {
           const viewportWidth = window.innerWidth;
           const viewportHeight = window.innerHeight;
           const summonedWidth = viewportWidth * SUMMONED_W_RATIO;
@@ -115,7 +118,6 @@ function FloatingImages({ images, summonedId }) {
     if (!prevSummonedIdRef.current) return;
 
     const returningId = prevSummonedIdRef.current;
-    const prevIdx = images.findIndex(img => img.id === returningId);
     prevSummonedIdRef.current = null;
     returningIdRef.current = returningId;
 
@@ -123,9 +125,9 @@ function FloatingImages({ images, summonedId }) {
       clearTimeout(returnTimeoutRef.current);
     }
 
-    const summonedEl = refs.current[prevIdx];
-    if (summonedEl && pos.current[prevIdx] && sizes.current[prevIdx]) {
-      const floatingWidth = sizes.current[prevIdx];
+    const summonedEl = refs.current[returningId];
+    if (summonedEl && pos.current[returningId] && sizes.current[returningId]) {
+      const floatingWidth = sizes.current[returningId];
       const floatingHeight = floatingWidth * 0.75;
 
       summonedEl.style.transition = [
@@ -135,8 +137,8 @@ function FloatingImages({ images, summonedId }) {
         'height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'opacity 0.4s ease',
       ].join(', ');
-      summonedEl.style.left = `${pos.current[prevIdx].x}px`;
-      summonedEl.style.top = `${pos.current[prevIdx].y}px`;
+      summonedEl.style.left = `${pos.current[returningId].x}px`;
+      summonedEl.style.top = `${pos.current[returningId].y}px`;
       summonedEl.style.width = `${floatingWidth}px`;
       summonedEl.style.height = `${floatingHeight}px`;
       summonedEl.style.opacity = String(FLOAT_OPACITY);
@@ -150,15 +152,15 @@ function FloatingImages({ images, summonedId }) {
       returnTimeoutRef.current = null;
     }, 500);
 
-    images.forEach((img, i) => {
-      if (i === prevIdx) return;
+    images.forEach((img) => {
+      if (img.id === returningId) return;
 
-      const el = refs.current[i];
+      const el = refs.current[img.id];
       if (!el) return;
       el.style.transition = 'opacity 0.5s ease';
-      el.style.opacity = String(FLOAT_OPACITY);
+      el.style.opacity = activeImageIds?.has(img.id) ? String(FLOAT_OPACITY) : '0';
     });
-  }, [summonedId, images]);
+  }, [summonedId, images, activeImageIds]);
 
   useEffect(() => {
     const animate = () => {
@@ -166,19 +168,19 @@ function FloatingImages({ images, summonedId }) {
       const returningId = returningIdRef.current;
       const currentImages = imagesRef.current;
 
-      currentImages.forEach((img, i) => {
+      currentImages.forEach((img) => {
         if (img.id === currentSummonedId || img.id === returningId) return;
 
-        const el = refs.current[i];
-        const position = pos.current[i];
-        const velocity = vel.current[i];
+        const el = refs.current[img.id];
+        const position = pos.current[img.id];
+        const velocity = vel.current[img.id];
         if (!el || !position || !velocity) return;
 
         position.x += velocity.vx;
         position.y += velocity.vy;
 
         const viewportWidth = window.innerWidth;
-        const floatingWidth = sizes.current[i] || 160;
+        const floatingWidth = sizes.current[img.id] || 160;
         const floatingHeight = floatingWidth * 0.75;
         const { top, bottom } = getVisibleBounds();
         const minX = -floatingWidth * MAX_OFFSCREEN_RATIO;
@@ -230,11 +232,17 @@ function FloatingImages({ images, summonedId }) {
       {images.map((img, i) => (
         <div
           key={img.id}
-          ref={el => { refs.current[i] = el; }}
+          ref={el => {
+            if (el) {
+              refs.current[img.id] = el;
+            } else {
+              delete refs.current[img.id];
+            }
+          }}
           style={{
             position: 'absolute',
-            width: `${SIZES[i % SIZES.length]}px`,
-            height: `${SIZES[i % SIZES.length] * 0.75}px`,
+            width: `${sizes.current[img.id] || SIZES[i % SIZES.length]}px`,
+            height: `${(sizes.current[img.id] || SIZES[i % SIZES.length]) * 0.75}px`,
             backgroundImage: `url(${img.src})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
