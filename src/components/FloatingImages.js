@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 const SIZES = [175, 150, 195, 160, 185, 145, 170, 155, 190, 165];
-const FLOAT_OPACITY = 0.3;
+const FLOAT_OPACITY = 0.35;
 const SUMMON_OPACITY = 0.82;
 const SUMMONED_W_RATIO = 0.4;
 const SUMMONED_H_RATIO = 0.5;
@@ -16,19 +16,35 @@ function FloatingImages({ images, summonedId }) {
   const summonedIdRef = useRef(summonedId);
   const prevSummonedIdRef = useRef(null);
   const rafRef = useRef(null);
+  const boundsRef = useRef({ top: 0, bottom: window.innerHeight });
 
   // Keep refs in sync without restarting RAF
   useEffect(() => { imagesRef.current = images; }, [images]);
   useEffect(() => { summonedIdRef.current = summonedId; }, [summonedId]);
+
+  // Track the list area (between header and footer) and update on resize
+  useEffect(() => {
+    const updateBounds = () => {
+      const header = document.querySelector('header');
+      const footer = document.querySelector('footer');
+      const headerH = header ? header.offsetHeight : 0;
+      const footerH = footer ? footer.offsetHeight : 44;
+      boundsRef.current = { top: headerH, bottom: window.innerHeight - footerH };
+    };
+    updateBounds();
+    window.addEventListener('resize', updateBounds);
+    return () => window.removeEventListener('resize', updateBounds);
+  }, []);
 
   // Initialize positions for any new images
   useEffect(() => {
     images.forEach((img, i) => {
       if (pos.current[i] !== undefined) return;
       const sz = SIZES[i % SIZES.length];
+      const { top: listTop, bottom: listBottom } = boundsRef.current;
       pos.current[i] = {
         x: Math.random() * (window.innerWidth - sz),
-        y: Math.random() * (window.innerHeight - sz * 0.75),
+        y: listTop + Math.random() * Math.max(0, listBottom - listTop - sz * 0.75),
       };
       vel.current[i] = {
         vx: (Math.random() - 0.5) * DRIFT_SPEED,
@@ -143,13 +159,19 @@ function FloatingImages({ images, summonedId }) {
         p.y += v.vy;
 
         const W = window.innerWidth;
-        const H = window.innerHeight;
         const sz = sizes.current[i] || 160;
+        const { top: listTop, bottom: listBottom } = boundsRef.current;
 
-        if (p.x < -sz) { p.x = -sz; v.vx *= -1; }
-        if (p.x > W) { p.x = W; v.vx *= -1; }
-        if (p.y < -sz * 0.75) { p.y = -sz * 0.75; v.vy *= -1; }
-        if (p.y > H) { p.y = H; v.vy *= -1; }
+        // Allow at most 50% of the image outside the list area on any edge
+        const minX = -(sz * 0.5);
+        const maxX = W - sz * 0.5;
+        const minY = listTop - sz * 0.75 * 0.5;
+        const maxY = listBottom - sz * 0.75 * 0.5;
+
+        if (p.x < minX) { p.x = minX; v.vx *= -1; }
+        if (p.x > maxX) { p.x = maxX; v.vx *= -1; }
+        if (p.y < minY) { p.y = minY; v.vy *= -1; }
+        if (p.y > maxY) { p.y = maxY; v.vy *= -1; }
 
         el.style.left = `${p.x}px`;
         el.style.top = `${p.y}px`;
