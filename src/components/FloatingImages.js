@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 
 const SIZES = [175, 150, 195, 160, 185, 145, 170, 155, 190, 165];
-const FLOAT_OPACITY = 0.35;
+const FLOAT_OPACITY = 0.3;
 const SUMMON_OPACITY = 0.82;
 const SUMMONED_W_RATIO = 0.4;
 const SUMMONED_H_RATIO = 0.5;
 const DRIFT_SPEED = 0.28;
+const MAX_OFFSCREEN_RATIO = 0.6;
 
 function FloatingImages({ images, summonedId }) {
   const refs = useRef([]);
@@ -16,56 +17,63 @@ function FloatingImages({ images, summonedId }) {
   const summonedIdRef = useRef(summonedId);
   const prevSummonedIdRef = useRef(null);
   const rafRef = useRef(null);
-  const boundsRef = useRef({ top: 0, bottom: window.innerHeight });
+  const returningIdRef = useRef(null);
+  const returnTimeoutRef = useRef(null);
 
-  // Keep refs in sync without restarting RAF
-  useEffect(() => { imagesRef.current = images; }, [images]);
-  useEffect(() => { summonedIdRef.current = summonedId; }, [summonedId]);
-
-  // Track the list area (between header and footer) and update on resize
   useEffect(() => {
-    const updateBounds = () => {
-      const header = document.querySelector('header');
-      const footer = document.querySelector('footer');
-      const headerH = header ? header.offsetHeight : 0;
-      const footerH = footer ? footer.offsetHeight : 44;
-      boundsRef.current = { top: headerH, bottom: window.innerHeight - footerH };
-    };
-    updateBounds();
-    window.addEventListener('resize', updateBounds);
-    return () => window.removeEventListener('resize', updateBounds);
-  }, []);
+    imagesRef.current = images;
+  }, [images]);
 
-  // Initialize positions for any new images
+  useEffect(() => {
+    summonedIdRef.current = summonedId;
+  }, [summonedId]);
+
+  const getVisibleBounds = () => {
+    const headerElement = document.querySelector('header');
+    const footerElement = document.querySelector('footer');
+    const topBoundary = headerElement ? headerElement.getBoundingClientRect().bottom : 0;
+    const bottomBoundary = footerElement ? footerElement.getBoundingClientRect().top : window.innerHeight;
+
+    return {
+      top: topBoundary,
+      bottom: bottomBoundary > topBoundary ? bottomBoundary : window.innerHeight
+    };
+  };
+
   useEffect(() => {
     images.forEach((img, i) => {
-      if (pos.current[i] !== undefined) return;
-      const sz = SIZES[i % SIZES.length];
-      const { top: listTop, bottom: listBottom } = boundsRef.current;
-      pos.current[i] = {
-        x: Math.random() * (window.innerWidth - sz),
-        y: listTop + Math.random() * Math.max(0, listBottom - listTop - sz * 0.75),
-      };
-      vel.current[i] = {
-        vx: (Math.random() - 0.5) * DRIFT_SPEED,
-        vy: (Math.random() - 0.5) * DRIFT_SPEED,
-      };
-      sizes.current[i] = sz;
+      if (pos.current[i] === undefined) {
+        const size = SIZES[i % SIZES.length];
+        const { top, bottom } = getVisibleBounds();
+        const floatingHeight = size * 0.75;
+        pos.current[i] = {
+          x: Math.random() * (window.innerWidth - size),
+          y: top + Math.random() * Math.max(bottom - top - floatingHeight, 0),
+        };
+        vel.current[i] = {
+          vx: (Math.random() - 0.5) * DRIFT_SPEED,
+          vy: (Math.random() - 0.5) * DRIFT_SPEED,
+        };
+        sizes.current[i] = size;
+      }
 
       const el = refs.current[i];
-      if (el) {
-        el.style.left = `${pos.current[i].x}px`;
-        el.style.top = `${pos.current[i].y}px`;
-        requestAnimationFrame(() => {
-          if (!el) return;
-          el.style.transition = 'opacity 1.5s ease';
-          el.style.opacity = String(FLOAT_OPACITY);
-        });
-      }
+      if (!el) return;
+
+      el.style.left = `${pos.current[i].x}px`;
+      el.style.top = `${pos.current[i].y}px`;
+      el.style.width = `${sizes.current[i]}px`;
+      el.style.height = `${sizes.current[i] * 0.75}px`;
+      el.style.zIndex = '3';
+
+      requestAnimationFrame(() => {
+        if (!el) return;
+        el.style.transition = 'opacity 1.5s ease';
+        el.style.opacity = summonedIdRef.current === img.id ? String(SUMMON_OPACITY) : String(FLOAT_OPACITY);
+      });
     });
   }, [images]);
 
-  // Handle summon and unsummon
   useEffect(() => {
     if (summonedId) {
       const idx = images.findIndex(img => img.id === summonedId);
@@ -76,112 +84,137 @@ function FloatingImages({ images, summonedId }) {
         if (!el) return;
 
         if (i === idx) {
-          const W = window.innerWidth;
-          const H = window.innerHeight;
-          const sz = sizes.current[i] || SIZES[i % SIZES.length];
-          const floatW = sz;
-          const floatH = sz * 0.75;
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          const summonedWidth = viewportWidth * SUMMONED_W_RATIO;
+          const summonedHeight = viewportHeight * SUMMONED_H_RATIO;
 
-          // Compute the transform that moves the image's center to the viewport center
-          // and scales it up to the summoned size — single property, no wobble
-          const floatCenterX = pos.current[i].x + floatW / 2;
-          const floatCenterY = pos.current[i].y + floatH / 2;
-          const tx = W / 2 - floatCenterX;
-          const ty = H / 2 - floatCenterY;
-          const scaleX = (W * SUMMONED_W_RATIO) / floatW;
-          const scaleY = (H * SUMMONED_H_RATIO) / floatH;
-
-          // Counter-scale the border so it stays visually 1px regardless of scale
-          el.style.borderTopWidth = `${(1 / scaleY).toFixed(4)}px`;
-          el.style.borderBottomWidth = `${(1 / scaleY).toFixed(4)}px`;
-          el.style.borderLeftWidth = `${(1 / scaleX).toFixed(4)}px`;
-          el.style.borderRightWidth = `${(1 / scaleX).toFixed(4)}px`;
-
-          el.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease';
-          el.style.transform = `translate(${tx}px, ${ty}px) scale(${scaleX}, ${scaleY})`;
+          el.style.transition = [
+            'left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            'top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            'width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            'height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            'opacity 0.3s ease',
+          ].join(', ');
+          el.style.left = `${(viewportWidth - summonedWidth) / 2}px`;
+          el.style.top = `${(viewportHeight - summonedHeight) / 2}px`;
+          el.style.width = `${summonedWidth}px`;
+          el.style.height = `${summonedHeight}px`;
           el.style.opacity = String(SUMMON_OPACITY);
           el.style.zIndex = '5';
-        } else {
-          el.style.transition = 'opacity 0.3s ease';
-          el.style.opacity = '0';
+          return;
         }
-      });
-    } else if (prevSummonedIdRef.current) {
-      const prevIdx = images.findIndex(img => img.id === prevSummonedIdRef.current);
-      prevSummonedIdRef.current = null;
 
-      const summonedEl = refs.current[prevIdx];
-      if (summonedEl) {
-        // Animate transform back to identity — image flies back to float position and shrinks.
-        // Simultaneously transition border-width back to 1px so it stays visually 1px throughout.
-        summonedEl.style.transition = [
-          'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          'opacity 0.4s ease',
-          'border-top-width 0.5s ease',
-          'border-bottom-width 0.5s ease',
-          'border-left-width 0.5s ease',
-          'border-right-width 0.5s ease',
-        ].join(', ');
-        summonedEl.style.transform = 'none';
-        summonedEl.style.opacity = String(FLOAT_OPACITY);
-        summonedEl.style.borderTopWidth = '1px';
-        summonedEl.style.borderBottomWidth = '1px';
-        summonedEl.style.borderLeftWidth = '1px';
-        summonedEl.style.borderRightWidth = '1px';
-        summonedEl.style.zIndex = '3';
-      }
-
-      images.forEach((img, i) => {
-        if (i === prevIdx) return;
-        const el = refs.current[i];
-        if (!el) return;
-        el.style.transition = 'opacity 0.5s ease';
-        el.style.opacity = String(FLOAT_OPACITY);
+        el.style.transition = 'opacity 0.3s ease';
+        el.style.opacity = '0';
       });
+
+      return;
     }
+
+    if (!prevSummonedIdRef.current) return;
+
+    const returningId = prevSummonedIdRef.current;
+    const prevIdx = images.findIndex(img => img.id === returningId);
+    prevSummonedIdRef.current = null;
+    returningIdRef.current = returningId;
+
+    if (returnTimeoutRef.current) {
+      clearTimeout(returnTimeoutRef.current);
+    }
+
+    const summonedEl = refs.current[prevIdx];
+    if (summonedEl && pos.current[prevIdx] && sizes.current[prevIdx]) {
+      const floatingWidth = sizes.current[prevIdx];
+      const floatingHeight = floatingWidth * 0.75;
+
+      summonedEl.style.transition = [
+        'left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        'top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        'width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        'height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        'opacity 0.4s ease',
+      ].join(', ');
+      summonedEl.style.left = `${pos.current[prevIdx].x}px`;
+      summonedEl.style.top = `${pos.current[prevIdx].y}px`;
+      summonedEl.style.width = `${floatingWidth}px`;
+      summonedEl.style.height = `${floatingHeight}px`;
+      summonedEl.style.opacity = String(FLOAT_OPACITY);
+      summonedEl.style.zIndex = '3';
+    }
+
+    returnTimeoutRef.current = setTimeout(() => {
+      if (returningIdRef.current === returningId) {
+        returningIdRef.current = null;
+      }
+      returnTimeoutRef.current = null;
+    }, 500);
+
+    images.forEach((img, i) => {
+      if (i === prevIdx) return;
+
+      const el = refs.current[i];
+      if (!el) return;
+      el.style.transition = 'opacity 0.5s ease';
+      el.style.opacity = String(FLOAT_OPACITY);
+    });
   }, [summonedId, images]);
 
-  // Single long-lived RAF loop — only updates left/top, never transform
   useEffect(() => {
     const animate = () => {
       const currentSummonedId = summonedIdRef.current;
-      const imgs = imagesRef.current;
+      const returningId = returningIdRef.current;
+      const currentImages = imagesRef.current;
 
-      imgs.forEach((img, i) => {
-        if (img.id === currentSummonedId) return;
+      currentImages.forEach((img, i) => {
+        if (img.id === currentSummonedId || img.id === returningId) return;
 
         const el = refs.current[i];
-        const p = pos.current[i];
-        const v = vel.current[i];
-        if (!el || !p || !v) return;
+        const position = pos.current[i];
+        const velocity = vel.current[i];
+        if (!el || !position || !velocity) return;
 
-        p.x += v.vx;
-        p.y += v.vy;
+        position.x += velocity.vx;
+        position.y += velocity.vy;
 
-        const W = window.innerWidth;
-        const sz = sizes.current[i] || 160;
-        const { top: listTop, bottom: listBottom } = boundsRef.current;
+        const viewportWidth = window.innerWidth;
+        const floatingWidth = sizes.current[i] || 160;
+        const floatingHeight = floatingWidth * 0.75;
+        const { top, bottom } = getVisibleBounds();
+        const minX = -floatingWidth * MAX_OFFSCREEN_RATIO;
+        const maxX = viewportWidth - floatingWidth * (1 - MAX_OFFSCREEN_RATIO);
+        const minY = top - floatingHeight * MAX_OFFSCREEN_RATIO;
+        const maxY = bottom - floatingHeight * (1 - MAX_OFFSCREEN_RATIO);
 
-        // Allow at most 50% of the image outside the list area on any edge
-        const minX = -(sz * 0.5);
-        const maxX = W - sz * 0.5;
-        const minY = listTop - sz * 0.75 * 0.5;
-        const maxY = listBottom - sz * 0.75 * 0.5;
+        if (position.x < minX) {
+          position.x = minX;
+          velocity.vx *= -1;
+        }
+        if (position.x > maxX) {
+          position.x = maxX;
+          velocity.vx *= -1;
+        }
+        if (position.y < minY) {
+          position.y = minY;
+          velocity.vy *= -1;
+        }
+        if (position.y > maxY) {
+          position.y = maxY;
+          velocity.vy *= -1;
+        }
 
-        if (p.x < minX) { p.x = minX; v.vx *= -1; }
-        if (p.x > maxX) { p.x = maxX; v.vx *= -1; }
-        if (p.y < minY) { p.y = minY; v.vy *= -1; }
-        if (p.y > maxY) { p.y = maxY; v.vy *= -1; }
-
-        el.style.left = `${p.x}px`;
-        el.style.top = `${p.y}px`;
+        el.style.left = `${position.x}px`;
+        el.style.top = `${position.y}px`;
       });
 
       rafRef.current = requestAnimationFrame(animate);
     };
 
     rafRef.current = requestAnimationFrame(animate);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (returnTimeoutRef.current) clearTimeout(returnTimeoutRef.current);
+    };
   }, []);
 
   return (
