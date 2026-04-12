@@ -24,6 +24,7 @@ export const mainPortfolioConfig = {
     'augmented-symphony': () => import('../projectPages/AugmentedSymphony'),
     // Art projects
     'the-beast': () => import('../projectPages/TheBeast'),
+    'an-ant': () => import('../projectPages/AnAnt'),
     'i-cant-hear-you': () => import('../projectPages/ICantHearYou'),
     'i-asked-my-reflection': () => import('../projectPages/IAskedMyReflection'),
   },

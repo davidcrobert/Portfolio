@@ -69,6 +69,15 @@ const EmphasisText = styled.span`
   }
 `;
 
+const DeckMeta = styled.p`
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+`;
+
 const IntroSection = styled(DescriptionParagraph)`
   margin-top: 40px;
   margin-bottom: 40px;
@@ -130,19 +139,22 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
               to speak to it. When they did, it asked them to keep talking for 60 seconds.
               <br />
               <br />
-              Having found a way to monologue for a full minute, they were greeted by a chorus of
-              former recordings of people having done the same. A few moments later, they were
-              met by their own voice saying things they had never said before. Then the cacophony
-              of previous voice clones layered in, saying similar things.
+              Once they had spoken for a full minute, they were greeted by a chorus of
+              everyone who had done the same before them. A few moments later, they were
+              met by their own voice saying words they had never spoken. Then the cacophony
+              of previous voice clones layered in — all of them saying the same kinds of things.
               <br />
               <br />
               They had joined The Beast.
             </CustomSubtitle>
+            <DeckMeta>Python · TouchDesigner · AI voice cloning · Fabrica Research Center, 2024</DeckMeta>
           </CustomHeader>
 
           {originalProject.mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
           )}
+
+          <StyledDocImage src="/images/projects/TheBeast/people-talking.JPG" alt="People talking to The Beast" />
 
           <IntroSection>
             I sat at my desk one day and received a phone call from an unknown number.
@@ -153,8 +165,6 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
             In that moment I feared I had just supplied the necessary tools to hijack me.
             It only takes a few seconds to know someone's voice.
           </IntroSection>
-
-          <StyledDocImage src="/images/projects/TheBeast/people-talking.JPG" alt="People talking to The Beast" />
 
           <DescriptionParagraph>
             We have suddenly and violently entered into a time where our bodies no longer

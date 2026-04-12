@@ -6,12 +6,8 @@ import {
   PageWrapper,
   MainContent,
   ProjectContent,
-  DescriptionParagraph,
   CustomHeader,
   CustomTitle,
-  CustomCategory,
-  CustomSubtitle,
-  Quote,
   useOriginalProject,
   getBackLink
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
@@ -19,7 +15,7 @@ import {
 // Interactive component container - centers the sketch and counteracts its internal offset
 const InteractiveContainer = styled.div`
   width: 100%;
-  margin: 30px auto;
+  margin: 10px auto 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,43 +27,22 @@ const InteractiveContainer = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    margin: 20px auto;
+    margin: 8px auto 0;
   }
 `;
 
-const IntroSection = styled(DescriptionParagraph)`
-  margin-top: 40px;
-  margin-bottom: 40px;
+const CompactHeader = styled(CustomHeader)`
+  margin-bottom: 10px;
+  padding: 12px 20px;
 `;
 
-const ReflectionQuote = styled(Quote)`
-  font-size: 24px;
-  margin: 40px auto;
-  padding: 30px 20px;
-  max-width: 600px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-
-  @media screen and (max-width: 768px) {
-    font-size: 16px;
-    padding: 20px 15px;
-    margin: 30px auto;
-  }
-`;
-
-const EmphasisText = styled.span`
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-style: italic;
-  display: block;
+const DeckMeta = styled.p`
+  margin: 10px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-align: center;
-  margin-top: 25px;
-  font-size: 17px;
-  letter-spacing: 0.3px;
-
-  @media screen and (max-width: 768px) {
-    font-size: 15px;
-    margin-top: 20px;
-  }
 `;
 
 const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) => {
@@ -91,47 +66,14 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
         />
 
         <ProjectContent>
-          <CustomHeader>
+          {/* <CompactHeader>
             <CustomTitle>How would you act if there were 200 of you in a room?</CustomTitle>
-            {/* <CustomCategory>[individual project]</CustomCategory> */}
-            <CustomSubtitle>
-              In <i>I ASKED MY REFLECTION ITS NAME AGAIN</i>, users are given a simple
-              direction to move their mouse. As time goes on, more and more cursors
-              appear, mimicking (though not copying) the user's movements.
-            </CustomSubtitle>
-          </CustomHeader>
+            <DeckMeta>JavaScript · p5.js · AI</DeckMeta>
+          </CompactHeader> */}
 
           <InteractiveContainer>
             <ReflectionInteractive />
           </InteractiveContainer>
-
-          <ReflectionQuote>
-            A cursor is our digital avatar.<br /> A projection of our body in the digital realm.
-          </ReflectionQuote>
-
-          <IntroSection>
-            The cursors imitate users' behavior based on their previous movements using a Markov chain model.
-            As cursors appear and users become aware of the role they play in their movement, this affects
-            how they interact with the site. Which will in turn affect the cursors. Which will in turn
-            affect the user. Which will in turn affect the cursors.
-            <br />
-            <br />
-            This project explores a sort of recursive interaction with AI. The ways in which
-            intelligent systems transform our behaviour and how we transform them.
-          </IntroSection>
-
-          <DescriptionParagraph>
-            As the experience progresses, users receive inactionable commands.
-            It's their call what they want to do with that.
-          </DescriptionParagraph>
-
-          <ReflectionQuote>
-            Ask your reflection its name.
-          </ReflectionQuote>
-          <ReflectionQuote>
-            I asked my reflection its name again.
-          </ReflectionQuote>
-
         </ProjectContent>
       </MainContent>
     </PageWrapper>
