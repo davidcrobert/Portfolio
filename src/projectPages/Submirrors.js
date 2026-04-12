@@ -7,8 +7,6 @@ import {
   ProjectContent,
   DescriptionParagraph,
   CustomHeader,
-  CustomTitle,
-  CustomCategory,
   CustomSubtitle,
   CreditsSection,
   CreditsGrid,
@@ -19,15 +17,38 @@ import {
   CreditItem,
   CreditName,
   CreditRole,
-  ArtistQuoteSection,
-  ArtistQuoteLabel,
-  ArtistQuoteText,
   ExternalLink,
   DocImage,
   InlineLink
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
 
 // Project-specific styled components
+const ProjectDeck = styled.div`
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 20px;
+  text-align: center;
+`;
+
+const DeckSubtitle = styled.p`
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+`;
+
+const DeckMeta = styled.p`
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+const IntroBody = styled.div`
+  margin-top: 30px;
+`;
+
 const VideoGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -112,19 +133,24 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>How does it feel to lose control of your own reflection?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
-            <CustomSubtitle>
-              <i>Recurrent Waiting</i> and <i>Recurrent Kafka</i> [the Submirror series] are interactive mirror installations
-              I developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>.
-              <ArtistQuoteSection>
-                <ArtistQuoteLabel>In the artist's words:</ArtistQuoteLabel>
-                <ArtistQuoteText>
-                  "These mirrors are recalcitrant, they do not reflect faithfully; they act with intention,
-                  manipulating the viewer's image to reveal a version of the self that is no longer entirely their own."
-                </ArtistQuoteText>
-              </ArtistQuoteSection>
-            </CustomSubtitle>
+            <ProjectDeck>
+              <DeckSubtitle>
+                Interactive AI mirrors for Rafael Lozano-Hemmer.
+              </DeckSubtitle>
+              <DeckMeta>
+                Python · TouchDesigner · AI · real-time facial puppeteering
+              </DeckMeta>
+            </ProjectDeck>
+            <IntroBody>
+              <CustomSubtitle>
+                <i>Recurrent Waiting</i> and <i>Recurrent Kafka</i> are interactive mirror installations
+                developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>.
+                Each piece captures a visitor's face in real time and uses an AI model to puppeteer and
+                distort their reflection; blinking on a coded sequence, or redirecting the gaze to
+                follow a scrolling teleprompter. The inference pipeline runs in Python, with
+                TouchDesigner handling compositing and puppeteering control.
+              </CustomSubtitle>
+            </IntroBody>
           </CustomHeader>
 
           <VideoGrid>
@@ -167,7 +193,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
                 <RoleDescription>
                   Sole developer of the AI puppeteering system. Built the LivePortrait integration for real-time facial
                   manipulation, including optimizations for live video feeds. Created Python-based puppet software and
-                  developed the TouchDesigner compositing / puppeteering pipeline. Built the initial installation prototype
+                  developed the TouchDesigner compositing / puppeteering pipeline. Built the initial prototype
                   in ComfyUI.
                 </RoleDescription>
               </CreditsColumn>
@@ -178,7 +204,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
                     <CreditName>Rafael Lozano-Hemmer</CreditName> — <CreditRole>Artist</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>David Robert</CreditName> — <CreditRole>Sole Developer</CreditRole>
+                    <CreditName>David Robert</CreditName> — <CreditRole>Software</CreditRole>
                   </CreditItem>
                   <CreditItem>
                     <CreditName>Lauria Clarke, Emily Green, Jade Séguéla, Stephan Schulz, William Sutton, Matthieu Vanier</CreditName> — <CreditRole>Production</CreditRole>

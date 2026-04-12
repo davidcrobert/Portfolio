@@ -39,11 +39,11 @@ const EmphasisText = styled.span`
   display: block;
   text-align: center;
   margin-top: 25px;
-  font-size: 17px;
+  font-size: 22px;
   letter-spacing: 0.3px;
 
   @media screen and (max-width: 768px) {
-    font-size: 15px;
+    font-size: 18px;
     margin-top: 20px;
   }
 `;
@@ -109,17 +109,17 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How can a human-robot system feel creatively collaborative?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
+            {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
-              <i>Assembly Line</i> is a window installation I was lead developer on, created for Toronto Metropolitan
+              <i>Assembly Line</i> is a window installation developed as lead developer for Toronto Metropolitan
               University&apos;s <InlineLink href="https://www.torontomu.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</InlineLink>.
               The piece combines 3D projection mapping with an industrial KUKA
               robot to create collaborative artwork between machine and audience.
               <br />
               <br />
               Visitors draw gestures through workshop windows on a web portal. These 2D inputs are
-              "manufactured" into temporary 3D forms by the robot before dissolving away, exploring the
-              ephemeral nature of digital labour and the manufactured form.
+              "manufactured" into temporary 3D forms by the robot — then dissolve.
+              <EmphasisText>That which is made is inevitably unmade.</EmphasisText>
             </CustomSubtitle>
           </CustomHeader>
 
@@ -154,42 +154,6 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
-
-          <IntroSection>
-            During COVID-19, I was tasked with creating an interactive installation
-            about digital fabrication that felt intimate and collaborative, but worked through glass,
-            across distance, with no physical contact.
-            <br />
-            <br />
-            How do you bridge the digital and the physical? How do you make remote participation feel meaningful?
-          </IntroSection>
-
-          <DescriptionParagraph>
-            The solution was <i>Assembly Line</i>. A massive KUKA industrial robot performed repetitive motions
-            behind a workshop window, its movements synchronized with 3D projection mapping. Passersby could draw
-            gestures on their phones. Their marks would appear in the projection, get "picked up" by the robot's
-            motion, transform into 3D forms, and then slowly dissolve.
-            <br />
-            <br />
-            The technical challenge was creating a networked pipeline: p5.js to record their drawings, Node.js to route
-            the data from phone to installation, and TouchDesigner to orchestrate projection mapping while tracking the robot's
-            physical position with HTC VIVE trackers.
-            <EmphasisText>That which is made is inevitably unmade.</EmphasisText>
-          </DescriptionParagraph>
-
-          <ImageGrid>
-            <ImageLink href="https://www.torontomu.ca/design-technology-lab/projects/assembly-line/" target="_blank" rel="noopener noreferrer">
-              <StyledDocImage src="/images/projects/AssemblyLine/assembly-line1.jpg" alt="Assembly Line Installation" />
-            </ImageLink>
-            <ImageLink href="https://www.torontomu.ca/design-technology-lab/projects/assembly-line/" target="_blank" rel="noopener noreferrer">
-              <StyledDocImage src="/images/projects/AssemblyLine/aseembly-line2.jpg" alt="Assembly Line Projection" />
-            </ImageLink>
-          </ImageGrid>
-
-          <DescriptionParagraph>
-            Presented at DesignTO 2022, the installation was an exploration of human-machine collaboration and the impermanence of manufacturing.
-            Strangers on the street collaborated with an industrial robot to make art that existed for seconds before washing away.
-          </DescriptionParagraph>
 
           <ExternalLink
             href="https://www.cbc.ca/arts/in-toronto-here-s-where-you-can-make-art-with-a-giant-industrial-robot-1.6321499"

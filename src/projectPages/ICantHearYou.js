@@ -87,7 +87,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>Will we try to help someone even if we know we probably can't?</CustomTitle>
-            <CustomCategory>[individual project]</CustomCategory>
+            {/* <CustomCategory>[individual project]</CustomCategory> */}
             <CustomSubtitle>
               <i>I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER</i> is a networked performance
               about miscommunication and the limits of empathy. One person sits alone in a dark room. A group sits together elsewhere. The group can hear the isolated person, but the person cannot hear the group,

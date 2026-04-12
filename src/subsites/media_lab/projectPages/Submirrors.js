@@ -130,7 +130,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How does it feel to lose control of your own reflection?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
+            {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
               <i>Recurrent Waiting</i> and <i>Recurrent Kafka</i> [the Submirror series] are interactive mirror installations
               I developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>. The works explore the tension between self-perception,

@@ -111,7 +111,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How can a human-robot system feel creatively collaborative?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
+            {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
               <i>Assembly Line</i> is a window installation I was lead developer on, created for Toronto Metropolitan
               University&apos;s <InlineLink href="https://www.torontomu.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</InlineLink>.

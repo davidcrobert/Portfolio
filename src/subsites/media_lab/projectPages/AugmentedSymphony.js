@@ -82,7 +82,7 @@ const AugmentedSymphonyProjectPage = ({ project, subsiteContext, subsiteId }) =>
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How do you bring the orchestra home?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
+            {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
               <i>Augmented Symphony</i> is a Social Sciences and Humanities Research
               Council-funded project that I designed and developed as a Research Assistant.

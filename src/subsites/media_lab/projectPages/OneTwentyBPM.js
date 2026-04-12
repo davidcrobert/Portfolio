@@ -117,7 +117,7 @@ const OneTwentyBPMProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>Will we accept our discomfort in order to stop someone else's?</CustomTitle>
-            <CustomCategory>[individual project]</CustomCategory>
+            {/* <CustomCategory>[individual project]</CustomCategory> */}
             <CustomSubtitle>
               <i>ONE HUNDRED AND TWENTY BEATS PER MINUTE</i> is a networked performance about collective responsibility.
               An audience on Zoom watched a machine strike me in the head, over and over, while I sat alone

@@ -119,7 +119,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>What is a 'bodily identity' in the age of AI?</CustomTitle>
-            <CustomCategory>[individual project]</CustomCategory>
+            {/* <CustomCategory>[individual project]</CustomCategory> */}
             <CustomSubtitle>
               Produced during my time as an artist-in-residence at the <InlineLink href="https://www.fabrica.it/" target="_blank" rel="noopener noreferrer">Fabrica research center</InlineLink>,
               <i> I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST</i> is an exploration of AI

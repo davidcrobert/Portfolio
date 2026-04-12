@@ -28,7 +28,7 @@ export const projectData = {
         infoPopup: {
           main: "Lorum ipsum",
           context: `
-            <i>Spiral Reflector</i> is an installation I developed as a software engineer for artist Rafael Lozano-Hemmer,
+            <i>Spiral Reflector</i> is an installation I developed as a creative technologist for artist Rafael Lozano-Hemmer,
             exhibited at the Museo de Arte Moderno in Mexico City.<br><br>
             300 metres of LED lights in a tubular diffuser form a five-metre spiral. A surveillance camera at the centre
             periodically "flushes" and absorbs light as it pans, casting a scanning line that tracks its attention across the room.
@@ -284,46 +284,46 @@ export const projectData = {
       //     tools: `JavaScript & Node.js & React & Three.js & MongoDB`
       //   }
       // },
-      {
-        title: "Augmented Symphony",
-        link: "/projects/augmented-symphony",
-        description: "An AR mobile app for spatially arranging and walking through a full orchestra at home, with instrument-accurate positional audio",
-        subtitle1: "Orchestras",
-        subtitle2: "@ Home",
-        year: "2021",
-        tags: ['ar/vr/xr'],
-        mediaEmbed: `
-          <iframe 
-            width="560" 
-            height="315" 
-            src="https://www.youtube.com/embed/TyodRsDgzKk" 
-            title="YouTube video player"
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        `,
-        infoPopup: {
-          main: "How can the digital delivery of orchestral music be enhanced?",
-          context: `
-            <i>Augmented Symphony</i> was a research project exploring the use of augmented reality (AR) and spatial audio to enhance the audience experience 
-            of orchestral music at home. The project aimed to engage users through interactivity, allowing them to explore the orchestra in a novel way -
-            through space.<br><br>
+      // {
+      //   title: "Augmented Symphony",
+      //   link: "/projects/augmented-symphony",
+      //   description: "An AR mobile app for spatially arranging and walking through a full orchestra at home, with instrument-accurate positional audio",
+      //   subtitle1: "Orchestras",
+      //   subtitle2: "@ Home",
+      //   year: "2021",
+      //   tags: ['ar/vr/xr'],
+      //   mediaEmbed: `
+      //     <iframe 
+      //       width="560" 
+      //       height="315" 
+      //       src="https://www.youtube.com/embed/TyodRsDgzKk" 
+      //       title="YouTube video player"
+      //       frameborder="0" 
+      //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      //       allowfullscreen
+      //     ></iframe>
+      //   `,
+      //   infoPopup: {
+      //     main: "How can the digital delivery of orchestral music be enhanced?",
+      //     context: `
+      //       <i>Augmented Symphony</i> was a research project exploring the use of augmented reality (AR) and spatial audio to enhance the audience experience 
+      //       of orchestral music at home. The project aimed to engage users through interactivity, allowing them to explore the orchestra in a novel way -
+      //       through space.<br><br>
 
-            The app allows users to place instruments around their space in AR. They can then walk through their uniquely arranged orchestra, paying attention 
-            to instruments as they wish and creating their own personalized concert experience.<br><br>
+      //       The app allows users to place instruments around their space in AR. They can then walk through their uniquely arranged orchestra, paying attention 
+      //       to instruments as they wish and creating their own personalized concert experience.<br><br>
 
-            This app, along with a <a href="https://www.academia.edu/84385746/Augmented_Symphony_An_augmented_reality_application_for_immersive_music_listening" target="_blank" rel="noopener noreferrer">
-            short paper</a> I helped write, was presented as part of 
-            <a href="http://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.
-          `,
-          tech: `
-            The app was developed in Unity and programmed with C#.<br>
-            It works on both iOS and Android devices using AR Foundation.<br>
-          `,
-          tools: `Unity & C#`
-        }
-      }
+      //       This app, along with a <a href="https://www.academia.edu/84385746/Augmented_Symphony_An_augmented_reality_application_for_immersive_music_listening" target="_blank" rel="noopener noreferrer">
+      //       short paper</a> I helped write, was presented as part of 
+      //       <a href="http://www.eva-london.org/eva-london-2022/" target="_blank" rel="noopener noreferrer">EVA London 2022</a>.
+      //     `,
+      //     tech: `
+      //       The app was developed in Unity and programmed with C#.<br>
+      //       It works on both iOS and Android devices using AR Foundation.<br>
+      //     `,
+      //     tools: `Unity & C#`
+      //   }
+      // }
     ]
   },
   art: {
@@ -430,46 +430,46 @@ export const projectData = {
           tools: `Unity & Python & TouchDesigner`
         }
       },
-      {
-        title: "I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER",
-        link: "/projects/i-cant-hear-you",
-        description: "Networked performance about [mis]communication",
-        subtitle1: "Like talking",
-        subtitle2: "@ a brick wall",
-        year: "2022",
-        tags: ['installation'],
-        mediaEmbed: `
-          <iframe 
-            width="560" 
-            height="315" 
-            src="https://www.youtube.com/embed/T3VsCSVuLc8" 
-            title="YouTube video player"
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        `,
-        infoPopup: {
-          main: "What exactly are you saying?",
-          context: `
-            In <i>I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER</i>, the audience is divided.<br>
-            In one room, the majority of them remain together. It is warmly lit, and they sat in a semi-circle looking at each other.<br> 
-            For the other room I took one member of the group, and placed them in a large, dark studio.<br> 
-            The only thing lighting the room is a projection of long green lines against the wall.<br>
-            This member's phone is taken and put in a box, then are seated in a high chair with a microphone sitting on the ground in front of them.<br><br>
+      // {
+      //   title: "I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER",
+      //   link: "/projects/i-cant-hear-you",
+      //   description: "Networked performance about [mis]communication",
+      //   subtitle1: "Like talking",
+      //   subtitle2: "@ a brick wall",
+      //   year: "2022",
+      //   tags: ['installation'],
+      //   mediaEmbed: `
+      //     <iframe 
+      //       width="560" 
+      //       height="315" 
+      //       src="https://www.youtube.com/embed/T3VsCSVuLc8" 
+      //       title="YouTube video player"
+      //       frameborder="0" 
+      //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      //       allowfullscreen
+      //     ></iframe>
+      //   `,
+      //   infoPopup: {
+      //     main: "What exactly are you saying?",
+      //     context: `
+      //       In <i>I'M SORRY I CAN'T HEAR YOU COULD YOU PLEASE SPEAK A LITTLE LOUDER</i>, the audience is divided.<br>
+      //       In one room, the majority of them remain together. It is warmly lit, and they sat in a semi-circle looking at each other.<br> 
+      //       For the other room I took one member of the group, and placed them in a large, dark studio.<br> 
+      //       The only thing lighting the room is a projection of long green lines against the wall.<br>
+      //       This member's phone is taken and put in a box, then are seated in a high chair with a microphone sitting on the ground in front of them.<br><br>
 
-            Connecting these rooms is a Zoom call. In the first room, with the group, the Zoom call is audible and they may communally speak to it.<br>
-            In the second room with the single participant, they cannot hear anything from the call, but rather just see a visualization of the audio 
-            from the call, sitting in silence.<br>
-            Their collective goal: have a conversation. Speak to each other.<br><br>
-            The performance lasted about 15 minutes for each participant.
-          `,
-          tech: `
-            The audio visualization was done in TouchDesigner.
-          `,
-          tools: `TouchDesigner`
-        }
-      },
+      //       Connecting these rooms is a Zoom call. In the first room, with the group, the Zoom call is audible and they may communally speak to it.<br>
+      //       In the second room with the single participant, they cannot hear anything from the call, but rather just see a visualization of the audio 
+      //       from the call, sitting in silence.<br>
+      //       Their collective goal: have a conversation. Speak to each other.<br><br>
+      //       The performance lasted about 15 minutes for each participant.
+      //     `,
+      //     tech: `
+      //       The audio visualization was done in TouchDesigner.
+      //     `,
+      //     tools: `TouchDesigner`
+      //   }
+      // },
       // {
       //   title: "THERE ARE 600 SPHERES HERE AND NONE OF THEM WERE DESCRIBED IN THE BIBLE",
       //   link: "/projects/600-spheres",

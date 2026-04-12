@@ -93,7 +93,7 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How would you act if there were 200 of you in a room?</CustomTitle>
-            <CustomCategory>[individual project]</CustomCategory>
+            {/* <CustomCategory>[individual project]</CustomCategory> */}
             <CustomSubtitle>
               In <i>I ASKED MY REFLECTION ITS NAME AGAIN</i>, users are given a simple
               direction to move their mouse. As time goes on, more and more cursors

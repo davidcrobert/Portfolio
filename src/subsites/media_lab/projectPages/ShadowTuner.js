@@ -93,7 +93,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
         <ProjectContent>
           <CustomHeader>
             <CustomTitle>How can AI help us hear what the world really sounds like?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
+            {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
               <i>Shadow Tuner</i> is an interactive installation I helped develop for
               artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,

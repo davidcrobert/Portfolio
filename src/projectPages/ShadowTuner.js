@@ -7,8 +7,6 @@ import {
   ProjectContent,
   DescriptionParagraph,
   CustomHeader,
-  CustomTitle,
-  CustomCategory,
   CustomSubtitle,
   DocImage,
   MediaEmbed,
@@ -27,24 +25,30 @@ import {
   InlineLink
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
 
-const IntroSection = styled(DescriptionParagraph)`
-  margin-top: 40px;
-  margin-bottom: 40px;
+const ProjectDeck = styled.div`
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 20px;
+  text-align: center;
 `;
 
-const EmphasisText = styled.span`
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-style: italic;
-  display: block;
-  text-align: center;
-  margin-top: 25px;
-  font-size: 17px;
-  letter-spacing: 0.3px;
+const DeckSubtitle = styled.p`
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+`;
 
-  @media screen and (max-width: 768px) {
-    font-size: 15px;
-    margin-top: 20px;
-  }
+const DeckMeta = styled.p`
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+const IntroBody = styled.div`
+  margin-top: 30px;
 `;
 
 const ImageLink = styled.a`
@@ -90,20 +94,28 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomTitle>How can AI help us hear what the world really sounds like?</CustomTitle>
-            <CustomCategory>[professional / group project]</CustomCategory>
-            <CustomSubtitle>
-              <i>Shadow Tuner</i> is an interactive installation I helped develop for
-              artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
-              adapting a massive public artwork originally presented in Abu Dhabi into a scaled-down spherical LED display.
-              <br /><br />
-              The piece transforms the visitor's body into a global antenna: as their shadow moves across a spinning Earth,
-              it tunes into thousands of live radio stations worldwide.
-              <br /><br />
-              In the new version I worked on, a custom AI system analyzes each audio stream, separating spoken
-              word from music. This foregrounds human voices and gives each region of the planet a more localized,
-              conversational texture.
-            </CustomSubtitle>
+            <ProjectDeck>
+              <DeckSubtitle>
+                Interactive radio installation adapted for a spherical LED display, with AI-assisted live audio analysis.
+              </DeckSubtitle>
+              <DeckMeta>
+                Python · TouchDesigner · speech / music classification · hardware integration
+              </DeckMeta>
+            </ProjectDeck>
+            <IntroBody>
+              <CustomSubtitle>
+                <i>Shadow Tuner</i> is an interactive installation developed for
+                artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
+                adapting a large-scale public artwork originally presented on an inflatable sphere in Abu Dhabi into a custom spherical LED display.
+                <br /><br />
+                The piece transforms the visitor&apos;s body into a global antenna: as their shadow moves across a spinning Earth,
+                it tunes into thousands of live radio stations worldwide.
+                <br /><br />
+                In the new version I worked on, a custom AI system analyzes each audio stream, separating spoken
+                word from music. This foregrounds human voices and gives each region of the planet a more localized,
+                conversational texture.
+              </CustomSubtitle>
+            </IntroBody>
           </CustomHeader>
 
           {originalProject.mediaEmbed && (
@@ -117,7 +129,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
                 <RoleDescription>
                   Developed the AI analyzer to differentiate spoken word from music across thousands of live
                   radio streams. Re-architected the audio downloading pipeline for greater resiliency and
-                  cross-platform compatibility.
+                  clearer data collection.
                   Designed audio database schema and implemented data storage system.
                   Assisted with depth-camera tracking system in TouchDesigner for shadow-based interaction.
                   <br />
@@ -132,19 +144,13 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
                     <CreditName>Rafael Lozano-Hemmer</CreditName> — <CreditRole>Artist</CreditRole>
                   </CreditItem>
                   <CreditItem>
+                    <CreditName>David Robert</CreditName> — <CreditRole>Backend & AI Development</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
                     <CreditName>Hugo Daoust</CreditName> — <CreditRole>Visuals & Interaction Development</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>Roy MacDonald</CreditName> — <CreditRole>Original Backend Development</CreditRole>
-                  </CreditItem>
-                  <CreditItem>
-                    <CreditName>David Robert</CreditName> — <CreditRole>New Backend & AI Development</CreditRole>
-                  </CreditItem>
-                  <CreditItem>
-                    <CreditName>Luis Morales</CreditName> — <CreditRole>Previz</CreditRole>
-                  </CreditItem>
-                  <CreditItem>
-                    <CreditName>Pierre Tremblay, Matthieu Vanier</CreditName> — <CreditRole>Video</CreditRole>
+                    <CreditName>William Sutton</CreditName> — <CreditRole>Industrial Design & Fabrication</CreditRole>
                   </CreditItem>
                 </CreditsList>
               </CreditsColumn>
@@ -152,11 +158,10 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
           </CreditsSection>
 
           <DescriptionParagraph>
-            Thousands of radio stations broadcast simultaneously across the globe. News, music, poetry,
-            debates. A lot of signal, a lot of noise. How do you develop a sense of place?
-            How do you tune into the voices? How do you find the conversations hidden in the noise?
+            Thousands of radio stations broadcast simultaneously across the globe — news, music, poetry,
+            debates. How do you develop a sense of place? How do you find the conversations hidden in the noise?
             <br /><br />
-            Our solution, and my job, was to build an AI system that could listen to the world and surface speech.
+            The solution was to build an AI system that could listen to the world and surface speech.
           </DescriptionParagraph>
 
           <ImageLink href="https://www.lozano-hemmer.com/shadow_tuner.php" target="_blank" rel="noopener noreferrer">
@@ -184,8 +189,7 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
             decisions about audio content. The result is a global polyphony that foregrounds linguistic
             diversity: the news in Arabic, conversations in Mandarin, poetry in Portuguese.
             <br /><br />
-            Your body becomes the tuning dial. Your shadow becomes the antenna. And the AI ensures that
-            what you hear is not just noise, but the world speaking.
+            Your body becomes the tuning dial. Your shadow becomes the antenna.
           </DescriptionParagraph>
 
         </ProjectContent>

@@ -18,7 +18,9 @@ export const mainPortfolioConfig = {
     'Submirrors': () => import('../projectPages/Submirrors'),
     'shadow-tuner': () => import('../projectPages/ShadowTuner'),
     'spiral-reflector': () => import('../projectPages/SpiralReflector'),
+    'remote-pulse': () => import('../projectPages/RemotePulse'),
     'assembly-line': () => import('../projectPages/AssemblyLine'),
+    'moth-melody': () => import('../projectPages/MothMelody'),
     'augmented-symphony': () => import('../projectPages/AugmentedSymphony'),
     // Art projects
     'the-beast': () => import('../projectPages/TheBeast'),

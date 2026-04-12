@@ -6,7 +6,6 @@ import {
   MainContent,
   ProjectContent,
   CustomHeader,
-  CustomCategory,
   CustomSubtitle,
   MediaEmbed,
   CreditsSection,
@@ -25,17 +24,18 @@ import {
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
 
 const ImageGallery = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
   width: 100%;
   max-width: 960px;
   margin: 30px auto 40px;
 
   @media screen and (max-width: 768px) {
+    display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 72vw;
-    grid-template-columns: none;
     gap: 8px;
     margin: 24px auto 32px;
     padding-bottom: 6px;
@@ -54,11 +54,43 @@ const ImageGallery = styled.div`
   }
 `;
 
+const ProjectDeck = styled.div`
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 20px;
+  text-align: center;
+`;
+
+const DeckSubtitle = styled.p`
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+`;
+
+const DeckMeta = styled.p`
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+const IntroBody = styled.div`
+  margin-top: 30px;
+`;
+
 const GalleryCell = styled.div`
+  flex: 0 1 calc((100% - 40px) / 5);
+  max-width: calc((100% - 40px) / 5);
   aspect-ratio: 4 / 5;
   overflow: hidden;
   background-color: #111;
-  scroll-snap-align: start;
+
+  @media screen and (max-width: 768px) {
+    max-width: none;
+    scroll-snap-align: start;
+  }
 
   img {
     width: 100%;
@@ -96,15 +128,23 @@ const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
         <ProjectContent>
           <CustomHeader>
-            <CustomCategory>[professional / group project]</CustomCategory>
-            <CustomSubtitle>
-              <i>Spiral Reflector</i> is a large-scale LED installation I developed as a software
-              engineer for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
-              exhibited at the Museo de Arte Moderno in Mexico City. 300 metres of LED lights in a
-              tubular diffuser form a spiral seven-metres in diameter. A PTZ camera at the center
-              continuously rotates and captures images that are rendered to the single-line
-              'canvas', casting bright points down the spiral.
-            </CustomSubtitle>
+            <ProjectDeck>
+              <DeckSubtitle>
+                Large-scale LED installation for Rafael Lozano-Hemmer, exhibited at the Museo de Arte Moderno, Mexico City.
+              </DeckSubtitle>
+              <DeckMeta>
+                TouchDesigner · Python · DMX · PTZ camera control and synchronization
+              </DeckMeta>
+            </ProjectDeck>
+            <IntroBody>
+              <CustomSubtitle>
+                <i>Spiral Reflector</i> is a large-scale LED installation developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
+                exhibited at the Museo de Arte Moderno in Mexico City. 300 metres of LED lights in a
+                tubular diffuser form a spiral seven metres in diameter. A PTZ camera at the center
+                continuously rotates, capturing the room — its image rendered in real time onto the
+                spiral's length, casting bright points of light that track the camera's gaze.
+              </CustomSubtitle>
+            </IntroBody>
           </CustomHeader>
 
           <ImageGallery>
@@ -127,10 +167,10 @@ const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Software developer. Developed the camera control and synchronization in Python.
-                  Built the TouchDesigner system that generates images and renders them to the
-                  linear DMX light as a canvas, as well as all other visual effects. Planned hardware
-                  requirements.
+                  Software developer. Built an async Python API for PTZ camera control and
+                  image synchronization. Developed the TouchDesigner system that generates
+                  imagery and drives the LED strip over DMX, including all visual effects.
+                  Scoped hardware requirements.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>
