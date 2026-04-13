@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f9f9f9;
+  min-height: 100%;
 }
 
 code {
@@ -20,12 +21,12 @@ code {
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   cursor: crosshair;
 }
 
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 .header {
@@ -51,4 +52,10 @@ html, body {
 
 .secondSubtext {
   margin-left: 30px;
+}
+
+@media (hover: none), (pointer: coarse) {
+  html, body {
+    cursor: auto;
+  }
 }

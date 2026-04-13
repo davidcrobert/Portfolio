@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './Header';
+import { media, spacing } from '../styles/responsive';
 
 // Main container for the category page
 const CategoryContainer = styled.div`
   background-color: #f9f9f9;
   color: black;
   overscroll-behavior: contain;
-  min-height: calc(100vh - 150px);
+  min-height: 100vh;
   font-family: 'Times New Roman', Times, serif;
   display: flex;
   flex-direction: column;
@@ -32,9 +33,9 @@ const Project = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: ${spacing.cardPadding} 0;
   
   /* Set fixed height based on viewport size, regardless of how many projects */
-  height: calc(25vh);
   min-height: 150px;
 
   &:last-child {
@@ -55,10 +56,12 @@ const Project = styled.section`
   }
 
   /* Mobile-specific styling */
-  @media screen and (max-width: 768px) {
-    height: 25vh;
-    min-height: 120px;
-    padding: 10px 0;
+  ${media.downTablet} {
+    width: 100%;
+    min-height: 0;
+    text-align: left;
+    align-items: flex-start;
+    padding: ${spacing.cardPadding} ${spacing.pageX};
   }
 `;
 
@@ -85,11 +88,13 @@ const ProjectTitle = styled(Link)`
   }
 
   /* Mobile-specific styling */
-  @media screen and (max-width: 768px) {
-    font-size: 18px;
-    max-width: 80%;
+  ${media.downTablet} {
+    font-size: 20px;
+    max-width: 100%;
     margin-bottom: 10px;
     padding-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
   }
 `;
 
@@ -104,10 +109,11 @@ const ProjectDescription = styled.p`
   margin-bottom: 8px;
 
   /* Mobile-specific styling */
-  @media screen and (max-width: 768px) {
-    font-size: 10px;
-    padding: 0 10px;
-    margin-bottom: 5px;
+  ${media.downTablet} {
+    font-size: 12px;
+    padding: 0;
+    margin-bottom: 10px;
+    text-align: left;
   }
 `;
 
@@ -120,8 +126,9 @@ const ProjectTechnologies = styled.p`
   margin-bottom: 4px;
 
   /* Mobile-specific styling */
-  @media screen and (max-width: 768px) {
-    font-size: 10px;
+  ${media.downTablet} {
+    font-size: 11px;
+    text-align: left;
   }
 `;
 
@@ -134,8 +141,9 @@ const ProjectTags = styled.p`
   font-style: italic;
 
   /* Mobile-specific styling */
-  @media screen and (max-width: 768px) {
-    font-size: 9px;
+  ${media.downTablet} {
+    font-size: 10px;
+    text-align: left;
   }
 `;
 

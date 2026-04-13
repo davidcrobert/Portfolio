@@ -2,11 +2,16 @@ import { useEffect, useRef } from 'react';
 
 const SIZES = [175, 150, 195, 160, 185, 145, 170, 155, 190, 165];
 const FLOAT_OPACITY = 0.3;
+const MOBILE_FLOAT_OPACITY = 0.22;
 const SUMMON_OPACITY = 0.82;
+const MOBILE_SUMMON_OPACITY = 0.68;
 const SUMMONED_W_RATIO = 0.4;
 const SUMMONED_H_RATIO = 0.5;
+const MOBILE_SUMMONED_W_RATIO = 0.28;
+const MOBILE_SUMMONED_H_RATIO = 0.24;
 const DRIFT_SPEED = 0.28;
 const MAX_OFFSCREEN_RATIO = 0.6;
+const MOBILE_SIZE_SCALE = 0.58;
 
 function FloatingImages({ images, summonedId, activeImageIds }) {
   const refs = useRef({});
@@ -19,6 +24,16 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
   const rafRef = useRef(null);
   const returningIdRef = useRef(null);
   const returnTimeoutRef = useRef(null);
+  const isMobileRef = useRef(window.innerWidth <= 768);
+
+  const getSizeForViewport = (baseSize) => {
+    return isMobileRef.current ? Math.round(baseSize * MOBILE_SIZE_SCALE) : baseSize;
+  };
+
+  const getFloatOpacity = () => (isMobileRef.current ? MOBILE_FLOAT_OPACITY : FLOAT_OPACITY);
+  const getSummonOpacity = () => (isMobileRef.current ? MOBILE_SUMMON_OPACITY : SUMMON_OPACITY);
+  const getSummonedWidthRatio = () => (isMobileRef.current ? MOBILE_SUMMONED_W_RATIO : SUMMONED_W_RATIO);
+  const getSummonedHeightRatio = () => (isMobileRef.current ? MOBILE_SUMMONED_H_RATIO : SUMMONED_H_RATIO);
 
   useEffect(() => {
     imagesRef.current = images;
@@ -43,7 +58,7 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
   useEffect(() => {
     images.forEach((img, i) => {
       if (pos.current[img.id] === undefined) {
-        const size = sizes.current[img.id] || SIZES[i % SIZES.length];
+        const size = sizes.current[img.id] || getSizeForViewport(SIZES[i % SIZES.length]);
         const { top, bottom } = getVisibleBounds();
         const floatingHeight = size * 0.75;
         pos.current[img.id] = {
@@ -73,7 +88,9 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
           el.style.opacity = '0';
           return;
         }
-        el.style.opacity = summonedIdRef.current === img.id ? String(SUMMON_OPACITY) : String(FLOAT_OPACITY);
+        el.style.opacity = summonedIdRef.current === img.id
+          ? String(getSummonOpacity())
+          : String(getFloatOpacity());
       });
     });
   }, [images, activeImageIds]);
@@ -89,8 +106,8 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
         if (img.id === summonedId) {
           const viewportWidth = window.innerWidth;
           const viewportHeight = window.innerHeight;
-          const summonedWidth = viewportWidth * SUMMONED_W_RATIO;
-          const summonedHeight = viewportHeight * SUMMONED_H_RATIO;
+          const summonedWidth = viewportWidth * getSummonedWidthRatio();
+          const summonedHeight = viewportHeight * getSummonedHeightRatio();
 
           el.style.transition = [
             'left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
@@ -103,7 +120,7 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
           el.style.top = `${(viewportHeight - summonedHeight) / 2}px`;
           el.style.width = `${summonedWidth}px`;
           el.style.height = `${summonedHeight}px`;
-          el.style.opacity = String(SUMMON_OPACITY);
+          el.style.opacity = String(getSummonOpacity());
           el.style.zIndex = '5';
           return;
         }
@@ -141,7 +158,7 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
       summonedEl.style.top = `${pos.current[returningId].y}px`;
       summonedEl.style.width = `${floatingWidth}px`;
       summonedEl.style.height = `${floatingHeight}px`;
-      summonedEl.style.opacity = String(FLOAT_OPACITY);
+      summonedEl.style.opacity = String(getFloatOpacity());
       summonedEl.style.zIndex = '3';
     }
 
@@ -158,9 +175,55 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
       const el = refs.current[img.id];
       if (!el) return;
       el.style.transition = 'opacity 0.5s ease';
-      el.style.opacity = activeImageIds?.has(img.id) ? String(FLOAT_OPACITY) : '0';
+      el.style.opacity = activeImageIds?.has(img.id) ? String(getFloatOpacity()) : '0';
     });
   }, [summonedId, images, activeImageIds]);
+
+  useEffect(() => {
+    const clampPosition = (id) => {
+      const position = pos.current[id];
+      const size = sizes.current[id];
+      if (!position || !size) return;
+
+      const viewportWidth = window.innerWidth;
+      const floatingHeight = size * 0.75;
+      const { top, bottom } = getVisibleBounds();
+      const minX = -size * MAX_OFFSCREEN_RATIO;
+      const maxX = viewportWidth - size * (1 - MAX_OFFSCREEN_RATIO);
+      const minY = top - floatingHeight * MAX_OFFSCREEN_RATIO;
+      const maxY = bottom - floatingHeight * (1 - MAX_OFFSCREEN_RATIO);
+
+      position.x = Math.min(Math.max(position.x, minX), maxX);
+      position.y = Math.min(Math.max(position.y, minY), maxY);
+    };
+
+    const syncViewportSizing = () => {
+      const nextIsMobile = window.innerWidth <= 768;
+      const modeChanged = nextIsMobile !== isMobileRef.current;
+      isMobileRef.current = nextIsMobile;
+
+      imagesRef.current.forEach((img, i) => {
+        const nextSize = getSizeForViewport(SIZES[i % SIZES.length]);
+        if (modeChanged || !sizes.current[img.id]) {
+          sizes.current[img.id] = nextSize;
+        }
+
+        clampPosition(img.id);
+
+        const el = refs.current[img.id];
+        if (!el) return;
+        el.style.width = `${sizes.current[img.id]}px`;
+        el.style.height = `${sizes.current[img.id] * 0.75}px`;
+        if (!summonedIdRef.current || summonedIdRef.current !== img.id) {
+          el.style.opacity = activeImageIds?.has(img.id) ? String(getFloatOpacity()) : '0';
+        }
+      });
+    };
+
+    syncViewportSizing();
+    window.addEventListener('resize', syncViewportSizing);
+    return () => window.removeEventListener('resize', syncViewportSizing);
+  }, [activeImageIds]);
 
   useEffect(() => {
     const animate = () => {
@@ -241,8 +304,8 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
           }}
           style={{
             position: 'absolute',
-            width: `${sizes.current[img.id] || SIZES[i % SIZES.length]}px`,
-            height: `${(sizes.current[img.id] || SIZES[i % SIZES.length]) * 0.75}px`,
+            width: `${sizes.current[img.id] || getSizeForViewport(SIZES[i % SIZES.length])}px`,
+            height: `${(sizes.current[img.id] || getSizeForViewport(SIZES[i % SIZES.length])) * 0.75}px`,
             backgroundImage: `url(${img.src})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',

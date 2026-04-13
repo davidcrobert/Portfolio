@@ -1,6 +1,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { media, spacing } from '../styles/responsive';
 
 const HeaderContainer = styled.header`
   position: sticky;
@@ -9,62 +10,92 @@ const HeaderContainer = styled.header`
   background-color: #f9f9f9;
   border-bottom: black 1px solid;
   width: 100%;
-  padding: 7px 10px;
-  height: 80px;
-  overflow: hidden;
+  padding: 10px ${spacing.pageX};
 `;
 
 const HeaderContent = styled.div`
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  height: 100%;
+  gap: 16px 24px;
   max-width: 100%;
+  flex-wrap: wrap;
+
+  ${media.downLaptop} {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  ${media.downTablet} {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const LeftSide = styled.div`
   display: flex;
-  align-items: center;
-  gap: 40px;
-  flex: 1;
+  align-items: flex-start;
+  gap: 24px;
+  flex: 1 1 320px;
   min-width: 0;
+
+  ${media.downLaptop} {
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  ${media.downTablet} {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const TitleContainer = styled.div`
   min-width: 0;
-  overflow: hidden;
-  flex-shrink: 0;
+  flex: 0 1 auto;
 `;
 
 const CenterArea = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   flex: 0 0 auto;
   min-width: 0;
-  align-self: center;
-  height: 100%;
+  align-self: flex-start;
+
+  ${media.downLaptop} {
+    justify-content: flex-start;
+  }
+
+  ${media.downTablet} {
+    order: 3;
+  }
 `;
 
 const RightSide = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
-  gap: 20px;
-  flex: 1;
+  gap: 12px 20px;
+  flex: 1 1 320px;
   min-width: 0;
+  flex-wrap: wrap;
+
+  ${media.downLaptop} {
+    justify-content: flex-start;
+  }
+
+  ${media.downTablet} {
+    order: 2;
+  }
 `;
 
 const Title = styled.h1`
-  font-size: 25px;
+  font-size: clamp(22px, 3vw, 28px);
   text-transform: uppercase;
   font-weight: 400;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  line-height: 1.05;
 `;
 
 const Subtitle = styled.h2`
@@ -74,41 +105,38 @@ const Subtitle = styled.h2`
   margin: 0;
   margin-left: ${props => props.$second ? '30px' : '0'};
   font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  line-height: 1.3;
+
+  ${media.downPhone} {
+    font-size: 12px;
+    margin-left: ${props => props.$second ? '16px' : '0'};
+  }
 `;
 
 const TagsContainer = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  flex: 0 0 auto;
-  overflow: visible;
+  justify-content: flex-start;
+  flex: 1 1 240px;
   min-width: 0;
-  max-height: 60px;
-  align-content: center;
-  
-  @media screen and (max-width: 768px) {
-    gap: 5px;
-    flex: 0 0 20%;
+
+  ${media.downTablet} {
+    width: 100%;
   }
 `;
 
 const TagButton = styled.button`
   background: none;
-  border: none;
+  border: 1px solid transparent;
   color: black;
   font-size: 12px;
   text-transform: uppercase;
   cursor: help;
-  padding: 2px 5px;
+  padding: 6px 10px;
   transition: transform 0.2s linear;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  white-space: nowrap;
-  height: 20px;
+  min-height: 34px;
   
   &:hover {
     transform: skew(-20deg);
@@ -116,24 +144,30 @@ const TagButton = styled.button`
   
   ${props => props.$active && `
     border-bottom: 1px solid black;
+    border-color: black;
   `}
   
-  @media screen and (max-width: 768px) {
+  ${media.downPhone} {
     font-size: 10px;
-    padding: 1px 3px;
-    height: 16px;
+    padding: 5px 8px;
+    min-height: 30px;
+  }
+
+  ${media.touch} {
+    cursor: pointer;
   }
 `;
 
 const StatementContainer = styled.div`
-  max-width: clamp(500px, 30vw, 500px);
+  max-width: min(520px, 100%);
   font-size: 14px;
   line-height: 1.4;
   font-family: 'Times New Roman', Times, serif;
-  flex-shrink: 1;
+  flex: 1 1 320px;
 
-  @media screen and (max-width: 880px) {
-    display: none;
+  ${media.downTablet} {
+    width: 100%;
+    font-size: 13px;
   }
 `;
 
@@ -146,9 +180,8 @@ const AnimatedTextContainer = styled.div`
   align-items: center;
   position: relative;
   margin-left: auto;
-  margin-right: 100px;
 
-  @media screen and (max-width: 1100px) {
+  ${media.downDesktop} {
     display: none;
   }
 `;
@@ -176,24 +209,23 @@ const Arrow = styled.span`
 
 const HeaderButtons = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
   flex: 0 0 auto;
-  justify-content: flex-end;
+  justify-content: flex-start;
   min-width: 0;
   flex-shrink: 0;
-
 `;
 
 const HeaderButton = styled.button`
   color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
   text-transform: uppercase;
   transition: transform 0.2s linear;
   background: none;
   border: none;
-  padding: 0;
+  padding: 6px 0;
   font: inherit;
   cursor: pointer;
   outline: inherit;
@@ -201,6 +233,14 @@ const HeaderButton = styled.button`
 
   &:hover {
     transform: ${props => props.$back ? 'skew(20deg)' : 'skew(-20deg)'};
+  }
+
+  ${media.downPhone} {
+    font-size: 16px;
+  }
+
+  ${media.touch} {
+    cursor: pointer;
   }
 `;
 

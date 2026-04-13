@@ -335,7 +335,7 @@ export const projectData = {
       {
         title: "I SURRENDERED MY BODY AND I SUCCUMBED TO THE BEAST",
         link: "/projects/the-beast",
-        description: "An installation that records your voice, then puts words in your mouth",
+        description: "An installation that puts words in your mouth. Made at the Fabrica Research Residency.",
         subtitle1: "Copying",
         subtitle2: "& Crowing",
         year: "2024",

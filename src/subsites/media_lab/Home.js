@@ -4,26 +4,25 @@ import styled from 'styled-components';
 import Header from '../../components/Header';
 import Sketch from '../../components/Sketch';
 import { mediaLabData } from './data';
+import { media, spacing } from '../../styles/responsive';
 
 const IndexContainer = styled.div`
   background-color: #f9f9f9;
   color: black;
   overscroll-behavior: contain;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: 'Times New Roman', Times, serif;
-  overflow: hidden;
   position: relative;
 `;
 
 const SplitContainer = styled.div`
   display: flex;
   width: 100%;
-  height: calc(100vh - 80px);
-  overflow: hidden;
+  flex: 1;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     flex-direction: column;
   }
 `;
@@ -32,9 +31,8 @@ const Side = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
   direction: ${props => props.$left ? 'rtl' : 'ltr'};
+  min-width: 0;
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -44,6 +42,11 @@ const Side = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: black;
     border-radius: 0;
+  }
+
+  ${media.downTablet} {
+    direction: ltr;
+    overflow: visible;
   }
 `;
 
@@ -64,9 +67,11 @@ const SideLabel = styled.div`
   background-color: #f9f9f9;
   z-index: 10;
 
-  @media screen and (max-width: 768px) {
-    font-size: 10px;
-    padding: 6px;
+  ${media.downTablet} {
+    position: static;
+    font-size: 11px;
+    padding: 10px ${spacing.pageX};
+    text-align: left;
   }
 `;
 
@@ -85,17 +90,19 @@ const Project = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: calc(25vh);
-  min-height: 150px;
+  min-height: 180px;
+  padding: ${spacing.cardPadding} 0;
 
   &:last-child {
     border-bottom: none;
   }
 
-  @media screen and (max-width: 768px) {
-    height: 25vh;
-    min-height: 120px;
-    padding: 10px 0;
+  ${media.downTablet} {
+    width: 100%;
+    min-height: 0;
+    align-items: flex-start;
+    text-align: left;
+    padding: ${spacing.cardPadding} ${spacing.pageX};
   }
 `;
 
@@ -119,11 +126,13 @@ const ProjectTitle = styled(Link)`
     transform: rotateX(35deg);
   }
 
-  @media screen and (max-width: 768px) {
-    font-size: 18px;
-    max-width: 65%;
+  ${media.downTablet} {
+    font-size: 20px;
+    max-width: 100%;
     margin-bottom: 10px;
     padding-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
   }
 `;
 
@@ -135,10 +144,11 @@ const ProjectDescription = styled.p`
   line-height: 1.5;
   margin-bottom: 8px;
 
-  @media screen and (max-width: 768px) {
-    font-size: 10px;
-    padding: 0 10px;
-    margin-bottom: 5px;
+  ${media.downTablet} {
+    font-size: 12px;
+    padding: 0;
+    margin-bottom: 10px;
+    text-align: left;
   }
 `;
 
@@ -158,7 +168,7 @@ const ImagePreview = styled.div`
   background-position: center;
   border: 1px solid black;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     width: 70vw;
     height: 40vh;
   }
@@ -176,6 +186,10 @@ const ProjectMeta = styled.div`
   margin-top: 4px;
   justify-content: center;
   flex-wrap: wrap;
+
+  ${media.downTablet} {
+    justify-content: flex-start;
+  }
 `;
 
 const MetaSeparator = styled.span`
@@ -188,6 +202,7 @@ const MetaSeparator = styled.span`
 function MediaLabHome() {
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageCache, setImageCache] = useState({});
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
 
   // Split projects into professional and personal
   const personalProjects = mediaLabData.projects.filter(p => p.personal === true);
@@ -228,7 +243,19 @@ function MediaLabHome() {
     });
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleProjectHover = (projectLink) => {
+    if (isMobile) {
+      return;
+    }
     const projectId = projectLink.split('/').pop();
     // Use cached image path (will be null if no image exists)
     setHoveredImage(imageCache[projectId] || null);
@@ -241,7 +268,7 @@ function MediaLabHome() {
   return (
     <IndexContainer>
       <Sketch />
-      <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />
+      {!isMobile && <ImagePreview $visible={hoveredImage !== null} $image={hoveredImage} />}
       <Header
         title="David Robert"
         subtitle1="Critical Technologist"
@@ -262,8 +289,8 @@ function MediaLabHome() {
                 <Project key={index}>
                   <ProjectTitle
                     to={`/media_lab/projects/${project.originalLink.split('/').pop()}`}
-                    onMouseEnter={() => handleProjectHover(project.originalLink)}
-                    onMouseLeave={handleProjectLeave}
+                    onMouseEnter={!isMobile ? () => handleProjectHover(project.originalLink) : undefined}
+                    onMouseLeave={!isMobile ? handleProjectLeave : undefined}
                   >
                     {project.title}
                   </ProjectTitle>
@@ -287,8 +314,8 @@ function MediaLabHome() {
                 <Project key={index}>
                   <ProjectTitle
                     to={`/media_lab/projects/${project.originalLink.split('/').pop()}`}
-                    onMouseEnter={() => handleProjectHover(project.originalLink)}
-                    onMouseLeave={handleProjectLeave}
+                    onMouseEnter={!isMobile ? () => handleProjectHover(project.originalLink) : undefined}
+                    onMouseLeave={!isMobile ? handleProjectLeave : undefined}
                   >
                     {project.title}
                   </ProjectTitle>

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { getSubsite } from '../data/subsiteData';
+import { media, spacing } from '../styles/responsive';
 
 // Main container for the subsite page
 const SubSiteContainer = styled.div`
@@ -20,12 +21,14 @@ const IntroSection = styled.div`
   width: 90%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px ${spacing.pageX};
   text-align: center;
   border-bottom: 1px solid black;
 
-  @media screen and (max-width: 768px) {
-    padding: 30px 15px;
+  ${media.downTablet} {
+    width: 100%;
+    text-align: left;
+    padding: 28px ${spacing.pageX};
   }
 `;
 
@@ -38,7 +41,7 @@ const IntroStatement = styled.h2`
   margin-bottom: 30px;
   line-height: 1.4;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 18px;
     margin-bottom: 20px;
   }
@@ -52,7 +55,7 @@ const IntroDescription = styled.p`
   max-width: 700px;
   margin: 0 auto;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 14px;
     line-height: 1.6;
   }
@@ -76,8 +79,8 @@ const Project = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: calc(25vh);
   min-height: 150px;
+  padding: ${spacing.cardPadding} 0;
 
   &:last-child {
     border-bottom: none;
@@ -94,10 +97,12 @@ const Project = styled.section`
     }};
   }
 
-  @media screen and (max-width: 768px) {
-    height: 25vh;
-    min-height: 120px;
-    padding: 10px 0;
+  ${media.downTablet} {
+    width: 100%;
+    min-height: 0;
+    align-items: flex-start;
+    text-align: left;
+    padding: ${spacing.cardPadding} ${spacing.pageX};
   }
 `;
 
@@ -122,11 +127,13 @@ const ProjectTitle = styled(Link)`
     transform: rotateX(35deg);
   }
 
-  @media screen and (max-width: 768px) {
-    font-size: 18px;
-    max-width: 80%;
+  ${media.downTablet} {
+    font-size: 20px;
+    max-width: 100%;
     margin-bottom: 10px;
     padding-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
   }
 `;
 
@@ -140,10 +147,11 @@ const ProjectDescription = styled.p`
   line-height: 1.5;
   margin-bottom: 8px;
 
-  @media screen and (max-width: 768px) {
-    font-size: 10px;
-    padding: 0 10px;
-    margin-bottom: 5px;
+  ${media.downTablet} {
+    font-size: 12px;
+    padding: 0;
+    margin-bottom: 10px;
+    text-align: left;
   }
 `;
 
@@ -155,8 +163,9 @@ const ProjectTags = styled.p`
   color: #777;
   font-style: italic;
 
-  @media screen and (max-width: 768px) {
-    font-size: 9px;
+  ${media.downTablet} {
+    font-size: 10px;
+    text-align: left;
   }
 `;
 

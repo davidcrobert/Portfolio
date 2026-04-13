@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { media, spacing } from '../styles/responsive';
 
 const AboutMeContainer = styled.div`
   background-color: #f9f9f9;
@@ -12,26 +13,25 @@ const AboutMeContainer = styled.div`
 
 const AboutSection = styled.section`
   width: 100%;
-  overflow: hidden;
-  padding-top: 20px;
+  padding: 20px ${spacing.pageX} 40px;
+  display: grid;
+  gap: 12px;
 `;
 
 const AboutParagraph = styled.p`
-  padding: 16px;
+  padding: 16px 0;
   font-size: 22px;
-  width: 100%;
-  margin-top: 4.25vh;
+  width: min(100%, 760px);
+  margin-top: 0;
 
   &.left {
-    float: left;
-    margin-left: 0;
+    justify-self: start;
   }
 
   &.right {
-    float: right;
+    justify-self: end;
     text-align: right;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-right: 0;
   }
 
   a {
@@ -42,8 +42,20 @@ const AboutParagraph = styled.p`
     cursor: help;
   }
 
-  @media only screen and (max-width: 800px) {
-    width: 75%;
+  ${media.downTablet} {
+    width: 100%;
+    font-size: 18px;
+    padding: 10px 0;
+
+    &.left,
+    &.right {
+      justify-self: stretch;
+      text-align: left;
+    }
+  }
+
+  ${media.downPhone} {
+    font-size: 16px;
   }
 `;
 

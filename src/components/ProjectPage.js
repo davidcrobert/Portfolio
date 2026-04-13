@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 import parse from 'html-react-parser';
 import Header from './Header';
@@ -7,6 +7,7 @@ import { projectData } from '../data/projectData';
 import { getSubsite } from '../data/subsiteData';
 import ScavengeARMedia from './ScavengeARMedia';
 import ReflectionInteractive from './ReflectionInteractive';
+import { media, spacing } from '../styles/responsive';
 
 const customComponents = {
   ScavengeARMedia,
@@ -34,17 +35,17 @@ const MainContent = styled.div`
 const ProjectContent = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 150px);
-  padding: 20px;
+  align-items: flex-start;
+  min-height: 0;
+  padding: ${spacing.pageY} ${spacing.pageX} 48px;
   transition: filter 0.75s ease-in-out;
   
   ${props => props.blurred && css`
     filter: blur(5px);
   `}
 
-  @media screen and (max-width: 768px) {
-    padding: 10px;
+  ${media.downTablet} {
+    padding-bottom: 24px;
   }
 `;
 
@@ -93,10 +94,9 @@ const MediaEmbed = styled.div`
     }
   }
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     iframe {
-      max-height: 70vh;
-      transform: translateY(-25%);
+      max-height: none;
     }
   }
 `;
@@ -141,10 +141,14 @@ const InfoPopup = styled.div`
     border: transparent;
   }
 
-  @media screen and (max-width: 768px) {
-    width: 90vw;
-    height: 80vh;
-    padding: 15px;
+  ${media.downTablet} {
+    top: auto;
+    left: 0;
+    bottom: 0;
+    transform: none;
+    width: 100%;
+    height: min(72vh, 640px);
+    padding: 18px ${spacing.pageX} 24px;
   }
 `;
 
@@ -162,7 +166,7 @@ const InfoHeader = styled.h3`
   margin-bottom: 10px;
   border-bottom: 1px solid #f9f9f9;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 20px;
   }
 `;
@@ -177,7 +181,7 @@ const MainStatement = styled.h2`
   font-weight: 400;
   color: #f9f9f9;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 18px;
   }
 `;
@@ -195,7 +199,6 @@ const ExternalLink = styled.a`
 const ProjectPage = () => {
   const { projectId, subsiteId } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const infoPopupRef = useRef(null);
   const [project, setProject] = useState(null);

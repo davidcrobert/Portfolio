@@ -7,14 +7,12 @@ import ProjectPage from './components/ProjectPage';
 import SubSitePage from './pages/SubSitePage';
 import { Home as MediaLabHome } from './subsites/media_lab';
 import NotFound from './pages/NotFound';
-import NoiseOverlay from './components/NoiseOverlay';
 import { projectData } from './data/projectData';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* <NoiseOverlay /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutMe />} />

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { projectData } from '../../../data/projectData';
+import { media, spacing } from '../../../styles/responsive';
 
 // ============================================================================
 // SHARED STYLED COMPONENTS
@@ -24,13 +25,13 @@ export const MainContent = styled.div`
 export const ProjectContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  min-height: calc(100vh - 150px);
-  padding: 20px;
+  min-height: 0;
+  padding: ${spacing.pageY} ${spacing.pageX} 48px;
 
-  @media screen and (max-width: 768px) {
-    padding: 10px;
+  ${media.downTablet} {
+    padding-bottom: 24px;
   }
 `;
 
@@ -47,7 +48,7 @@ export const DescriptionParagraph = styled.p`
   padding: 10px;
   background-color: #fafafa;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 14px;
   }
 `;
@@ -71,7 +72,7 @@ export const CustomTitle = styled.h2`
   font-weight: 400;
   margin-bottom: 10px;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 20px;
   }
 `;
@@ -84,7 +85,7 @@ export const CustomCategory = styled.p`
   color: #666;
   margin-bottom: 15px;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 10px;
   }
 `;
@@ -96,7 +97,7 @@ export const CustomSubtitle = styled.p`
   line-height: 1.8;
   text-align: left;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 14px;
   }
 `;
@@ -132,10 +133,9 @@ export const MediaEmbed = styled.div`
     }
   }
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     iframe {
-      max-height: 70vh;
-      transform: translateY(-25%);
+      max-height: none;
     }
   }
 `;
@@ -163,7 +163,7 @@ export const Quote = styled.p`
   font-style: italic;
   font-weight: bold;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 14px;
   }
 `;
@@ -182,7 +182,7 @@ export const CreditsGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 30px;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -244,7 +244,7 @@ export const ArtistQuoteSection = styled.div`
   padding-left: 20px;
   
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     padding-left: 15px;
   }
 `;
@@ -267,7 +267,7 @@ export const ArtistQuoteText = styled.p`
   font-style: italic;
   margin: 0;
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 14px;
   }
 `;
@@ -295,7 +295,7 @@ export const ExternalLink = styled.a`
     cursor: pointer;
   }
 
-  @media screen and (max-width: 768px) {
+  ${media.downTablet} {
     font-size: 11px;
     padding: 12px 15px;
     margin: 20px auto;
