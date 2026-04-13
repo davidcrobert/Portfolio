@@ -367,6 +367,25 @@ function Home() {
     ...filteredWork.map(p => p.link.split('/').pop()),
   ]), [filteredArt, filteredWork]);
 
+  const visibleSections = useMemo(() => {
+    const sections = [
+      {
+        key: 'work',
+        label: mainPortfolioConfig.rightColumnLabel,
+        left: true,
+        projects: filteredWork,
+      },
+      {
+        key: 'art',
+        label: mainPortfolioConfig.leftColumnLabel,
+        left: false,
+        projects: filteredArt,
+      },
+    ];
+
+    return isMobile ? sections.filter(section => section.projects.length > 0) : sections;
+  }, [filteredArt, filteredWork, isMobile]);
+
   return (
     <IndexContainer>
       {/* <Sketch bottomBoundarySelector="footer" /> */}

@@ -28,6 +28,7 @@ import {
   getBackLink,
   InlineLink
 } from './BaseProjectPage';
+import { media } from '../../../styles/responsive';
 
 const IntroSection = styled(DescriptionParagraph)`
   margin-top: 40px;
@@ -87,6 +88,12 @@ const ImageGrid = styled.div`
   }
 `;
 
+const MobileAlignedHeader = styled(CustomHeader)`
+  ${media.downTablet} {
+    text-align: left;
+  }
+`;
+
 const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
   const originalProject = useOriginalProject(project);
 
@@ -109,7 +116,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
         />
 
         <ProjectContent>
-          <CustomHeader>
+          <MobileAlignedHeader>
             <CustomTitle>How can a human-robot system feel creatively collaborative?</CustomTitle>
             {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
@@ -123,7 +130,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
               “manufactured” into temporary 3D forms by the robot before dissolving away, exploring the
               ephemeral nature of digital labour and the manufactured form.
             </CustomSubtitle>
-          </CustomHeader>
+          </MobileAlignedHeader>
 
           {originalProject.mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />

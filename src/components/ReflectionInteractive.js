@@ -3,12 +3,44 @@ import p5 from 'p5';
 
 const ReflectionInteractive = ({ width, height }) => {
   const sketchRef = useRef();
-  // console.log(width, height); // Debugging statement to verify props
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-  const scaleMultiplier = 0.75;
-  width = screenWidth * scaleMultiplier;
-  height = screenHeight * scaleMultiplier;
+  const getLayout = () => {
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const isPortraitPhone = screenWidth <= 768 && screenHeight > screenWidth;
+
+    if (isPortraitPhone) {
+      const horizontalPadding = screenWidth <= 480 ? 24 : 32;
+      const reservedVerticalSpace = screenWidth <= 480 ? 220 : 250;
+      const displayedWidth = Math.max((screenWidth - horizontalPadding) * 0.9, 252);
+      const displayedHeight = Math.max((screenHeight - reservedVerticalSpace) * 0.9, 252);
+      const canvasWidth = Math.round(displayedHeight);
+      const canvasHeight = Math.round(displayedWidth);
+
+      return {
+        canvasWidth,
+        canvasHeight,
+        frameWidth: canvasHeight,
+        frameHeight: canvasWidth,
+        rotate: true,
+      };
+    }
+
+    const scaleMultiplier = screenWidth <= 768 ? 0.88 : 0.75;
+    const canvasWidth = Math.round(screenWidth * scaleMultiplier);
+    const canvasHeight = Math.round(screenHeight * scaleMultiplier);
+
+    return {
+      canvasWidth,
+      canvasHeight,
+      frameWidth: canvasWidth,
+      frameHeight: canvasHeight,
+      rotate: false,
+    };
+  };
+
+  const layout = getLayout();
+  width = layout.canvasWidth;
+  height = layout.canvasHeight;
 
   useEffect(() => {
     const sketch = (p) => {
@@ -51,9 +83,7 @@ const ReflectionInteractive = ({ width, height }) => {
         p.textSize(width / 80);
         p.textAlign(p.CENTER);
 
-        canvas.style("transform", `translate(15%, 10%)`);
         canvas.style("border", "1px solid black");
-        // canvas.style("transform", `translate(-${(45 * scaleMultiplier) / 2}%, 10%)`);
       };
 
       p.windowResized = () => {
@@ -182,7 +212,33 @@ const ReflectionInteractive = ({ width, height }) => {
     };
   }, [width, height]);
 
-  return <div ref={sketchRef} style={{ width: '100%', height: '100%', zIndex:100 }}></div>;
+  return (
+    <div
+      style={{
+        width: `${layout.frameWidth}px`,
+        height: `${layout.frameHeight}px`,
+        maxWidth: '100%',
+        position: 'relative',
+        margin: '0 auto',
+      }}
+    >
+      <div
+        ref={sketchRef}
+        style={{
+          width: `${layout.canvasWidth}px`,
+          height: `${layout.canvasHeight}px`,
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: layout.rotate
+            ? 'translate(-50%, -50%) rotate(90deg)'
+            : 'translate(-50%, -50%)',
+          transformOrigin: 'center center',
+          zIndex: 100,
+        }}
+      />
+    </div>
+  );
 };
 
 export default ReflectionInteractive;

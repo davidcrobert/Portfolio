@@ -9,8 +9,8 @@ export const projectData = {
         title: "Spiral Reflector",
         link: "/projects/spiral-reflector",
         description: "A DMX-controlled linear LED spiral that maps a surveillance camera's image as a 2D canvas",
-        subtitle1: "Light",
-        subtitle2: "& Surveillance",
+        subtitle1: "Spinning",
+        subtitle2: "& Spiralling",
         year: "2026",
         tags: ['installation', 'electronics'],
         mediaEmbed: `

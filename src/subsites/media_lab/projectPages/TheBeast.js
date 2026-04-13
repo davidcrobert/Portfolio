@@ -20,6 +20,7 @@ import {
   getCategoryPrefix,
   getBackLink
 } from './BaseProjectPage';
+import { media } from '../../../styles/responsive';
 
 // Project-specific styled components
 const BeastQuote = styled.div`
@@ -91,6 +92,12 @@ const ImageGrid = styled.div`
   }
 `;
 
+const MobileAlignedHeader = styled(CustomHeader)`
+  ${media.downTablet} {
+    text-align: left;
+  }
+`;
+
 const VerticalImage = styled.img`
   width: 100%;
   height: auto;
@@ -120,7 +127,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
         />
 
         <ProjectContent>
-          <CustomHeader>
+          <MobileAlignedHeader>
             <CustomTitle>What is a 'bodily identity' in the age of AI?</CustomTitle>
             {/* <CustomCategory>[individual project]</CustomCategory> */}
             <CustomSubtitle>
@@ -141,7 +148,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <br />
               They had joined The Beast.
             </CustomSubtitle>
-          </CustomHeader>
+          </MobileAlignedHeader>
 
           {originalProject.mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />

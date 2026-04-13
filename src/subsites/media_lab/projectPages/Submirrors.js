@@ -29,6 +29,7 @@ import {
   DocImage,
   InlineLink
 } from './BaseProjectPage';
+import { media } from '../../../styles/responsive';
 
 // Project-specific styled components
 const VideoGrid = styled.div`
@@ -106,6 +107,12 @@ const EmphasisText = styled.span`
   }
 `;
 
+const MobileAlignedHeader = styled(CustomHeader)`
+  ${media.downTablet} {
+    text-align: left;
+  }
+`;
+
 const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
   const originalProject = useOriginalProject(project);
 
@@ -128,7 +135,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
         />
 
         <ProjectContent>
-          <CustomHeader>
+          <MobileAlignedHeader>
             <CustomTitle>How does it feel to lose control of your own reflection?</CustomTitle>
             {/* <CustomCategory>[professional project]</CustomCategory> */}
             <CustomSubtitle>
@@ -143,7 +150,7 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
                 </ArtistQuoteText>
               </ArtistQuoteSection>
             </CustomSubtitle>
-          </CustomHeader>
+          </MobileAlignedHeader>
 
           <VideoGrid>
             <div>

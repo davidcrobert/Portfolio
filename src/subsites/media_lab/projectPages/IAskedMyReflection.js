@@ -20,7 +20,7 @@ import {
   getBackLink
 } from './BaseProjectPage';
 
-// Interactive component container - centers the sketch and counteracts its internal offset
+// Interactive component container
 const InteractiveContainer = styled.div`
   width: 100%;
   margin: 30px auto;
@@ -29,13 +29,13 @@ const InteractiveContainer = styled.div`
   align-items: center;
   position: relative;
 
-  /* Counteract the 15% horizontal offset from the p5 sketch canvas */
-  > div > canvas {
-    transform: translate(15%, 0%) !important;
-  }
-
   @media screen and (max-width: 768px) {
     margin: 20px auto;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    min-height: clamp(360px, 62vh, 560px);
+    margin: 0 auto;
   }
 `;
 

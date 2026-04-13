@@ -61,6 +61,11 @@ export const CustomHeader = styled.div`
   width: 100%;
   border-bottom: 1px solid black;
   background-color: #f2f2f2;
+
+  ${media.downTablet} {
+    padding: 0 0 16px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const CustomTitle = styled.h2`
@@ -74,6 +79,7 @@ export const CustomTitle = styled.h2`
 
   ${media.downTablet} {
     font-size: 20px;
+    letter-spacing: 1px;
   }
 `;
 
@@ -99,6 +105,7 @@ export const CustomSubtitle = styled.p`
 
   ${media.downTablet} {
     font-size: 14px;
+    line-height: 1.7;
   }
 `;
 
@@ -142,8 +149,14 @@ export const MediaEmbed = styled.div`
 
 export const Gif = styled.img`
   width: 70%;
+  max-width: 900px;
   margin: 20px auto;
   aspect-ratio: 16 / 9;
+  object-fit: cover;
+
+  ${media.downTablet} {
+    width: 100%;
+  }
 `;
 
 export const DocImage = styled.img`
@@ -164,7 +177,8 @@ export const Quote = styled.p`
   font-weight: bold;
 
   ${media.downTablet} {
-    font-size: 14px;
+    font-size: 22px;
+    line-height: 1.5;
   }
 `;
 
@@ -175,6 +189,11 @@ export const CreditsSection = styled.div`
   padding: 20px;
   border: 1px solid black;
   background-color: #fafafa;
+
+  ${media.downTablet} {
+    padding: 16px;
+    margin-top: 24px;
+  }
 `;
 
 export const CreditsGrid = styled.div`
@@ -210,6 +229,10 @@ export const RoleDescription = styled.p`
   line-height: 1.6;
   color: #333;
   margin: 0;
+
+  ${media.downTablet} {
+    font-size: 13px;
+  }
 `;
 
 export const CreditsList = styled.ul`
@@ -227,6 +250,10 @@ export const CreditItem = styled.li`
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  ${media.downTablet} {
+    font-size: 13px;
   }
 `;
 

@@ -22,6 +22,7 @@ import {
   cleanYouTubeEmbed,
   getBackLink
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
+import { media } from '../styles/responsive';
 
 const ImageGallery = styled.div`
   display: flex;
@@ -35,13 +36,16 @@ const ImageGallery = styled.div`
   @media screen and (max-width: 768px) {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: 72vw;
-    gap: 8px;
+    grid-auto-columns: 68vw;
+    justify-content: start;
+    gap: 10px;
     margin: 24px auto 32px;
-    padding-bottom: 6px;
+    max-width: 100%;
+    padding: 0 16px 6px;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x proximity;
+    scroll-padding-inline: 16px;
     -webkit-overflow-scrolling: touch;
 
     &::-webkit-scrollbar {
@@ -59,6 +63,10 @@ const ProjectDeck = styled.div`
   max-width: 960px;
   margin: 0 auto 20px;
   text-align: center;
+
+  ${media.downTablet} {
+    text-align: left;
+  }
 `;
 
 const DeckSubtitle = styled.p`
@@ -90,6 +98,7 @@ const GalleryCell = styled.div`
   @media screen and (max-width: 768px) {
     max-width: none;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   img {

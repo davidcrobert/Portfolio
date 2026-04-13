@@ -21,13 +21,13 @@ const InteractiveContainer = styled.div`
   align-items: center;
   position: relative;
 
-  /* Counteract the 15% horizontal offset from the p5 sketch canvas */
-  > div > canvas {
-    transform: translate(15%, 0%) !important;
-  }
-
   @media screen and (max-width: 768px) {
     margin: 8px auto 0;
+  }
+
+  @media screen and (max-width: 768px) and (orientation: portrait) {
+    min-height: clamp(360px, 62vh, 560px);
+    margin: 0 auto;
   }
 `;
 

@@ -49,6 +49,20 @@ const ProjectContent = styled.div`
   }
 `;
 
+const ProjectFlow = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  ${media.downTablet} {
+    align-items: stretch;
+    gap: 20px;
+  }
+`;
+
 const MediaEmbed = styled.div`
   width: 100%;
   max-width: 1200px;
@@ -152,6 +166,16 @@ const InfoPopup = styled.div`
   }
 `;
 
+const MobileInfoPanel = styled.section`
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px ${spacing.pageX} 24px;
+  border: 1px solid black;
+  background-color: #111;
+  color: #f9f9f9;
+`;
+
 const InfoSection = styled.div`
   margin-bottom: 20px;
   font-family: 'Times New Roman', Times, serif;
@@ -194,6 +218,18 @@ const ExternalLink = styled.a`
   cursor: help;
 `;
 
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return isMobile;
+};
+
 
 
 const ProjectPage = () => {
@@ -205,6 +241,7 @@ const ProjectPage = () => {
   const [categoryData, setCategoryData] = useState(null);
   const [subsiteContext, setSubsiteContext] = useState(null);
   const [customContext, setCustomContext] = useState(null);
+  const isMobile = useIsMobile();
 
   const cleanYouTubeEmbed = (embedCode) => {
     if (!embedCode.includes('youtube.com/embed/')) {
@@ -445,16 +482,43 @@ const ProjectPage = () => {
           isInfoOpen={isInfoOpen}
         />
 
-        <ProjectContent blurred={isInfoOpen}>
-          {CustomComponent && <CustomComponent />}
+        <ProjectContent blurred={isInfoOpen && !isMobile}>
+          <ProjectFlow>
+            {CustomComponent && <CustomComponent />}
 
-          {project.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(project.mediaEmbed) }} />
-          )}
+            {project.mediaEmbed && (
+              <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(project.mediaEmbed) }} />
+            )}
+
+            {isMobile && isInfoOpen && (
+              <MobileInfoPanel>
+                {project.infoPopup.main && (
+                  <MainStatement>{project.infoPopup.main}</MainStatement>
+                )}
+                {customContext && (
+                  <InfoSection>
+                    <InfoHeader>For This Application</InfoHeader>
+                    <div>{renderContent(customContext)}</div>
+                  </InfoSection>
+                )}
+                <InfoSection>
+                  <InfoHeader>Context</InfoHeader>
+                  <div>{renderContent(project.infoPopup.context)}</div>
+                </InfoSection>
+                <InfoSection>
+                  <InfoHeader>Tech</InfoHeader>
+                  <div>{renderContent(project.infoPopup.tech)}</div>
+                </InfoSection>
+                <InfoSection>
+                  <InfoHeader>{project.infoPopup.tools}</InfoHeader>
+                </InfoSection>
+              </MobileInfoPanel>
+            )}
+          </ProjectFlow>
         </ProjectContent>
       </MainContent>
 
-      {isInfoOpen && (
+      {isInfoOpen && !isMobile && (
         <InfoPopup ref={infoPopupRef}>
           {project.infoPopup.main && (
             <MainStatement>{project.infoPopup.main}</MainStatement>

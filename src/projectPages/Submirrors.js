@@ -21,6 +21,7 @@ import {
   DocImage,
   InlineLink
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
+import { media } from '../styles/responsive';
 
 // Project-specific styled components
 const ProjectDeck = styled.div`
@@ -28,6 +29,10 @@ const ProjectDeck = styled.div`
   max-width: 960px;
   margin: 0 auto 20px;
   text-align: center;
+
+  ${media.downTablet} {
+    text-align: left;
+  }
 `;
 
 const DeckSubtitle = styled.p`

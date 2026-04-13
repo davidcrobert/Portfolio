@@ -17,6 +17,7 @@ import {
   cleanYouTubeEmbed,
   getBackLink
 } from '../subsites/media_lab/projectPages/BaseProjectPage';
+import { media } from '../styles/responsive';
 
 // Project-specific styled components
 const BeastQuote = styled.div`
@@ -67,6 +68,12 @@ const IntroSection = styled(DescriptionParagraph)`
   margin-bottom: 40px;
 `;
 
+const MobileAlignedHeader = styled(CustomHeader)`
+  ${media.downTablet} {
+    text-align: left;
+  }
+`;
+
 
 const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
   const originalProject = useOriginalProject(project);
@@ -89,7 +96,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
         />
 
         <ProjectContent>
-          <CustomHeader>
+          <MobileAlignedHeader>
             <CustomTitle>What is a 'bodily identity' in the age of AI?</CustomTitle>
             <DeckMeta>Python · TouchDesigner · AI voice cloning</DeckMeta>
             <CustomSubtitle>
@@ -110,7 +117,7 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
               <br />
               They had joined The Beast.
             </CustomSubtitle>
-          </CustomHeader>
+          </MobileAlignedHeader>
 
           {originalProject.mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
