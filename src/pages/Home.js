@@ -16,6 +16,11 @@ const IndexContainer = styled.div`
   flex-direction: column;
   font-family: 'Times New Roman', Times, serif;
   position: relative;
+
+  @media screen and (min-width: 769px) {
+    height: 100vh;
+    overflow: hidden;
+  }
 `;
 
 const SplitContainer = styled.div`
@@ -23,6 +28,10 @@ const SplitContainer = styled.div`
   width: 100%;
   flex: 1;
   align-items: stretch;
+
+  @media screen and (min-width: 769px) {
+    overflow: hidden;
+  }
 
   ${media.downTablet} {
     flex-direction: column;
@@ -36,6 +45,11 @@ const Side = styled.div`
   flex-direction: column;
   direction: ${props => props.$left ? 'rtl' : 'ltr'};
   min-width: 0;
+
+  @media screen and (min-width: 769px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -73,8 +87,12 @@ const SideLabel = styled.div`
   ${media.downTablet} {
     position: static;
     font-size: 11px;
-    padding: 10px ${spacing.pageX};
+    padding: 12px ${spacing.pageX};
     text-align: left;
+    border-top: ${props => (props.$stackedSpacing ? '1px solid black' : 'none')};
+    letter-spacing: 0.08em;
+    margin-top: ${props => (props.$stackedSpacing ? '8px' : '0')};
+    background-color: rgba(249, 249, 249, 0.98);
   }
 `;
 
@@ -177,12 +195,13 @@ const ProjectMeta = styled.div`
 const ProjectTools = styled.div`
   margin-top: 14px;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.3;
   color: #3a3a3a;
 
-  @media screen and (max-width: 768px) {
-    font-size: 8px;
+  ${media.downTablet} {
+    font-size: 11px;
+    line-height: 1.45;
   }
 `;
 
@@ -401,57 +420,63 @@ function Home() {
       />
 
       <SplitContainer>
-        <Side $left>
-          <SideContent>
-            <SideLabel>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
-            <ProjectList>
-              {filteredWork.map((project, index) => (
-                <Project key={project.id ?? index}>
-                  <ProjectTitle
-                    to={project.link}
-                    onMouseEnter={!isMobile ? () => handleProjectHover(project.link) : undefined}
-                    onMouseLeave={!isMobile ? handleProjectLeave : undefined}
-                  >
-                    {project.title}
-                  </ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <ProjectMeta>
-                    {project.year && <span>{project.year}</span>}
-                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
-                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
-                  </ProjectMeta>
-                  {formatTools(project) ? <ProjectTools>{formatTools(project)}</ProjectTools> : null}
-                </Project>
-              ))}
-            </ProjectList>
-          </SideContent>
-        </Side>
+        {(!isMobile || filteredWork.length > 0) && (
+          <Side $left>
+            <SideContent>
+            <SideLabel $stackedSpacing={false}>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
+              <ProjectList>
+                {filteredWork.map((project, index) => (
+                  <Project key={project.id ?? index}>
+                    <ProjectTitle
+                      to={project.link}
+                      onMouseEnter={!isMobile ? () => handleProjectHover(project.link) : undefined}
+                      onMouseLeave={!isMobile ? handleProjectLeave : undefined}
+                    >
+                      {project.title}
+                    </ProjectTitle>
+                    <ProjectDescription>{project.description}</ProjectDescription>
+                    <ProjectMeta>
+                      {project.year && <span>{project.year}</span>}
+                      {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                      {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                    </ProjectMeta>
+                    {formatTools(project) ? <ProjectTools>{formatTools(project)}</ProjectTools> : null}
+                  </Project>
+                ))}
+              </ProjectList>
+            </SideContent>
+          </Side>
+        )}
 
-        <Side>
-          <SideContent>
-            <SideLabel>{mainPortfolioConfig.leftColumnLabel}</SideLabel>
-            <ProjectList>
-              {filteredArt.map((project, index) => (
-                <Project key={project.id ?? index}>
-                  <ProjectTitle
-                    to={project.link}
-                    onMouseEnter={!isMobile ? () => handleProjectHover(project.link) : undefined}
-                    onMouseLeave={!isMobile ? handleProjectLeave : undefined}
-                  >
-                    {project.title}
-                  </ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <ProjectMeta>
-                    {project.year && <span>{project.year}</span>}
-                    {project.year && project.tags?.length ? <MetaSeparator /> : null}
-                    {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
-                  </ProjectMeta>
-                  {formatTools(project) ? <ProjectTools>{formatTools(project)}</ProjectTools> : null}
-                </Project>
-              ))}
-            </ProjectList>
-          </SideContent>
-        </Side>
+        {(!isMobile || filteredArt.length > 0) && (
+          <Side>
+            <SideContent>
+            <SideLabel $stackedSpacing={isMobile && filteredWork.length > 0}>
+              {mainPortfolioConfig.leftColumnLabel}
+            </SideLabel>
+              <ProjectList>
+                {filteredArt.map((project, index) => (
+                  <Project key={project.id ?? index}>
+                    <ProjectTitle
+                      to={project.link}
+                      onMouseEnter={!isMobile ? () => handleProjectHover(project.link) : undefined}
+                      onMouseLeave={!isMobile ? handleProjectLeave : undefined}
+                    >
+                      {project.title}
+                    </ProjectTitle>
+                    <ProjectDescription>{project.description}</ProjectDescription>
+                    <ProjectMeta>
+                      {project.year && <span>{project.year}</span>}
+                      {project.year && project.tags?.length ? <MetaSeparator /> : null}
+                      {project.tags?.length ? <span>{project.tags.join(' · ')}</span> : null}
+                    </ProjectMeta>
+                    {formatTools(project) ? <ProjectTools>{formatTools(project)}</ProjectTools> : null}
+                  </Project>
+                ))}
+              </ProjectList>
+            </SideContent>
+          </Side>
+        )}
       </SplitContainer>
 
       <Footer>

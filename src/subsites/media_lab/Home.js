@@ -15,12 +15,21 @@ const IndexContainer = styled.div`
   flex-direction: column;
   font-family: 'Times New Roman', Times, serif;
   position: relative;
+
+  @media screen and (min-width: 769px) {
+    height: 100vh;
+    overflow: hidden;
+  }
 `;
 
 const SplitContainer = styled.div`
   display: flex;
   width: 100%;
   flex: 1;
+
+  @media screen and (min-width: 769px) {
+    overflow: hidden;
+  }
 
   ${media.downTablet} {
     flex-direction: column;
@@ -33,6 +42,11 @@ const Side = styled.div`
   flex-direction: column;
   direction: ${props => props.$left ? 'rtl' : 'ltr'};
   min-width: 0;
+
+  @media screen and (min-width: 769px) {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   &::-webkit-scrollbar {
     width: 5px;

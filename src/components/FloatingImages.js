@@ -47,7 +47,8 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
     const headerElement = document.querySelector('header');
     const footerElement = document.querySelector('footer');
     const topBoundary = headerElement ? headerElement.getBoundingClientRect().bottom : 0;
-    const bottomBoundary = footerElement ? footerElement.getBoundingClientRect().top : window.innerHeight;
+    const footerTop = footerElement ? footerElement.getBoundingClientRect().top : window.innerHeight;
+    const bottomBoundary = Math.min(footerTop, window.innerHeight);
 
     return {
       top: topBoundary,
