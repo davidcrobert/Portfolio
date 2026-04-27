@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../../../components/Header';
+import { getProjectMediaEmbed } from '../../../data/projectMedia';
 import {
   PageWrapper,
   MainContent,
@@ -74,6 +75,7 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
   const backLink = getBackLink(subsiteId);
   const titlePrefix = getCategoryPrefix(project.personal);
+  const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
     <PageWrapper>
@@ -97,8 +99,8 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
             </CustomSubtitle>
           </CustomHeader>
 
-          {originalProject.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
+          {mediaEmbed && (
+            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
 
           <DescriptionParagraph>

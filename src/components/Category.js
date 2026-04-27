@@ -149,8 +149,7 @@ const ProjectTags = styled.p`
 
 // Component for an individual project in the list
 const ProjectSection = ({ project, onMouseEnter, onMouseLeave }) => {
-  // Extract tools from the infoPopup if available
-  const technologies = project.infoPopup?.tools || null;
+  const technologies = project.tools || null;
   
   return (
     <Project totalProjects={project.totalProjects}>

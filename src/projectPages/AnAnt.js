@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { getProjectMediaEmbed } from '../data/projectMedia';
 import {
   PageWrapper,
   MainContent,
@@ -47,6 +48,7 @@ const AnAntProjectPage = ({ project, subsiteContext, subsiteId }) => {
   }
 
   const backLink = getBackLink(subsiteId);
+  const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
     <PageWrapper>
@@ -79,8 +81,8 @@ const AnAntProjectPage = ({ project, subsiteContext, subsiteId }) => {
             </IntroBody>
           </CustomHeader>
 
-          {originalProject.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
+          {mediaEmbed && (
+            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
         </ProjectContent>
       </MainContent>

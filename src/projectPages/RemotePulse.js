@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { getProjectMediaEmbed } from '../data/projectMedia';
 import {
   PageWrapper,
   MainContent,
@@ -61,6 +62,7 @@ const RemotePulseProjectPage = ({ project, subsiteContext, subsiteId }) => {
   }
 
   const backLink = getBackLink(subsiteId);
+  const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
     <PageWrapper>
@@ -101,8 +103,8 @@ const RemotePulseProjectPage = ({ project, subsiteContext, subsiteId }) => {
             </IntroBody>
           </CustomHeader>
 
-          {originalProject.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
+          {mediaEmbed && (
+            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
 
           <StyledCreditsSection>

@@ -4,6 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 import parse from 'html-react-parser';
 import Header from './Header';
 import { projectData } from '../data/projectData';
+import { getProjectMediaEmbed } from '../data/projectMedia';
 import { getSubsite } from '../data/subsiteData';
 import ScavengeARMedia from './ScavengeARMedia';
 import ReflectionInteractive from './ReflectionInteractive';
@@ -433,6 +434,15 @@ const ProjectPage = () => {
   }
 
   const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
+  const mediaEmbed = getProjectMediaEmbed(project);
+  const projectInfo = project.infoPopup || null;
+  const hasInfoContent = Boolean(
+    customContext ||
+    projectInfo?.main ||
+    projectInfo?.context ||
+    projectInfo?.tech ||
+    projectInfo?.tools
+  );
 
   const renderContent = (content) => {
     const options = {
@@ -454,10 +464,6 @@ const ProjectPage = () => {
     return parse(content, options);
   };
 
-  console.log("Project:", project);
-  console.log("CustomComponent exists:", !!CustomComponent);
-  console.log("CustomComponent name:", project.customComponent);
-
   // Determine the correct back link based on context
   const backLink = subsiteContext
     ? `/${subsiteId}`
@@ -477,7 +483,7 @@ const ProjectPage = () => {
           subtitle2={project.subtitle2}
           year={project.year}
           backLink={backLink}
-          showInfoButton={true}
+          showInfoButton={hasInfoContent}
           onInfoClick={toggleInfo}
           isInfoOpen={isInfoOpen}
         />
@@ -486,14 +492,14 @@ const ProjectPage = () => {
           <ProjectFlow>
             {CustomComponent && <CustomComponent />}
 
-            {project.mediaEmbed && (
-              <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(project.mediaEmbed) }} />
+            {mediaEmbed && (
+              <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
             )}
 
-            {isMobile && isInfoOpen && (
+            {isMobile && isInfoOpen && hasInfoContent && (
               <MobileInfoPanel>
-                {project.infoPopup.main && (
-                  <MainStatement>{project.infoPopup.main}</MainStatement>
+                {projectInfo?.main && (
+                  <MainStatement>{projectInfo.main}</MainStatement>
                 )}
                 {customContext && (
                   <InfoSection>
@@ -501,27 +507,33 @@ const ProjectPage = () => {
                     <div>{renderContent(customContext)}</div>
                   </InfoSection>
                 )}
-                <InfoSection>
-                  <InfoHeader>Context</InfoHeader>
-                  <div>{renderContent(project.infoPopup.context)}</div>
-                </InfoSection>
-                <InfoSection>
-                  <InfoHeader>Tech</InfoHeader>
-                  <div>{renderContent(project.infoPopup.tech)}</div>
-                </InfoSection>
-                <InfoSection>
-                  <InfoHeader>{project.infoPopup.tools}</InfoHeader>
-                </InfoSection>
+                {projectInfo?.context && (
+                  <InfoSection>
+                    <InfoHeader>Context</InfoHeader>
+                    <div>{renderContent(projectInfo.context)}</div>
+                  </InfoSection>
+                )}
+                {projectInfo?.tech && (
+                  <InfoSection>
+                    <InfoHeader>Tech</InfoHeader>
+                    <div>{renderContent(projectInfo.tech)}</div>
+                  </InfoSection>
+                )}
+                {projectInfo?.tools && (
+                  <InfoSection>
+                    <InfoHeader>{projectInfo.tools}</InfoHeader>
+                  </InfoSection>
+                )}
               </MobileInfoPanel>
             )}
           </ProjectFlow>
         </ProjectContent>
       </MainContent>
 
-      {isInfoOpen && !isMobile && (
+      {isInfoOpen && !isMobile && hasInfoContent && (
         <InfoPopup ref={infoPopupRef}>
-          {project.infoPopup.main && (
-            <MainStatement>{project.infoPopup.main}</MainStatement>
+          {projectInfo?.main && (
+            <MainStatement>{projectInfo.main}</MainStatement>
           )}
           {customContext && (
             <InfoSection>
@@ -529,17 +541,23 @@ const ProjectPage = () => {
               <div>{renderContent(customContext)}</div>
             </InfoSection>
           )}
-          <InfoSection>
-            <InfoHeader>Context</InfoHeader>
-            <div>{renderContent(project.infoPopup.context)}</div>
-          </InfoSection>
-          <InfoSection>
-            <InfoHeader>Tech</InfoHeader>
-            <div>{renderContent(project.infoPopup.tech)}</div>
-          </InfoSection>
-          <InfoSection>
-            <InfoHeader>{project.infoPopup.tools}</InfoHeader>
-          </InfoSection>
+          {projectInfo?.context && (
+            <InfoSection>
+              <InfoHeader>Context</InfoHeader>
+              <div>{renderContent(projectInfo.context)}</div>
+            </InfoSection>
+          )}
+          {projectInfo?.tech && (
+            <InfoSection>
+              <InfoHeader>Tech</InfoHeader>
+              <div>{renderContent(projectInfo.tech)}</div>
+            </InfoSection>
+          )}
+          {projectInfo?.tools && (
+            <InfoSection>
+              <InfoHeader>{projectInfo.tools}</InfoHeader>
+            </InfoSection>
+          )}
         </InfoPopup>
       )}
     </PageWrapper>

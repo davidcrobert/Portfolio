@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../../../components/Header';
+import { getProjectMediaEmbed } from '../../../data/projectMedia';
 import {
   PageWrapper,
   MainContent,
@@ -103,6 +104,7 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
 
   const backLink = getBackLink(subsiteId);
   const titlePrefix = getCategoryPrefix(project.personal);
+  const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
     <PageWrapper>
@@ -132,8 +134,8 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
             </CustomSubtitle>
           </MobileAlignedHeader>
 
-          {originalProject.mediaEmbed && (
-            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(originalProject.mediaEmbed) }} />
+          {mediaEmbed && (
+            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
 
           <StyledCreditsSection>

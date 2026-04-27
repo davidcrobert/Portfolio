@@ -77,12 +77,14 @@ const RightSide = styled.div`
   align-items: flex-start;
   justify-content: flex-end;
   gap: 12px 20px;
-  flex: 1 1 320px;
+  flex: 1 1 420px;
   min-width: 0;
   flex-wrap: wrap;
+  margin-left: auto;
 
   ${media.downLaptop} {
     justify-content: flex-start;
+    margin-left: 0;
   }
 
   ${media.downTablet} {
@@ -117,9 +119,17 @@ const TagsContainer = styled.div`
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  flex: 1 1 240px;
+  justify-content: flex-end;
+  flex: 0 1 auto;
   min-width: 0;
+  max-width: min(100%, 640px);
+  margin-left: auto;
+
+  ${media.downLaptop} {
+    justify-content: flex-start;
+    flex-basis: 100%;
+    margin-left: 0;
+  }
 
   ${media.downTablet} {
     width: 100%;

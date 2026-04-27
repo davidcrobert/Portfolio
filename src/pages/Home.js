@@ -362,7 +362,7 @@ function Home() {
   ), [activeFilter, workProjects]);
 
   const formatTools = (project) => {
-    const tools = project.infoPopup?.tools;
+    const tools = project.tools;
     if (!tools) return null;
 
     const formatted = tools
