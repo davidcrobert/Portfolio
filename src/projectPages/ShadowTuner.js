@@ -24,7 +24,7 @@ import {
   cleanYouTubeEmbed,
   getBackLink,
   InlineLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 
 const ProjectDeck = styled.div`
   width: 100%;
@@ -73,14 +73,14 @@ const StyledDocImage = styled(DocImage)`
   }
 `;
 
-const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const ShadowTunerProjectPage = ({ project }) => {
   const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = getBackLink(subsiteId);
+  const backLink = getBackLink();
   const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
@@ -201,3 +201,5 @@ const ShadowTunerProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default ShadowTunerProjectPage;
+
+

@@ -16,7 +16,7 @@ import {
   useOriginalProject,
   cleanYouTubeEmbed,
   getBackLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 
 const IntroSection = styled(DescriptionParagraph)`
   margin-top: 40px;
@@ -65,14 +65,14 @@ const StyledDocImage = styled(DocImage)`
   display: block;
 `;
 
-const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const ICantHearYouProjectPage = ({ project }) => {
   const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = getBackLink(subsiteId);
+  const backLink = getBackLink();
   const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
@@ -154,3 +154,5 @@ const ICantHearYouProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default ICantHearYouProjectPage;
+
+

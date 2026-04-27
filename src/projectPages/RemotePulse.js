@@ -22,7 +22,7 @@ import {
   cleanYouTubeEmbed,
   getBackLink,
   InlineLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 
 const ProjectDeck = styled.div`
   width: 100%;
@@ -54,14 +54,14 @@ const StyledCreditsSection = styled(CreditsSection)`
   margin-top: 40px;
 `;
 
-const RemotePulseProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const RemotePulseProjectPage = ({ project }) => {
   const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = getBackLink(subsiteId);
+  const backLink = getBackLink();
   const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
@@ -139,3 +139,5 @@ const RemotePulseProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default RemotePulseProjectPage;
+
+

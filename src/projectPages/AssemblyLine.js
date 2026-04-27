@@ -27,7 +27,7 @@ import {
   cleanYouTubeEmbed,
   getBackLink,
   InlineLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 import { media } from '../styles/responsive';
 
 const IntroSection = styled(DescriptionParagraph)`
@@ -94,14 +94,14 @@ const MobileAlignedHeader = styled(CustomHeader)`
   }
 `;
 
-const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const AssemblyLineProjectPage = ({ project }) => {
   const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = getBackLink(subsiteId);
+  const backLink = getBackLink();
   const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
@@ -188,3 +188,5 @@ const AssemblyLineProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default AssemblyLineProjectPage;
+
+

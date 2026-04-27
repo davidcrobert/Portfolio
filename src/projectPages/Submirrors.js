@@ -20,7 +20,7 @@ import {
   ExternalLink,
   DocImage,
   InlineLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 import { media } from '../styles/responsive';
 
 // Project-specific styled components
@@ -124,7 +124,7 @@ const EmphasisText = styled.span`
   }
 `;
 
-const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const SubmirrorsProjectPage = ({ project }) => {
   return (
     <PageWrapper>
       <MainContent>
@@ -265,3 +265,5 @@ const SubmirrorsProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default SubmirrorsProjectPage;
+
+

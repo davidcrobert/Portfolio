@@ -17,7 +17,7 @@ import {
   useOriginalProject,
   cleanYouTubeEmbed,
   getBackLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 import { media } from '../styles/responsive';
 
 // Project-specific styled components
@@ -76,14 +76,14 @@ const MobileAlignedHeader = styled(CustomHeader)`
 `;
 
 
-const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const TheBeastProjectPage = ({ project }) => {
   const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = getBackLink(subsiteId);
+  const backLink = getBackLink();
   const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
@@ -154,3 +154,5 @@ const TheBeastProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default TheBeastProjectPage;
+
+

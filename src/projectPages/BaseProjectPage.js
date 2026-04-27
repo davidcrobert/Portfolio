@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { projectData } from '../../../data/projectData';
-import { media, spacing } from '../../../styles/responsive';
-
-// ============================================================================
-// SHARED STYLED COMPONENTS
-// These can be imported and used by all custom project pages
-// Override by creating new styled components in individual project files
-// ============================================================================
+import { projectData } from '../data/projectData';
+import { media, spacing } from '../styles/responsive';
 
 export const PageWrapper = styled.div`
   position: relative;
@@ -90,10 +84,6 @@ export const CustomCategory = styled.p`
   letter-spacing: 1px;
   color: #666;
   margin-bottom: 15px;
-
-  ${media.downTablet} {
-    font-size: 10px;
-  }
 `;
 
 export const CustomSubtitle = styled.p`
@@ -139,12 +129,6 @@ export const MediaEmbed = styled.div`
       }
     }
   }
-
-  ${media.downTablet} {
-    iframe {
-      max-height: none;
-    }
-  }
 `;
 
 export const Gif = styled.img`
@@ -175,25 +159,15 @@ export const Quote = styled.p`
   text-align: center;
   font-style: italic;
   font-weight: bold;
-
-  ${media.downTablet} {
-    font-size: 22px;
-    line-height: 1.5;
-  }
 `;
 
 export const CreditsSection = styled.div`
   max-width: 800px;
   width: 100%;
-  margin: 40px auto 30px auto;
+  margin: 40px auto 30px;
   padding: 20px;
   border: 1px solid black;
   background-color: #fafafa;
-
-  ${media.downTablet} {
-    padding: 16px;
-    margin-top: 24px;
-  }
 `;
 
 export const CreditsGrid = styled.div`
@@ -229,10 +203,6 @@ export const RoleDescription = styled.p`
   line-height: 1.6;
   color: #333;
   margin: 0;
-
-  ${media.downTablet} {
-    font-size: 13px;
-  }
 `;
 
 export const CreditsList = styled.ul`
@@ -247,14 +217,6 @@ export const CreditItem = styled.li`
   line-height: 1.6;
   color: #333;
   margin-bottom: 8px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  ${media.downTablet} {
-    font-size: 13px;
-  }
 `;
 
 export const CreditName = styled.span`
@@ -269,11 +231,6 @@ export const CreditRole = styled.span`
 export const ArtistQuoteSection = styled.div`
   margin: 25px 0;
   padding-left: 20px;
-  
-
-  ${media.downTablet} {
-    padding-left: 15px;
-  }
 `;
 
 export const ArtistQuoteLabel = styled.p`
@@ -293,10 +250,6 @@ export const ArtistQuoteText = styled.p`
   color: #1a1a1a;
   font-style: italic;
   margin: 0;
-
-  ${media.downTablet} {
-    font-size: 14px;
-  }
 `;
 
 export const ExternalLink = styled.a`
@@ -321,12 +274,6 @@ export const ExternalLink = styled.a`
     color: #f9f9f9;
     cursor: pointer;
   }
-
-  ${media.downTablet} {
-    font-size: 11px;
-    padding: 12px 15px;
-    margin: 20px auto;
-  }
 `;
 
 export const InlineLink = styled.a`
@@ -341,13 +288,6 @@ export const InlineLink = styled.a`
   }
 `;
 
-// ============================================================================
-// SHARED UTILITIES
-// ============================================================================
-
-/**
- * Cleans YouTube embed codes to add consistent parameters
- */
 export const cleanYouTubeEmbed = (embedCode) => {
   if (!embedCode || !embedCode.includes('youtube.com/embed/')) {
     return embedCode;
@@ -371,22 +311,16 @@ export const cleanYouTubeEmbed = (embedCode) => {
   return embedCode;
 };
 
-/**
- * Custom hook to load original project data from projectData.js
- * @param {Object} project - The subsite project object
- * @returns {Object|null} - The original project data or null if not found
- */
 export const useOriginalProject = (project) => {
   const [originalProject, setOriginalProject] = useState(null);
 
   useEffect(() => {
-    // Support both subsite projects (originalLink) and main portfolio projects (link)
-    const lookupLink = project.originalLink || project.link;
+    const lookupLink = project?.link;
     if (!lookupLink) return;
 
     for (const category in projectData) {
       const foundProject = projectData[category].projects.find(
-        p => p.link === lookupLink
+        entry => entry.link === lookupLink
       );
       if (foundProject) {
         setOriginalProject(foundProject);
@@ -398,20 +332,8 @@ export const useOriginalProject = (project) => {
   return originalProject;
 };
 
-/**
- * Gets the category prefix based on personal flag
- * @param {boolean} personal - Whether the project is personal
- * @returns {string} - 'PERSONAL' or 'PROFESSIONAL'
- */
 export const getCategoryPrefix = (personal) => {
   return personal ? 'PERSONAL' : 'PROFESSIONAL';
 };
 
-/**
- * Constructs the back link to the subsite home
- * @param {string} subsiteId - The subsite ID
- * @returns {string} - The back link path
- */
-export const getBackLink = (subsiteId) => {
-  return subsiteId ? `/${subsiteId}` : '/';
-};
+export const getBackLink = () => '/';

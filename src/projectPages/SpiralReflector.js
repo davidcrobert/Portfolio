@@ -22,7 +22,7 @@ import {
   InlineLink,
   cleanYouTubeEmbed,
   getBackLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 import { media } from '../styles/responsive';
 
 const ImageGallery = styled.div`
@@ -122,8 +122,8 @@ const StyledCreditsSection = styled(CreditsSection)`
 
 const GALLERY_IMAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
-  const backLink = getBackLink(subsiteId);
+const SpiralReflectorProjectPage = ({ project }) => {
+  const backLink = getBackLink();
   const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
@@ -149,10 +149,10 @@ const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
             </ProjectDeck>
             <IntroBody>
               <CustomSubtitle>
-                <i>Spiral Reflector</i> is a large-scale LED installation developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
+                <i>Spiral Reflector</i> is a large-scale outdoor LED installation developed for artist <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink>,
                 exhibited at the Museo de Arte Moderno in Mexico City. 300 metres of LED lights in a
                 tubular diffuser form a spiral seven metres in diameter. A PTZ camera at the center
-                continuously rotates, capturing the room — its image rendered in real time onto the
+                continuously rotates, capturing the space — its image rendered in real time onto the
                 spiral's length, casting bright points of light that track the camera's gaze.
               </CustomSubtitle>
             </IntroBody>
@@ -219,3 +219,5 @@ const SpiralReflectorProjectPage = ({ project, subsiteContext, subsiteId }) => {
 };
 
 export default SpiralReflectorProjectPage;
+
+

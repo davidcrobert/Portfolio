@@ -74,7 +74,7 @@ const AboutMe = () => {
         <AboutParagraph className="right">I also make my own art</AboutParagraph>
         <AboutParagraph className='left'>I was previously a Media Artist in Residence at <a href="https://www.fabrica.it/en/" target="_blank" rel="noopener noreferrer">Fabrica</a> </AboutParagraph>
         <AboutParagraph className="right">I studied Media Production [concentration in Digital Media] at Toronto Metropolitan University [TMU]</AboutParagraph>
-        <AboutParagraph className="left">I use AI & Python & the web & physical computing & Unreal & Unity & whatever else to create experiences</AboutParagraph>
+        <AboutParagraph className="left">I use TouchDesigner & AI & Python & the web & physical computing & Unreal & Unity & whatever else to create experiences</AboutParagraph>
         <AboutParagraph className="right">I'm originally from a small town in southern Ontario [Canada]</AboutParagraph>
         <AboutParagraph className="left">I was a Creative Technologist at TMU's <a href="https://www.ryerson.ca/design-technology-lab/" target="_blank" rel="noopener noreferrer">Design + Technology LAB</a></AboutParagraph>
         <AboutParagraph className="right">I currently live in Montreal [Canada]</AboutParagraph>

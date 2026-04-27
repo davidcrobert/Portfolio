@@ -10,7 +10,7 @@ import {
   CustomTitle,
   useOriginalProject,
   getBackLink
-} from '../subsites/media_lab/projectPages/BaseProjectPage';
+} from './BaseProjectPage';
 
 // Interactive component container - centers the sketch and counteracts its internal offset
 const InteractiveContainer = styled.div`
@@ -45,14 +45,14 @@ const DeckMeta = styled.p`
   text-align: center;
 `;
 
-const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) => {
+const IAskedMyReflectionProjectPage = ({ project }) => {
   const originalProject = useOriginalProject(project);
 
   if (!originalProject) {
     return null;
   }
 
-  const backLink = getBackLink(subsiteId);
+  const backLink = getBackLink();
 
   return (
     <PageWrapper>
@@ -81,3 +81,5 @@ const IAskedMyReflectionProjectPage = ({ project, subsiteContext, subsiteId }) =
 };
 
 export default IAskedMyReflectionProjectPage;
+
+

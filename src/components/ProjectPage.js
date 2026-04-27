@@ -5,20 +5,7 @@ import parse from 'html-react-parser';
 import Header from './Header';
 import { projectData } from '../data/projectData';
 import { getProjectMediaEmbed } from '../data/projectMedia';
-import { getSubsite } from '../data/subsiteData';
-import ScavengeARMedia from './ScavengeARMedia';
-import ReflectionInteractive from './ReflectionInteractive';
 import { media, spacing } from '../styles/responsive';
-
-const customComponents = {
-  ScavengeARMedia,
-  ReflectionInteractive
-};
-
-// Component wrapper for custom subsite project pages
-const CustomProjectPageWrapper = ({ CustomComponent, project, subsiteContext, subsiteId }) => {
-  return <CustomComponent project={project} subsiteContext={subsiteContext} subsiteId={subsiteId} />;
-};
 
 const PageWrapper = styled.div`
   position: relative;
@@ -40,7 +27,7 @@ const ProjectContent = styled.div`
   min-height: 0;
   padding: ${spacing.pageY} ${spacing.pageX} 48px;
   transition: filter 0.75s ease-in-out;
-  
+
   ${props => props.blurred && css`
     filter: blur(5px);
   `}
@@ -76,7 +63,6 @@ const MediaEmbed = styled.div`
     z-index: 101;
   }
 
-  /* Handle multiple videos in a container */
   > div {
     display: flex;
     flex-direction: column;
@@ -86,7 +72,6 @@ const MediaEmbed = styled.div`
   @media screen and (min-width: 769px) {
     width: 65vw;
 
-    /* Single iframe - use the responsive container approach */
     &:has(> iframe:only-child) {
       height: 0;
       padding-bottom: 36.5625vw;
@@ -101,7 +86,6 @@ const MediaEmbed = styled.div`
       }
     }
 
-    /* Multiple iframes in container - use flex layout */
     > div iframe {
       position: static;
       width: 100%;
@@ -231,146 +215,69 @@ const useIsMobile = () => {
   return isMobile;
 };
 
+const cleanYouTubeEmbed = (embedCode) => {
+  if (!embedCode.includes('youtube.com/embed/')) {
+    return embedCode;
+  }
 
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(embedCode, 'text/html');
+  const iframes = doc.querySelectorAll('iframe');
+
+  if (iframes.length > 0) {
+    iframes.forEach(iframe => {
+      let src = iframe.getAttribute('src');
+      src = src.includes('?') ? `${src}&` : `${src}?`;
+      src += 'controls=1&iv_load_policy=3&rel=0';
+      iframe.setAttribute('src', src);
+    });
+
+    return doc.body.innerHTML;
+  }
+
+  return embedCode;
+};
 
 const ProjectPage = () => {
-  const { projectId, subsiteId } = useParams();
+  const { projectId } = useParams();
   const navigate = useNavigate();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const infoPopupRef = useRef(null);
   const [project, setProject] = useState(null);
   const [categoryData, setCategoryData] = useState(null);
-  const [subsiteContext, setSubsiteContext] = useState(null);
-  const [customContext, setCustomContext] = useState(null);
   const isMobile = useIsMobile();
-
-  const cleanYouTubeEmbed = (embedCode) => {
-    if (!embedCode.includes('youtube.com/embed/')) {
-      return embedCode; // Return original embed if it's not a YouTube video
-    }
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(embedCode, 'text/html');
-    const iframes = doc.querySelectorAll('iframe');
-
-    if (iframes.length > 0) {
-      iframes.forEach(iframe => {
-        let src = iframe.getAttribute('src');
-        // Add or update YouTube parameters
-        src = src.includes('?') ? `${src}&` : `${src}?`;
-        src += 'controls=1&iv_load_policy=3&rel=0';
-        iframe.setAttribute('src', src);
-      });
-
-      return doc.body.innerHTML; // Return the full processed HTML
-    }
-
-    return embedCode; // Return original embed if parsing fails
-  };
 
   useEffect(() => {
     const findProjectAndCategory = async () => {
-      // Check if we're in a sub-site context
-      if (subsiteId) {
-        const subsite = getSubsite(subsiteId);
-        if (!subsite) {
-          navigate('/404');
-          return;
-        }
+      try {
+        const { mainPortfolioConfig } = await import('../data/mainPortfolioData');
+        if (mainPortfolioConfig.customProjectPages?.[projectId]) {
+          const customPageModule = await mainPortfolioConfig.customProjectPages[projectId]();
+          const CustomPageComponent = customPageModule.default;
 
-        // Find the project in the subsite's project list
-        const subsiteProject = subsite.projects.find(
-          p => p.originalLink === `/projects/${projectId}`
-        );
-
-        if (!subsiteProject) {
-          navigate('/404');
-          return;
-        }
-
-        // Check if there's a custom project page component for this subsite
-        if (subsite.customProjectPages && subsite.customProjectPages[projectId]) {
-          try {
-            // Dynamically import the custom project page component
-            const customPageModule = await subsite.customProjectPages[projectId]();
-            const CustomPageComponent = customPageModule.default;
-
-            // Store the custom component in state for rendering
-            setProject({ customPageComponent: CustomPageComponent, ...subsiteProject });
-            setSubsiteContext(subsite);
-            setCustomContext(subsiteProject.customContext || null);
-            setCategoryData({ title: subsite.title });
-            return;
-          } catch (error) {
-            console.error(`Failed to load custom project page for ${projectId}:`, error);
-            // Fall through to default behavior
-          }
-        }
-
-        // Find the original project data to get media embeds, etc.
-        for (const category in projectData) {
-          const foundProject = projectData[category].projects.find(
-            p => p.link === `/projects/${projectId}`
-          );
-          if (foundProject) {
-            // Merge original project data with subsite customizations
-            const mergedProject = {
-              ...foundProject,
-              title: subsiteProject.title || foundProject.title,
-              subtitle1: subsiteProject.subtitle1 || foundProject.subtitle1,
-              subtitle2: subsiteProject.subtitle2 || foundProject.subtitle2,
-              description: subsiteProject.description || foundProject.description,
-            };
-
-            setProject(mergedProject);
-            setSubsiteContext(subsite);
-            setCustomContext(subsiteProject.customContext || null);
-
-            // Create a mock category for header display
-            setCategoryData({
-              title: subsite.title,
-            });
-            return;
-          }
-        }
-      } else {
-        // Check for main portfolio custom project pages
-        try {
-          const { mainPortfolioConfig } = await import('../data/mainPortfolioData');
-          if (mainPortfolioConfig.customProjectPages && mainPortfolioConfig.customProjectPages[projectId]) {
-            const customPageModule = await mainPortfolioConfig.customProjectPages[projectId]();
-            const CustomPageComponent = customPageModule.default;
-
-            for (const category in projectData) {
-              const foundProject = projectData[category].projects.find(
-                p => p.link === `/projects/${projectId}`
-              );
-              if (foundProject) {
-                setProject({ customPageComponent: CustomPageComponent, ...foundProject });
-                setCategoryData(projectData[category]);
-                setSubsiteContext(null);
-                setCustomContext(null);
-                return;
-              }
+          for (const category in projectData) {
+            const foundProject = projectData[category].projects.find(
+              entry => entry.link === `/projects/${projectId}`
+            );
+            if (foundProject) {
+              setProject({ customPageComponent: CustomPageComponent, ...foundProject });
+              setCategoryData(projectData[category]);
+              return;
             }
           }
-        } catch (error) {
-          console.error(`Failed to load custom project page for ${projectId}:`, error);
-          // Fall through to default behavior
         }
+      } catch (error) {
+        console.error(`Failed to load custom project page for ${projectId}:`, error);
+      }
 
-        // Default behavior for non-subsite projects
-        for (const category in projectData) {
-          const foundProject = projectData[category].projects.find(
-            p => p.link === `/projects/${projectId}`
-          );
-          if (foundProject) {
-            setProject(foundProject);
-            setCategoryData(projectData[category]);
-            setSubsiteContext(null);
-            setCustomContext(null);
-            return;
-          }
+      for (const category in projectData) {
+        const foundProject = projectData[category].projects.find(
+          entry => entry.link === `/projects/${projectId}`
+        );
+        if (foundProject) {
+          setProject(foundProject);
+          setCategoryData(projectData[category]);
+          return;
         }
       }
 
@@ -378,7 +285,7 @@ const ProjectPage = () => {
     };
 
     findProjectAndCategory();
-  }, [projectId, subsiteId, navigate]);
+  }, [projectId, navigate]);
 
   const toggleInfo = useCallback(() => {
     setIsInfoOpen(prev => !prev);
@@ -420,24 +327,14 @@ const ProjectPage = () => {
     return null;
   }
 
-  // Check if this is a custom subsite project page
   if (project.customPageComponent) {
     const CustomPageComponent = project.customPageComponent;
-    return (
-      <CustomProjectPageWrapper
-        CustomComponent={CustomPageComponent}
-        project={project}
-        subsiteContext={subsiteContext}
-        subsiteId={subsiteId}
-      />
-    );
+    return <CustomPageComponent project={project} />;
   }
 
-  const CustomComponent = project.customComponent ? customComponents[project.customComponent] : null;
   const mediaEmbed = getProjectMediaEmbed(project);
   const projectInfo = project.infoPopup || null;
   const hasInfoContent = Boolean(
-    customContext ||
     projectInfo?.main ||
     projectInfo?.context ||
     projectInfo?.tech ||
@@ -464,25 +361,15 @@ const ProjectPage = () => {
     return parse(content, options);
   };
 
-  // Determine the correct back link based on context
-  const backLink = subsiteContext
-    ? `/${subsiteId}`
-    : '/';
-
-  // Determine the title prefix based on context
-  const titlePrefix = subsiteContext
-    ? (subsiteContext.projects.find(p => p.originalLink === `/projects/${projectId}`)?.personal ? 'PERSONAL' : 'PROFESSIONAL')
-    : categoryData.title;
-
   return (
     <PageWrapper>
       <MainContent>
         <Header
-          title={`${titlePrefix}/ ${project.title}`}
+          title={`${categoryData.title}/ ${project.title}`}
           subtitle1={project.subtitle1}
           subtitle2={project.subtitle2}
           year={project.year}
-          backLink={backLink}
+          backLink="/"
           showInfoButton={hasInfoContent}
           onInfoClick={toggleInfo}
           isInfoOpen={isInfoOpen}
@@ -490,8 +377,6 @@ const ProjectPage = () => {
 
         <ProjectContent blurred={isInfoOpen && !isMobile}>
           <ProjectFlow>
-            {CustomComponent && <CustomComponent />}
-
             {mediaEmbed && (
               <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
             )}
@@ -500,12 +385,6 @@ const ProjectPage = () => {
               <MobileInfoPanel>
                 {projectInfo?.main && (
                   <MainStatement>{projectInfo.main}</MainStatement>
-                )}
-                {customContext && (
-                  <InfoSection>
-                    <InfoHeader>For This Application</InfoHeader>
-                    <div>{renderContent(customContext)}</div>
-                  </InfoSection>
                 )}
                 {projectInfo?.context && (
                   <InfoSection>
@@ -534,12 +413,6 @@ const ProjectPage = () => {
         <InfoPopup ref={infoPopupRef}>
           {projectInfo?.main && (
             <MainStatement>{projectInfo.main}</MainStatement>
-          )}
-          {customContext && (
-            <InfoSection>
-              <InfoHeader>For This Application</InfoHeader>
-              <div>{renderContent(customContext)}</div>
-            </InfoSection>
           )}
           {projectInfo?.context && (
             <InfoSection>
