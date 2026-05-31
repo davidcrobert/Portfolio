@@ -15,6 +15,7 @@ export const mainPortfolioConfig = {
   // Only register a project here once its custom page is fully implemented.
   customProjectPages: {
     // Work projects
+    'undercurrents': () => import('../projectPages/Undercurrents'),
     'Submirrors': () => import('../projectPages/Submirrors'),
     'shadow-tuner': () => import('../projectPages/ShadowTuner'),
     'spiral-reflector': () => import('../projectPages/SpiralReflector'),

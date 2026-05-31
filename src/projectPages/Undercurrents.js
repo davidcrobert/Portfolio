@@ -1,0 +1,180 @@
+import React from 'react';
+import styled from 'styled-components';
+import Header from '../components/Header';
+import { getProjectMediaEmbed } from '../data/projectMedia';
+import {
+  PageWrapper,
+  MainContent,
+  ProjectContent,
+  CustomHeader,
+  CustomSubtitle,
+  MediaEmbed,
+  CreditsSection,
+  CreditsGrid,
+  CreditsColumn,
+  CreditsHeader,
+  RoleDescription,
+  CreditsList,
+  CreditItem,
+  CreditName,
+  CreditRole,
+  ExternalLink,
+  InlineLink,
+  cleanYouTubeEmbed,
+  getBackLink
+} from './BaseProjectPage';
+
+const ProjectDeck = styled.div`
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 20px;
+  text-align: center;
+`;
+
+const DeckSubtitle = styled.p`
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+`;
+
+const DeckMeta = styled.p`
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`;
+
+const IntroBody = styled.div`
+  margin-top: 30px;
+`;
+
+const ImagePair = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: calc(100% - 4px);
+  margin: 30px auto 40px;
+`;
+
+const WideImage = styled.img`
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+`;
+
+const StyledCreditsSection = styled(CreditsSection)`
+  margin-top: 40px;
+`;
+
+const UndercurrentsProjectPage = ({ project }) => {
+  const backLink = getBackLink();
+  const mediaEmbed = getProjectMediaEmbed(project);
+
+  return (
+    <PageWrapper>
+      <MainContent>
+        <Header
+          title={`WORK/ ${project.title}`}
+          subtitle1={project.subtitle1}
+          subtitle2={project.subtitle2}
+          year={project.year}
+          backLink={backLink}
+        />
+
+        <ProjectContent>
+          <CustomHeader>
+            <ProjectDeck>
+              <DeckSubtitle>
+                An underground echo chamber of voice and light for Rafael Lozano-Hemmer, at the Buffalo Bayou Park Cistern, Houston.
+              </DeckSubtitle>
+              <DeckMeta>
+                Python · TouchDesigner · DANTE Audio · DMX LEDs · AI voice analysis
+              </DeckMeta>
+            </ProjectDeck>
+            <IntroBody>
+              <CustomSubtitle>
+                <i>Undercurrents</i> is an installation by <InlineLink href="https://www.lozano-hemmer.com/" target="_blank" rel="noopener noreferrer">Rafael Lozano-Hemmer</InlineLink> inside
+                an 87,500 sq ft underground cistern built in 1926 beneath Houston. Visitors speak
+                into one of eight intercoms; their voice travels as light along branching paths,
+                forking at the cistern's columns before arriving at another station mixed with
+                echoes of past voices. Every recording joins a growing archive of messages
+                left at the intercoms, which an AI searches to find the closest match to each
+                new voice. Commissioned poems surface occasionally within this stream, accompanied
+                by animated LED sequences.
+              </CustomSubtitle>
+            </IntroBody>
+          </CustomHeader>
+
+          <ImagePair>
+            <WideImage
+              src="/images/projects/Undercurrents/undercurrents1.jpg"
+              alt="Undercurrents installation view 1"
+            />
+            <WideImage
+              src="/images/projects/Undercurrents/undercurrents2.jpg"
+              alt="Undercurrents installation view 2"
+            />
+          </ImagePair>
+
+          {mediaEmbed && (
+            <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
+          )}
+
+          <StyledCreditsSection>
+            <CreditsGrid>
+              <CreditsColumn>
+                <CreditsHeader>My Role</CreditsHeader>
+                <RoleDescription>
+                  Built the complete audio and intercom system in TouchDesigner: 8 DANTE
+                  inputs and outputs, intercom button handling, asynchronous API calls for
+                  AI-selected responses, audio cleaning, and playback routing across the
+                  eight stations.
+                  <br /><br />
+                  Built the Audio AI API, running on a dedicated second machine. Each incoming
+                  clip is transcribed, converted to a text embedding, and run through a FAISS
+                  search across tens of thousands of cistern recordings. An LLM picks the best
+                  response from the resulting shortlist. Its position in the cistern is then
+                  determined by UMAP, which projects the full embedding space into 2D so that
+                  semantically similar recordings land on nearby columns. The full stack ran
+                  locally and averaged 0.3–0.7 seconds.
+                </RoleDescription>
+              </CreditsColumn>
+              <CreditsColumn>
+                <CreditsHeader>Credits</CreditsHeader>
+                <CreditsList>
+                  <CreditItem>
+                    <CreditName>Rafael Lozano-Hemmer</CreditName> - <CreditRole>Artist</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>David Robert & Hugo Daoust</CreditName> - <CreditRole>Software</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>William Sutton, Lauria Clarke & Stephan Schulz</CreditName> - <CreditRole>Hardware</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>Michael Nardone</CreditName> - <CreditRole>Curator</CreditRole>
+                  </CreditItem>
+                </CreditsList>
+              </CreditsColumn>
+            </CreditsGrid>
+          </StyledCreditsSection>
+
+          <ExternalLink
+            href="https://www.lozano-hemmer.com/undercurrents.php"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on lozano-hemmer.com
+          </ExternalLink>
+
+        </ProjectContent>
+      </MainContent>
+    </PageWrapper>
+  );
+};
+
+export default UndercurrentsProjectPage;

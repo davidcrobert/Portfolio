@@ -6,6 +6,16 @@ export const projectData = {
     tags: ["all", "ai", "web", "installation", "audio", "robotics"],
     projects: [
       {
+        title: "Undercurrents",
+        link: "/projects/undercurrents",
+        description: "An intercom network inside a 1926 cistern where visitor voices are encoded as light across the columns, with an AI searching a growing archive of past recordings to select a response",
+        subtitle1: "Voices",
+        subtitle2: "& Echoes",
+        year: "2026",
+        tags: ["installation", "ai", "audio"],
+        tools: "Python & TouchDesigner & DANTE"
+      },
+      {
         title: "Spiral Reflector",
         link: "/projects/spiral-reflector",
         description: "A DMX-controlled linear LED spiral that maps a surveillance camera's image as a 2D canvas",
