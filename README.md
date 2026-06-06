@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# David Robert — Portfolio Source
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Source for [davidrobert.computer](https://www.davidrobert.computer), a React portfolio documenting creative technology, interactive installation, AI, audio, robotics, web, and physical computing work.
 
-## Available Scripts
+This repository is intended as a public, reviewable code sample for the portfolio site itself, plus a technical index into selected projects. Many of the production systems described on the site were built for collaborative studio, client, or public-art contexts, so their full installation code is not published here. I can provide sanitized excerpts, architecture walkthroughs, or deeper technical discussion on request.
 
-In the project directory, you can run:
+## Live Site
 
-### `npm start`
+- Portfolio: https://www.davidrobert.computer
+- Resume: https://www.davidrobert.computer/resume
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Selected Technical Evidence
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The site is organized around project pages with concise system descriptions, tools, media, role breakdowns, and credits. Useful review entry points:
 
-### `npm test`
+- `src/projectPages/Undercurrents.js` — large-scale AI/audio/light installation documentation; describes the local AI audio API, FAISS retrieval, LLM response selection, UMAP placement, DANTE routing, and TouchDesigner intercom system.
+- `src/projectPages/SpiralReflector.js` — DMX-controlled LED sculpture and camera-to-light mapping documentation.
+- `src/projectPages/Submirrors.js` — realtime AI mirror system using live camera input and generative facial manipulation.
+- `src/projectPages/ShadowTuner.js` — live radio/audio installation with AI speech classification.
+- `src/projectPages/RemotePulse.js` — networked biometric installation using Arduino/OpenFrameworks/MQTT-style interaction patterns.
+- `src/projectPages/AssemblyLine.js` — public interactive system combining OpenVR, KUKA robot motion, TouchDesigner, and web input.
+- `src/projectPages/MothMelody.js` — Ontario Science Centre installation using Unity, Arduino, TouchDesigner, capacitive touch, projection, and fabrication.
+- `src/components/ReflectionInteractive.js` — browser-based interactive behavior for a personal AI/web work.
+- `src/data/projectData.js` — structured project metadata powering portfolio navigation and category filtering.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technology Stack
 
-### `npm run build`
+- React 18
+- React Router
+- Styled Components
+- p5.js
+- Three.js
+- TensorFlow.js / face detection libraries
+- Tone.js / VexFlow
+- Firebase Hosting
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
+public/                 static assets and project media
+src/App.js              routing
+src/pages/              top-level pages
+src/components/         shared UI and interactive components
+src/projectPages/       individual project case-study pages
+src/data/               project metadata and media embeds
+src/styles/             responsive/mobile/global styling
+build/                  generated production output, not edited by hand
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Local Development
 
-### `npm run eject`
+```bash
+npm install
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The development server runs at `http://localhost:3000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Build
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm run build
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This creates an optimized production bundle in `build/`.
 
-## Learn More
+## Notes for Code Review
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This repo is a portfolio/application artifact rather than a complete archive of every installation system I have built. The most technically relevant production work often involves:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- physical installation hardware and venue-specific configuration
+- studio/client-owned source code
+- private datasets or recording archives
+- local machine paths, IP addresses, API keys, or AV routing details that should not be public
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For that reason, I use the portfolio pages to document system architecture and my role, while keeping sensitive production code private. I am happy to walk through representative code, diagrams, or sanitized excerpts for specific projects.
