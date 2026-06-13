@@ -27,7 +27,7 @@ import { media } from '../styles/responsive';
 import SystemDiagram from '../components/SystemDiagram';
 
 const SPIRAL_NODES = [
-  { id: 'ptz', label: 'PTZ Camera',     sublabel: 'AXIS Q6075-E',      nx: 0.25, ny: 0.20 },
+  { id: 'ptz', label: 'PTZ Camera',     sublabel: 'AXIS Q6075-E',      nx: 0.25, ny: 0.20, camera: true },
   { id: 'api', label: 'Axis API',        sublabel: 'Python · VAPIX',    nx: 0.10, ny: 0.63 },
   { id: 'td',  label: 'TouchDesigner',   sublabel: 'image processing',  nx: 0.48, ny: 0.63 },
   { id: 'dmx', label: 'DMX Controller',  sublabel: 'ArtNet',            nx: 0.68, ny: 0.20 },

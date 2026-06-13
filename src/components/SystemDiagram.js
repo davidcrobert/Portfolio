@@ -87,6 +87,12 @@ const PARTICLES_PER_EDGE = 4;
 const PARTICLE_RADIUS    = 2;
 const PARTICLE_SPEED     = 0.0012;
 
+// PTZ camera FOV sweep
+const PTZ_FOV_ANGLE  = 50;   // degrees — width of the field of view cone
+const PTZ_FOV_LENGTH = 24;   // pixels from node center to arc tip
+const PTZ_RPM        = 3;    // full rotations per minute
+const PTZ_ROT_SPEED  = (PTZ_RPM * 2 * Math.PI) / 60; // derived: radians per second
+
 // ─── Math ─────────────────────────────────────────────────────────────────────
 
 function bezierPoint(p0, p1, p2, t) {
@@ -260,6 +266,28 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.beginPath();
     ctx.arc(x, y, PARTICLE_RADIUS, 0, Math.PI * 2);
     ctx.fill();
+  });
+
+  // Camera FOV sweep — drawn before node circles so the circle sits on top
+  const fovRad  = (PTZ_FOV_ANGLE * Math.PI) / 180;
+  const halfFov = fovRad / 2;
+  nodes.filter(n => n.camera).forEach(({ nx, ny }) => {
+    const x   = nx * w;
+    const y   = ny * h;
+    const rot = (time * PTZ_ROT_SPEED) % (2 * Math.PI);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(PTZ_FOV_LENGTH * Math.cos(-halfFov), PTZ_FOV_LENGTH * Math.sin(-halfFov));
+    ctx.arc(0, 0, PTZ_FOV_LENGTH, -halfFov, halfFov);
+    ctx.lineTo(0, 0);
+    ctx.strokeStyle = '#bbb';
+    ctx.lineWidth = 0.8;
+    ctx.setLineDash([]);
+    ctx.stroke();
+    ctx.restore();
   });
 
   // Regular nodes
