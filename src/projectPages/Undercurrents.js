@@ -23,6 +23,7 @@ import {
   cleanYouTubeEmbed,
   getBackLink
 } from './BaseProjectPage';
+import SystemDiagram from '../components/SystemDiagram';
 
 const ProjectDeck = styled.div`
   width: 100%;
@@ -69,6 +70,29 @@ const WideImage = styled.img`
 const StyledCreditsSection = styled(CreditsSection)`
   margin-top: 40px;
 `;
+
+// ─── Diagram ──────────────────────────────────────────────────────────────────
+
+const UC_NODES = [
+  { id: 'ics',   label: 'Intercoms',     sublabel: '8 units · mic + speaker', nx: 0.07, ny: 0.50 },
+  { id: 'dante', label: 'Dante',         sublabel: 'ADC · DAC',               nx: 0.27, ny: 0.50 },
+  { id: 'td',    label: 'TouchDesigner', sublabel: 'audio · lighting',         nx: 0.50, ny: 0.50 },
+  { id: 'leds',  label: 'LED Strands',   sublabel: 'ArtNet · cistern',         nx: 0.50, ny: 0.80 },
+  { id: 'ai',    label: 'AI API',        sublabel: 'Python · FAISS · LLM',    nx: 0.74, ny: 0.25 },
+  { id: 'arch',  label: 'Archive',       sublabel: 'audio recordings',         nx: 0.90, ny: 0.60, archive: true },
+];
+
+const UC_EDGES = [
+  { from: 'ics',   to: 'dante', label: 'mic' },
+  { from: 'dante', to: 'ics',   label: 'speaker',    bendY:  0.14 },
+  { from: 'dante', to: 'td',    label: 'AoIP' },
+  { from: 'td',    to: 'dante', label: 'audio out',  bendY:  0.14 },
+  { from: 'td',    to: 'leds',  label: 'ArtNet' },
+  { from: 'td',    to: 'ai',    label: 'recording',  bendX:  0.10 },
+  { from: 'ai',    to: 'td',    label: 'response',   bendX: -0.10 },
+  { from: 'ai',    to: 'arch',  label: 'write',      bendX:  0.07 },
+  { from: 'arch',  to: 'ai',    label: 'search',     bendX: -0.10 },
+];
 
 const UndercurrentsProjectPage = ({ project }) => {
   const backLink = getBackLink();
@@ -123,6 +147,8 @@ const UndercurrentsProjectPage = ({ project }) => {
           {mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
+
+          <SystemDiagram nodes={UC_NODES} edges={UC_EDGES} />
 
           <StyledCreditsSection>
             <CreditsGrid>

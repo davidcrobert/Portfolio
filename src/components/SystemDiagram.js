@@ -83,7 +83,7 @@ const EdgeLabelEl = styled.div`
 const NODE_RADIUS    = 6;
 const SPIRAL_RADIUS  = 32; // outer coil radius
 const SPIRAL_TURNS   = 4;
-const PARTICLES_PER_EDGE = 4;
+const PARTICLES_PER_EDGE = 2;
 const PARTICLE_RADIUS    = 2;
 const PARTICLE_SPEED     = 0.0012;
 
@@ -107,6 +107,32 @@ const FACE_CORNER   = 5;    // corner bracket arm length in pixels
 // Mirror / screen node (rectangle instead of circle)
 const MIRROR_W = 16;  // half-width of the mirror rectangle
 const MIRROR_H = 10;  // half-height
+
+// Intercom cluster — 8 intercoms plotted at their real physical positions
+// Coordinates sourced from node_table.csv (type === 'Intercom')
+const IC_POSITIONS = [
+  [1.75,   25.91],  // #1
+  [1.89,   54.25],  // #3
+  [32.00,   1.75],  // #43
+  [32.00,  78.42],  // #44
+  [72.54,   1.75],  // #92
+  [72.54,  78.42],  // #98
+  [102.80, 54.25],  // #124
+  [102.80, 25.91],  // #126
+];
+const IC_CENTROID_X = 52.42;  // mean x of the 8 positions
+const IC_CENTROID_Y = 40.08;  // mean y
+const IC_SCALE      = 0.30;   // pixels per physical unit
+const IC_OFFSET_Y   = -6;     // shift cluster upward to clear the node label
+
+// Network switch — row of port squares above the node
+const SW_PORT_COUNT = 8;
+const SW_PORT_SIZE  = 3;   // width and height of each port square
+const SW_PORT_GAP   = 2;   // gap between squares
+
+// Archive — stacked horizontal lines suggesting stored recordings
+const ARCH_LINES = [22, 18, 26, 20];  // widths of each line (top to bottom)
+const ARCH_LINE_GAP = 3.5;            // vertical gap between lines
 
 // ─── Math ─────────────────────────────────────────────────────────────────────
 
@@ -284,6 +310,60 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
   });
 
   // — Decorations drawn under all node shapes ——————————————————————————————
+
+  // Intercom cluster — 8 dots at physical cistern positions + faint floor-plan rect
+  nodes.filter(n => n.intercomCluster).forEach(({ nx, ny }) => {
+    const cx = nx * w, cy = ny * h;
+    ctx.save();
+    ctx.strokeStyle = '#ddd';
+    ctx.lineWidth = 0.6;
+    ctx.setLineDash([3, 3]);
+    ctx.strokeRect(cx - 17, cy + IC_OFFSET_Y - 19, 34, 26);
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#bbb';
+    IC_POSITIONS.forEach(([ix, iy]) => {
+      const px = cx + (ix - IC_CENTROID_X) * IC_SCALE;
+      const py = cy + IC_OFFSET_Y + (iy - IC_CENTROID_Y) * IC_SCALE;
+      ctx.beginPath();
+      ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
+  });
+
+  // Network switch — port squares drawn above the node circle
+  nodes.filter(n => n.networkSwitch).forEach(({ nx, ny }) => {
+    const x = nx * w, y = ny * h;
+    const totalW = SW_PORT_COUNT * (SW_PORT_SIZE + SW_PORT_GAP) - SW_PORT_GAP;
+    const rowY   = y - NODE_RADIUS - SW_PORT_SIZE - 4;
+    ctx.save();
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 0.6;
+    ctx.setLineDash([]);
+    for (let i = 0; i < SW_PORT_COUNT; i++) {
+      ctx.strokeRect(x - totalW / 2 + i * (SW_PORT_SIZE + SW_PORT_GAP), rowY, SW_PORT_SIZE, SW_PORT_SIZE);
+    }
+    ctx.restore();
+  });
+
+  // Archive — stacked lines of varying width suggesting stored recordings
+  nodes.filter(n => n.archive).forEach(({ nx, ny }) => {
+    const x = nx * w, y = ny * h;
+    const totalH = (ARCH_LINES.length - 1) * ARCH_LINE_GAP;
+    const startY = y - NODE_RADIUS - 4 - totalH;
+    ctx.save();
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 0.8;
+    ctx.setLineDash([]);
+    ARCH_LINES.forEach((lw, i) => {
+      const ly = startY + i * ARCH_LINE_GAP;
+      ctx.beginPath();
+      ctx.moveTo(x - lw / 2, ly);
+      ctx.lineTo(x + lw / 2, ly);
+      ctx.stroke();
+    });
+    ctx.restore();
+  });
 
   // PTZ camera FOV sweep
   const fovRad  = (PTZ_FOV_ANGLE * Math.PI) / 180;
