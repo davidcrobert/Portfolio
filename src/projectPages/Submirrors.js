@@ -22,6 +22,7 @@ import {
   InlineLink
 } from './BaseProjectPage';
 import { media } from '../styles/responsive';
+import SystemDiagram from '../components/SystemDiagram';
 
 // Project-specific styled components
 const ProjectDeck = styled.div`
@@ -111,6 +112,26 @@ const VideoCaption = styled.p`
   color: #666;
 `;
 
+const StyledCreditsSection = styled(CreditsSection)`
+  margin-top: 40px;
+`;
+
+// ─── Diagram data ─────────────────────────────────────────────────────────────
+
+const SUBMIRRORS_NODES = [
+  { id: 'cam', label: 'Camera',        sublabel: 'live capture',          nx: 0.10, ny: 0.28, lens: true },
+  { id: 'py',  label: 'Python',        sublabel: 'LivePortrait · AI',     nx: 0.40, ny: 0.70, aiNode: true },
+  { id: 'td',  label: 'TouchDesigner', sublabel: 'compositing',           nx: 0.64, ny: 0.70 },
+  { id: 'mir', label: 'Mirrors',       sublabel: 'full-frame display',    nx: 0.88, ny: 0.28, mirror: true },
+];
+
+const SUBMIRRORS_EDGES = [
+  { from: 'cam', to: 'py',  label: 'video in' },
+  { from: 'py',  to: 'td',  label: 'NDI' },
+  { from: 'py',  to: 'td',  label: 'face coords', bendY: -0.22 },
+  { from: 'td',  to: 'mir', label: 'render' },
+];
+
 const EmphasisText = styled.span`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-style: italic;
@@ -191,7 +212,9 @@ const SubmirrorsProjectPage = ({ project }) => {
             </div>
           </VideoGrid>
 
-          <CreditsSection>
+          <SystemDiagram nodes={SUBMIRRORS_NODES} edges={SUBMIRRORS_EDGES} />
+
+          <StyledCreditsSection>
             <CreditsGrid>
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
@@ -217,7 +240,7 @@ const SubmirrorsProjectPage = ({ project }) => {
                 </CreditsList>
               </CreditsColumn>
             </CreditsGrid>
-          </CreditsSection>
+          </StyledCreditsSection>
 
           <ImageLink href="https://www.lozano-hemmer.com/recurrent_waiting.php" target="_blank" rel="noopener noreferrer">
             <StyledDocImage src="/images/projects/Submirrors/recurrent_waiting.jpg" alt="Recurrent Waiting" />

@@ -12,7 +12,7 @@ export const projectData = {
         subtitle1: "Voices",
         subtitle2: "& Echoes",
         year: "2026",
-        tags: ["installation", "ai", "audio"],
+        tags: ["installation", "electronics", "ai", "audio"],
         tools: "Python & TouchDesigner & DANTE"
       },
       {

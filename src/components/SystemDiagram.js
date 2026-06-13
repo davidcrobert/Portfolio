@@ -93,6 +93,21 @@ const PTZ_FOV_LENGTH = 24;   // pixels from node center to arc tip
 const PTZ_RPM        = 3;    // full rotations per minute
 const PTZ_ROT_SPEED  = (PTZ_RPM * 2 * Math.PI) / 60; // derived: radians per second
 
+// Camera lens rings (concentric circles suggesting optics, static)
+const LENS_RING_1 = NODE_RADIUS * 2.0;  // inner ring radius
+const LENS_RING_2 = NODE_RADIUS * 3.2;  // outer ring radius
+
+// AI face-tracking bounding box (corner brackets that drift slightly)
+const FACE_BOX_W    = 16;   // detection box width in pixels
+const FACE_BOX_H    = 20;   // detection box height in pixels
+const FACE_DRIFT_PX = 2;    // max position drift ± pixels
+const FACE_DRIFT_SPD = 0.35; // oscillation speed in radians per second
+const FACE_CORNER   = 5;    // corner bracket arm length in pixels
+
+// Mirror / screen node (rectangle instead of circle)
+const MIRROR_W = 16;  // half-width of the mirror rectangle
+const MIRROR_H = 10;  // half-height
+
 // ─── Math ─────────────────────────────────────────────────────────────────────
 
 function bezierPoint(p0, p1, p2, t) {
@@ -268,7 +283,9 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.fill();
   });
 
-  // Camera FOV sweep — drawn before node circles so the circle sits on top
+  // — Decorations drawn under all node shapes ——————————————————————————————
+
+  // PTZ camera FOV sweep
   const fovRad  = (PTZ_FOV_ANGLE * Math.PI) / 180;
   const halfFov = fovRad / 2;
   nodes.filter(n => n.camera).forEach(({ nx, ny }) => {
@@ -290,8 +307,52 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.restore();
   });
 
-  // Regular nodes
-  nodes.filter(n => !n.special).forEach(({ nx, ny }) => {
+  // Camera lens: two concentric rings suggesting optics
+  nodes.filter(n => n.lens).forEach(({ nx, ny }) => {
+    const x = nx * w, y = ny * h;
+    ctx.save();
+    ctx.setLineDash([]);
+    [[LENS_RING_1, '#ccc', 0.8], [LENS_RING_2, '#ddd', 0.6]].forEach(([r, color, lw]) => {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lw;
+      ctx.stroke();
+    });
+    ctx.restore();
+  });
+
+  // AI face-tracking box: drifting corner brackets
+  nodes.filter(n => n.aiNode).forEach(({ nx, ny }) => {
+    const x  = nx * w, y = ny * h;
+    const dx = Math.sin(time * FACE_DRIFT_SPD) * FACE_DRIFT_PX;
+    const dy = Math.sin(time * FACE_DRIFT_SPD * 0.67 + 1.0) * FACE_DRIFT_PX;
+    const bx = x + dx - FACE_BOX_W / 2;
+    const by = y + dy - FACE_BOX_H / 2;
+    const bw = FACE_BOX_W, bh = FACE_BOX_H, cl = FACE_CORNER;
+    ctx.save();
+    ctx.strokeStyle = '#bbb';
+    ctx.lineWidth = 0.8;
+    ctx.setLineDash([]);
+    [
+      [bx,      by,      1,  1],
+      [bx + bw, by,     -1,  1],
+      [bx,      by + bh, 1, -1],
+      [bx + bw, by + bh,-1, -1],
+    ].forEach(([cx, cy, sx, sy]) => {
+      ctx.beginPath();
+      ctx.moveTo(cx + sx * cl, cy);
+      ctx.lineTo(cx, cy);
+      ctx.lineTo(cx, cy + sy * cl);
+      ctx.stroke();
+    });
+    ctx.restore();
+  });
+
+  // — Node shapes ———————————————————————————————————————————————————————————
+
+  // Regular nodes (circles) — excludes spiral and mirror nodes
+  nodes.filter(n => !n.special && !n.mirror).forEach(({ nx, ny }) => {
     const x = nx * w;
     const y = ny * h;
     ctx.beginPath();
@@ -302,6 +363,21 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.lineWidth = 1.5;
     ctx.setLineDash([]);
     ctx.stroke();
+  });
+
+  // Mirror / screen nodes — drawn as rectangles
+  nodes.filter(n => n.mirror).forEach(({ nx, ny }) => {
+    const x = nx * w, y = ny * h;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x - MIRROR_W, y - MIRROR_H, MIRROR_W * 2, MIRROR_H * 2);
+    ctx.fillStyle = '#fafafa';
+    ctx.fill();
+    ctx.strokeStyle = '#111';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([]);
+    ctx.stroke();
+    ctx.restore();
   });
 }
 
