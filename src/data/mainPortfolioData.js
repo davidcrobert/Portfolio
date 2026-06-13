@@ -3,7 +3,7 @@
 
 export const mainPortfolioConfig = {
   // Combined tags across all project categories
-  tags: ["all", "installation", "ai", "electronics", "web", "audio", "robotics"],
+  tags: ["all", "installation", "ai", "electronics", "web", "audio", "ar/vr/xr", "robotics"],
 
   // Column labels for the split-screen layout
   leftColumnLabel: "Art [Personal]",

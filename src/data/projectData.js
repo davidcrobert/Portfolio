@@ -3,7 +3,7 @@ export const projectData = {
     title: "Work",
     subtitle1: "Professional",
     subtitle2: "& Proper",
-    tags: ["all", "ai", "web", "installation", "audio", "robotics"],
+    tags: ["all", "ai", "web", "installation", "audio", "ar/vr/xr", "robotics"],
     projects: [
       {
         title: "Undercurrents",
@@ -74,6 +74,16 @@ export const projectData = {
         year: "2022",
         tags: ["installation", "electronics"],
         tools: "Unity & Arduino & TouchDesigner & Fabrication"
+      },
+      {
+        title: "Augmented Symphony",
+        link: "/projects/augmented-symphony",
+        description: "An AR spatial-audio application that lets listeners place orchestra instruments around their room and move through a personalized concert",
+        subtitle1: "Orchestras",
+        subtitle2: "@ Home",
+        year: "2021",
+        tags: ["ar/vr/xr", "audio"],
+        tools: "Unity & C# & AR Foundation"
       }
     ]
   },
