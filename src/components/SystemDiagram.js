@@ -85,7 +85,7 @@ const SPIRAL_RADIUS  = 32; // outer coil radius
 const SPIRAL_TURNS   = 4;
 const PARTICLES_PER_EDGE = 4;
 const PARTICLE_RADIUS    = 2;
-const PARTICLE_SPEED     = 0.0018;
+const PARTICLE_SPEED     = 0.0012;
 
 // ─── Math ─────────────────────────────────────────────────────────────────────
 
@@ -120,66 +120,96 @@ function buildEdgePoints(nodes, edges, w, h) {
 }
 
 // ─── Spiral path ─────────────────────────────────────────────────────────────
-//
-// Draws the incoming edge bezier and transitions it tangentially into an
-// Archimedean spiral. The spiral's outer coil begins at the angle where the
-// arriving tangent is perpendicular to the radius — giving a smooth join.
 
-function drawSpiralEdge(ctx, p0, center) {
-  // Direction the line arrives in (from source toward center)
+// Path sampling resolution
+const BEZIER_SAMPLES = 60;   // segments along the entry bezier
+const SPIRAL_SAMPLES = 280;  // segments along the Archimedean coil
+
+// Wave animation — all tuneable knobs in one place
+const WAVE_PERIOD   = 10;    // wavelength in pixels (smaller = tighter waves)
+const WAVE_SPEED_PX = 10;   // travel speed in pixels per second
+const WAVE_DARK     = 0;     // darkest colour (0 = black)
+const WAVE_BRIGHT   = 255;   // brightest colour (255 = invisible on #fafafa)
+
+const WAVE_FREQ  = (2 * Math.PI) / WAVE_PERIOD;
+const WAVE_SPEED = WAVE_FREQ * WAVE_SPEED_PX;
+
+function buildSpiralPath(p0, center) {
   const dx = center.x - p0.x;
   const dy = center.y - p0.y;
   const dist = Math.hypot(dx, dy);
   const ux = dx / dist;
   const uy = dy / dist;
 
-  // For an Archimedean spiral the tangent at radius r is ~perpendicular to the
-  // radius. We want the tangent at the outer coil to equal (ux, uy), so the
-  // radius at that point must be perpendicular: rotated 90° from (ux, uy).
-  // Two choices — pick the one that puts pStart on the incoming-side of center.
-  const thetaA = Math.atan2(-ux,  uy); // candidate A
-  const thetaB = Math.atan2( ux, -uy); // candidate B (opposite)
-
-  // Pick whichever candidate places pStart closer to p0 (the "arriving" side)
+  const thetaA = Math.atan2(-ux,  uy);
+  const thetaB = Math.atan2( ux, -uy);
   const pA = { x: center.x + SPIRAL_RADIUS * Math.cos(thetaA), y: center.y + SPIRAL_RADIUS * Math.sin(thetaA) };
   const pB = { x: center.x + SPIRAL_RADIUS * Math.cos(thetaB), y: center.y + SPIRAL_RADIUS * Math.sin(thetaB) };
-  const distA = Math.hypot(pA.x - p0.x, pA.y - p0.y);
-  const distB = Math.hypot(pB.x - p0.x, pB.y - p0.y);
-  const thetaStart = distA < distB ? thetaA : thetaB;
-  const pStart = distA < distB ? pA : pB;
+  const thetaStart = Math.hypot(pA.x - p0.x, pA.y - p0.y) < Math.hypot(pB.x - p0.x, pB.y - p0.y) ? thetaA : thetaB;
+  const pStart = { x: center.x + SPIRAL_RADIUS * Math.cos(thetaStart), y: center.y + SPIRAL_RADIUS * Math.sin(thetaStart) };
 
-  // Control point: pull back from pStart in the incoming direction so the
-  // bezier exits p0 aiming at center and arrives at pStart tangent-matched.
   const k  = Math.hypot(pStart.x - p0.x, pStart.y - p0.y) / 2.5;
   const cp = { x: pStart.x - k * ux, y: pStart.y - k * uy };
 
-  // Build the full path in one stroke call
+  const pts = [];
+  for (let i = 0; i <= BEZIER_SAMPLES; i++) {
+    const t = i / BEZIER_SAMPLES;
+    const mt = 1 - t;
+    pts.push({
+      x: mt * mt * p0.x + 2 * mt * t * cp.x + t * t * pStart.x,
+      y: mt * mt * p0.y + 2 * mt * t * cp.y + t * t * pStart.y,
+    });
+  }
+
+  const totalAngle = SPIRAL_TURNS * 2 * Math.PI;
+  for (let i = 1; i <= SPIRAL_SAMPLES; i++) {
+    const t  = i / SPIRAL_SAMPLES;
+    const th = thetaStart + t * totalAngle;
+    const r  = SPIRAL_RADIUS * (1 - t);
+    pts.push({ x: center.x + r * Math.cos(th), y: center.y + r * Math.sin(th) });
+  }
+
+  const arc = [0];
+  for (let i = 1; i < pts.length; i++) {
+    const ddx = pts[i].x - pts[i - 1].x;
+    const ddy = pts[i].y - pts[i - 1].y;
+    arc.push(arc[i - 1] + Math.hypot(ddx, ddy));
+  }
+
+  return { pts, arc };
+}
+
+function drawSpiralEdge(ctx, p0, center, time) {
+  const { pts, arc } = buildSpiralPath(p0, center);
+
   ctx.save();
-  ctx.beginPath();
-  ctx.strokeStyle = '#111';
   ctx.lineWidth = 1;
   ctx.setLineDash([]);
 
-  ctx.moveTo(p0.x, p0.y);
-  ctx.quadraticCurveTo(cp.x, cp.y, pStart.x, pStart.y);
+  // Entry bezier: solid black, drawn as one path
+  ctx.beginPath();
+  ctx.strokeStyle = '#111';
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for (let i = 1; i <= BEZIER_SAMPLES; i++) ctx.lineTo(pts[i].x, pts[i].y);
+  ctx.stroke();
 
-  // Archimedean spiral: r decreases from SPIRAL_RADIUS to 0 over SPIRAL_TURNS turns
-  const totalAngle = SPIRAL_TURNS * 2 * Math.PI;
-  const N = 300;
-  for (let i = 1; i <= N; i++) {
-    const t = i / N;
-    const theta = thetaStart + t * totalAngle;
-    const r = SPIRAL_RADIUS * (1 - t);
-    ctx.lineTo(center.x + r * Math.cos(theta), center.y + r * Math.sin(theta));
+  // Coil: sine wave colour travels along the arc from the coil entry onward
+  for (let i = BEZIER_SAMPLES + 1; i < pts.length; i++) {
+    const wave = 0.5 + 0.5 * Math.sin(arc[i] * WAVE_FREQ - time * WAVE_SPEED);
+    const b    = Math.round(WAVE_DARK + wave * (WAVE_BRIGHT - WAVE_DARK));
+    ctx.beginPath();
+    ctx.strokeStyle = `rgb(${b},${b},${b})`;
+    ctx.moveTo(pts[i - 1].x, pts[i - 1].y);
+    ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
   }
 
-  ctx.stroke();
   ctx.restore();
 }
 
 // ─── Main draw ────────────────────────────────────────────────────────────────
 
-function drawDiagram(ctx, w, h, nodes, edgePoints, particles) {
+function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
   ctx.clearRect(0, 0, w, h);
   ctx.fillStyle = '#fafafa';
   ctx.fillRect(0, 0, w, h);
@@ -221,7 +251,7 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles) {
   const spiralNode = nodes.find(n => n.special === 'spiral');
   const spiralEp   = edgePoints.find(e => e.toSpecial);
   if (spiralNode && spiralEp) {
-    drawSpiralEdge(ctx, spiralEp.p0, { x: spiralNode.nx * w, y: spiralNode.ny * h });
+    drawSpiralEdge(ctx, spiralEp.p0, { x: spiralNode.nx * w, y: spiralNode.ny * h }, time);
   }
 
   // Particles (regular edges only)
@@ -299,7 +329,7 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
     };
 
     let rafId;
-    const animate = () => {
+    const animate = (time) => {
       rafId = requestAnimationFrame(animate);
       if (!w || !h || !edgePoints.length) return;
 
@@ -310,7 +340,7 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
         })
       );
 
-      drawDiagram(ctx, w, h, nodes, edgePoints, positions);
+      drawDiagram(ctx, w, h, nodes, edgePoints, positions, time * 0.001);
     };
 
     const ro = new ResizeObserver(resize);
