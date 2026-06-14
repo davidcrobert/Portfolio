@@ -72,7 +72,7 @@ export const projectData = {
         subtitle1: "Music",
         subtitle2: "& Moths",
         year: "2022",
-        tags: ["installation", "electronics"],
+        tags: ["installation", "audio", "electronics"],
         tools: "Unity & Arduino & TouchDesigner & Fabrication"
       },
       {

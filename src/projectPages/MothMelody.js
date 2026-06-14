@@ -82,7 +82,7 @@ const MothMelodyProjectPage = ({ project }) => {
                 Collaborative tabletop installation for the Ontario Science Centre, built around touch, light, and sound.
               </DeckSubtitle>
               <DeckMeta>
-                Unity · Arduino · TouchDesigner
+                Unity · C# · Arduino · TouchDesigner
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -108,9 +108,9 @@ const MothMelodyProjectPage = ({ project }) => {
               <CreditsColumn>
                 <CreditsHeader>My Contribution</CreditsHeader>
                 <RoleDescription>
-                  Led software development and hardware integration. Built the interaction system
-                  linking capacitive-touch inputs on the physical lanterns to the moth's behavior,
-                  musical responses, and projected visuals across the tabletop.
+                  Led software development and hardware integration. Built the real-time interaction
+                  system in the Unity game engine (C#), linking capacitive-touch inputs on the physical
+                  lanterns to the moth's behavior, musical responses, and projected visuals across the tabletop.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>

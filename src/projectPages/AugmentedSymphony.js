@@ -108,7 +108,7 @@ const AugmentedSymphonyProjectPage = ({ project }) => {
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
                   Developer and experience designer. Proposed the AR spatial-audio solution
-                  in response to the research question. Developed the entire Unity application using
+                  in response to the research question. Developed the entire Unity application (C#) using
                   AR Foundation for iOS and Android. Designed the interaction model and spatial audio
                   system. Co-authored the research paper presented at EVA London 2022.
                 </RoleDescription>

@@ -246,6 +246,19 @@ const FooterLink = styled(Link)`
   }
 `;
 
+const BuiltWith = styled.div`
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 10px;
+  color: #000;
+  padding: 4px 0 6px;
+  flex-shrink: 0;
+
+  ${media.downTablet} {
+    padding: 8px 0 12px;
+  }
+`;
+
 const ContactLink = styled.a`
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: lowercase;
@@ -488,6 +501,7 @@ function Home() {
           david.connor.r[at]gmail.com
         </ContactLink>
       </Footer>
+      <BuiltWith>Built with React</BuiltWith>
     </IndexContainer>
   );
 }

@@ -116,7 +116,7 @@ const UndercurrentsProjectPage = ({ project }) => {
                 An underground echo chamber of voice and light for Rafael Lozano-Hemmer, at the Buffalo Bayou Park Cistern, Houston.
               </DeckSubtitle>
               <DeckMeta>
-                Python · TouchDesigner · DANTE Audio · DMX LEDs · AI voice analysis
+                Python · TouchDesigner · DANTE Audio · DMX / ArtNet · REST API · ffmpeg · AI voice analysis
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -160,13 +160,18 @@ const UndercurrentsProjectPage = ({ project }) => {
                   AI-selected responses, audio cleaning, and playback routing across the
                   eight stations.
                   <br /><br />
-                  Built the Audio AI API, running on a dedicated second machine. Each incoming
+                  Built the Audio AI REST API, running on a dedicated second machine. Each incoming
                   clip is transcribed, converted to a text embedding, and run through a FAISS
                   search across tens of thousands of cistern recordings. An LLM picks the best
                   response from the resulting shortlist. Its position in the cistern is then
                   determined by UMAP, which projects the full embedding space into 2D so that
-                  semantically similar recordings land on nearby columns. The full stack ran
+                  semantically similar recordings land on nearby columns. Incoming and outgoing
+                  audio is normalized and transcoded with ffmpeg. The full stack ran
                   locally and averaged 0.3–0.7 seconds.
+                  <br /><br />
+                  Also wrote a GLSL jump-flood-algorithm tool for texture-based audio
+                  spatialization - mapping an arbitrary source image onto the physical speaker
+                  layout to position sound across the cistern.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>

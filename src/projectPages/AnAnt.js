@@ -68,7 +68,7 @@ const AnAntProjectPage = ({ project }) => {
                 An installation where the image only appears when the participant can no longer look at it.
               </DeckSubtitle>
               <DeckMeta>
-                Unity · Python · TouchDesigner · eye detection · boid simulation
+                Unity · C# · Python · TouchDesigner · eye detection · boid simulation
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -76,7 +76,8 @@ const AnAntProjectPage = ({ project }) => {
                 In <i>AN ANT HAS DRAWN A RECOGNIZABLE CARICATURE OF WINSTON CHURCHILL</i>, a participant
                 sits in front of a projection that withholds its image until they close their eyes.
                 Python-based eye detection watches for that threshold; only then does the room shift from a
-                blank command into a hidden visual field of swarming motion and degraded tape sound.
+                blank command into a hidden visual field of swarming motion and degraded tape sound. The swarm
+                is a real-time boid simulation built in the Unity game engine (C#).
               </CustomSubtitle>
             </IntroBody>
           </CustomHeader>

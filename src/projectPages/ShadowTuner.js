@@ -101,7 +101,7 @@ const ShadowTunerProjectPage = ({ project }) => {
                 Interactive radio installation adapted for a spherical LED display, with AI-assisted live audio analysis.
               </DeckSubtitle>
               <DeckMeta>
-                Python · TouchDesigner · speech / music classification · hardware integration
+                Python · TouchDesigner · PowerShell · ffmpeg · speech / music classification · hardware integration
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -130,10 +130,10 @@ const ShadowTunerProjectPage = ({ project }) => {
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
                   Developed the AI analyzer to differentiate spoken word from music across thousands of live
-                  radio streams. Re-architected the audio downloading pipeline for greater resiliency and
-                  clearer data collection.
+                  radio streams. Re-architected the audio downloading and transcoding pipeline around ffmpeg
+                  for greater resiliency and clearer data collection.
                   Designed audio database schema and implemented data storage system.
-                  Assisted with depth-camera tracking system in TouchDesigner for shadow-based interaction.
+                  Assisted with depth-camera (RealSense) tracking system in TouchDesigner for shadow-based interaction.
                   <br />
                   <br />
                   Also planned out, sourced, and assembled hardware components.

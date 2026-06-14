@@ -161,7 +161,7 @@ const SpiralReflectorProjectPage = ({ project }) => {
                 Large-scale LED installation for Rafael Lozano-Hemmer, exhibited at the Museo de Arte Moderno, Mexico City.
               </DeckSubtitle>
               <DeckMeta>
-                TouchDesigner · Python · DMX · PTZ camera control and synchronization
+                TouchDesigner · Python · DMX / ArtNet · REST API · PTZ camera control and synchronization
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -197,10 +197,10 @@ const SpiralReflectorProjectPage = ({ project }) => {
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Software developer. Built an async Python API for PTZ camera control and
-                  image synchronization. Developed the TouchDesigner system that generates
-                  imagery and drives the LED strip over DMX, including all visual effects.
-                  Scoped hardware requirements.
+                  Software developer. Developed the TouchDesigner system
+                  that generates imagery and drives the LED strip over DMX / ArtNet, including
+                  all visual effects. Built an async Python REST API for PTZ camera control
+                  (Axis VAPIX) and image synchronization.  Scoped hardware requirements.
                 </RoleDescription>
               </CreditsColumn>
               <CreditsColumn>
