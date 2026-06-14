@@ -72,7 +72,7 @@ const AboutMe = () => {
       <AboutSection>
         <AboutParagraph className="left">I'm a Creative Technologist at <a href="https://antimodular.com/" target="_blank" rel="noopener noreferrer">Atelier Lozano-Hemmer</a>, working for the artist Rafael Lozano-Hemmer</AboutParagraph>
         <AboutParagraph className="right">I also make my own art</AboutParagraph>
-        <AboutParagraph className='left'>I was previously a Media Artist in Residence at <a href="https://www.fabrica.it/en/" target="_blank" rel="noopener noreferrer">Fabrica</a> </AboutParagraph>
+        <AboutParagraph className='left'>I was previously a Media Artist in Residence at <a href="https://www.fabrica.it/" target="_blank" rel="noopener noreferrer">Fabrica</a> </AboutParagraph>
         <AboutParagraph className="right">I studied Media Production [concentration in Digital Media] at Toronto Metropolitan University [TMU]</AboutParagraph>
         <AboutParagraph className="left">I use TouchDesigner & AI & Python & the web & physical computing & Unreal & Unity & whatever else to create experiences</AboutParagraph>
         <AboutParagraph className="right">I'm originally from a small town in southern Ontario [Canada]</AboutParagraph>
