@@ -119,10 +119,10 @@ const StyledCreditsSection = styled(CreditsSection)`
 // ─── Diagram data ─────────────────────────────────────────────────────────────
 
 const SUBMIRRORS_NODES = [
-  { id: 'cam', label: 'Camera',        sublabel: 'live capture',          nx: 0.10, ny: 0.28, lens: true },
+  { id: 'cam', label: 'Camera',        sublabel: 'live capture',          nx: 0.10, ny: 0.28, lens: true, labelAbove: true },
   { id: 'py',  label: 'Python',        sublabel: 'LivePortrait · AI',     nx: 0.40, ny: 0.70, aiNode: true },
   { id: 'td',  label: 'TouchDesigner', sublabel: 'compositing',           nx: 0.64, ny: 0.70 },
-  { id: 'mir', label: 'Mirrors',       sublabel: 'full-frame display',    nx: 0.88, ny: 0.28, mirror: true },
+  { id: 'mir', label: 'Mirrors',       sublabel: 'full-frame display',    nx: 0.88, ny: 0.28, mirror: true, labelAbove: true },
 ];
 
 const SUBMIRRORS_EDGES = [

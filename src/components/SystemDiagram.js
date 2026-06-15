@@ -44,7 +44,7 @@ const LabelLayer = styled.div`
 
 const NodeLabel = styled.div`
   position: absolute;
-  transform: translate(-50%, 11px);
+  transform: ${p => (p.$above ? 'translate(-50%, calc(-100% - 11px))' : 'translate(-50%, 11px)')};
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.3;
@@ -69,7 +69,7 @@ const NodeSub = styled.div`
 
 const EdgeLabelEl = styled.div`
   position: absolute;
-  transform: translate(-50%, calc(-50% + 14px));
+  transform-origin: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: clamp(6px, 0.75vw, 8px);
   letter-spacing: 0.1em;
@@ -499,11 +499,16 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       setLabels({
         nodes: nodes.filter(n => !n.special).map(n => ({
           id: n.id, name: n.label, sub: n.sublabel,
-          x: n.nx * w, y: n.ny * h,
+          x: n.nx * w, y: n.ny * h, above: !!n.labelAbove,
         })),
         edges: edgePoints.filter(e => e.label && !e.toSpecial).map(e => {
           const mid = bezierPoint(e.p0, e.p1, e.p2, 0.5);
-          return { label: e.label, x: mid.x, y: mid.y };
+          const tan = bezierTangent(e.p0, e.p1, e.p2, 0.5);
+          // Angle the label so it runs along the line, kept upright (never upside-down)
+          let ang = Math.atan2(tan.y, tan.x);
+          if (ang >  Math.PI / 2) ang -= Math.PI;
+          if (ang < -Math.PI / 2) ang += Math.PI;
+          return { label: e.label, x: mid.x, y: mid.y, angle: (ang * 180) / Math.PI };
         }),
         spiral: spiralNode
           ? { name: spiralNode.label, sub: spiralNode.sublabel,
@@ -543,13 +548,20 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
         <CanvasEl ref={canvasRef} />
         <LabelLayer>
           {nodeLabels.map(n => (
-            <NodeLabel key={n.id} style={{ left: n.x, top: n.y }}>
+            <NodeLabel key={n.id} $above={n.above} style={{ left: n.x, top: n.y }}>
               <NodeName>{n.name}</NodeName>
               {n.sub && <NodeSub>{n.sub}</NodeSub>}
             </NodeLabel>
           ))}
           {edgeLabels.map((e, i) => (
-            <EdgeLabelEl key={i} style={{ left: e.x, top: e.y }}>
+            <EdgeLabelEl
+              key={i}
+              style={{
+                left: e.x,
+                top: e.y,
+                transform: `translate(-50%, -50%) rotate(${e.angle}deg) translate(0, -10px)`,
+              }}
+            >
               {e.label}
             </EdgeLabelEl>
           ))}
