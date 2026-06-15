@@ -116,7 +116,7 @@ const UndercurrentsProjectPage = ({ project }) => {
                 An underground echo chamber of voice and light for Rafael Lozano-Hemmer, at the Buffalo Bayou Park Cistern, Houston.
               </DeckSubtitle>
               <DeckMeta>
-                Python · TouchDesigner · DANTE Audio · DMX / ArtNet · REST API · ffmpeg · AI voice analysis
+                Python · TouchDesigner · DANTE Audio · DMX / ArtNet · REST API · AI voice analysis
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -166,7 +166,7 @@ const UndercurrentsProjectPage = ({ project }) => {
                   response from the resulting shortlist. Its position in the cistern is then
                   determined by UMAP, which projects the full embedding space into 2D so that
                   semantically similar recordings land on nearby columns. Incoming and outgoing
-                  audio is normalized and transcoded with ffmpeg. The full stack ran
+                  audio is normalized, has its silence trimmed, and noise reduced with Numpy. The full stack ran
                   locally and averaged 0.3–0.7 seconds.
                   <br /><br />
                   Also wrote a GLSL jump-flood-algorithm tool for texture-based audio
