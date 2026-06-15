@@ -97,12 +97,53 @@ const PTZ_ROT_SPEED  = (PTZ_RPM * 2 * Math.PI) / 60; // derived: radians per sec
 const LENS_RING_1 = NODE_RADIUS * 2.0;  // inner ring radius
 const LENS_RING_2 = NODE_RADIUS * 3.2;  // outer ring radius
 
-// AI face-tracking bounding box (corner brackets that drift slightly)
-const FACE_BOX_W    = 16;   // detection box width in pixels
-const FACE_BOX_H    = 20;   // detection box height in pixels
-const FACE_DRIFT_PX = 2;    // max position drift ± pixels
-const FACE_DRIFT_SPD = 0.35; // oscillation speed in radians per second
-const FACE_CORNER   = 5;    // corner bracket arm length in pixels
+// AI face landmark mesh — the canonical 68-point iBUG/dlib layout, floated above the
+// node like a live face-detection readout. Coordinates are normalised (x 0–1, y ~0.24–1).
+const FACE_MESH_W   = 56;   // rendered face width in pixels
+const FACE_MESH_H   = 70;   // rendered face height in pixels
+const FACE_MESH_DY  = 54;   // distance the mesh floats above the node centre
+const FACE_JITTER   = 0.4;  // per-point detection jitter in pixels
+const FACE_JIT_SPD  = 2.2;  // jitter oscillation speed (radians per second)
+
+// 68 facial landmarks (x right, y down) in a front-facing canonical face.
+const FACE_68 = [
+  // jaw line (0–16)
+  [0.00, 0.40], [0.02, 0.52], [0.05, 0.64], [0.09, 0.75], [0.15, 0.85],
+  [0.23, 0.93], [0.33, 0.98], [0.43, 1.00], [0.50, 1.01], [0.57, 1.00],
+  [0.67, 0.98], [0.77, 0.93], [0.85, 0.85], [0.91, 0.75], [0.95, 0.64],
+  [0.98, 0.52], [1.00, 0.40],
+  // right eyebrow (17–21)
+  [0.12, 0.30], [0.19, 0.25], [0.27, 0.24], [0.35, 0.26], [0.43, 0.29],
+  // left eyebrow (22–26)
+  [0.57, 0.29], [0.65, 0.26], [0.73, 0.24], [0.81, 0.25], [0.88, 0.30],
+  // nose bridge (27–30)
+  [0.50, 0.36], [0.50, 0.44], [0.50, 0.52], [0.50, 0.60],
+  // lower nose (31–35)
+  [0.42, 0.64], [0.46, 0.66], [0.50, 0.67], [0.54, 0.66], [0.58, 0.64],
+  // right eye (36–41)
+  [0.18, 0.40], [0.23, 0.37], [0.29, 0.37], [0.34, 0.40], [0.29, 0.43], [0.23, 0.43],
+  // left eye (42–47)
+  [0.66, 0.40], [0.71, 0.37], [0.77, 0.37], [0.82, 0.40], [0.77, 0.43], [0.71, 0.43],
+  // outer lip (48–59)
+  [0.36, 0.78], [0.41, 0.75], [0.46, 0.74], [0.50, 0.75], [0.54, 0.74], [0.59, 0.75],
+  [0.64, 0.78], [0.59, 0.82], [0.54, 0.84], [0.50, 0.85], [0.46, 0.84], [0.41, 0.82],
+  // inner lip (60–67)
+  [0.39, 0.78], [0.46, 0.77], [0.50, 0.78], [0.54, 0.77], [0.61, 0.78],
+  [0.54, 0.80], [0.50, 0.81], [0.46, 0.80],
+];
+
+// Feature groups as [startIndex, endIndex, closed?] for the faint connecting strokes.
+const FACE_GROUPS = [
+  [0, 16, false],  // jaw
+  [17, 21, false], // right brow
+  [22, 26, false], // left brow
+  [27, 30, false], // nose bridge
+  [31, 35, false], // lower nose
+  [36, 41, true],  // right eye
+  [42, 47, true],  // left eye
+  [48, 59, true],  // outer lip
+  [60, 67, true],  // inner lip
+];
 
 // Mirror / screen node (rectangle instead of circle)
 const MIRROR_W = 16;  // half-width of the mirror rectangle
@@ -130,9 +171,30 @@ const SW_PORT_COUNT = 8;
 const SW_PORT_SIZE  = 3;   // width and height of each port square
 const SW_PORT_GAP   = 2;   // gap between squares
 
-// Archive — stacked horizontal lines suggesting stored recordings
-const ARCH_LINES = [22, 18, 26, 20];  // widths of each line (top to bottom)
-const ARCH_LINE_GAP = 3.5;            // vertical gap between lines
+// Archive — a growing stack of recordings: a new line is written in periodically, the
+// stack scrolls down, and the oldest recording fades off the bottom.
+const ARCH_LINE_COUNT = 7;    // visible recordings in the stack
+const ARCH_LINE_GAP   = 4.5;  // vertical spacing between recordings
+const ARCH_W_MIN      = 13;   // shortest recording line (px)
+const ARCH_W_MAX      = 28;   // longest recording line (px)
+const ARCH_INTERVAL   = 1.5;  // seconds between new recordings
+const ARCH_SLIDE      = 9;    // px the newest line slides in from the right
+const ARCH_TOP_GAP    = 2;    // gap from node centre down to the newest line
+const ARCH_OFFSET_X   = 16;   // shift the stack right, clear of the node's edges
+
+// LED strands — a branching system of wave-textured tubes (the same LED tubes as the
+// Spiral piece). The brightness wave flows out from the node and forks at each split,
+// echoing "voice travels as light along branching paths, forking at the columns".
+const LED_TRUNK_LEN   = 20;   // length of the root tube in pixels
+const LED_DEPTH       = 3;    // number of times each tube forks
+const LED_SPREAD      = 0.5;  // fork half-angle in radians
+const LED_DECAY       = 0.74; // length multiplier at each fork
+const LED_SEG_SAMPLES = 6;    // points sampled per tube (wave smoothness)
+const LED_LABEL_DY    = 46;   // push the node label below the branch system
+
+// Voice packet — particles on audio edges render as a tiny travelling waveform, each
+// with its own randomly generated shape (assigned once per particle, so each is unique)
+const VOICE_BAR_GAP = 2.2;  // spacing between bars along travel
 
 // ─── Math ─────────────────────────────────────────────────────────────────────
 
@@ -162,7 +224,7 @@ function buildEdgePoints(nodes, edges, w, h) {
       x: (p0.x + p2.x) / 2 + (edge.bendX || 0) * w,
       y: (p0.y + p2.y) / 2 + (edge.bendY || 0) * h,
     };
-    return { p0, p1, p2, dashed: !!edge.dashed, label: edge.label, toSpecial: !!to.special };
+    return { p0, p1, p2, dashed: !!edge.dashed, label: edge.label, toSpecial: !!to.special, voice: !!edge.voice };
   });
 }
 
@@ -254,6 +316,66 @@ function drawSpiralEdge(ctx, p0, center, time) {
   ctx.restore();
 }
 
+// ─── LED strands & voice packets ───────────────────────────────────────────────
+
+// Draws a polyline with the same travelling brightness wave used by the spiral coil.
+function drawWavePolyline(ctx, pts, arcStart, time) {
+  let arc = arcStart;
+  ctx.save();
+  ctx.lineWidth = 1;
+  ctx.setLineDash([]);
+  for (let i = 1; i < pts.length; i++) {
+    arc += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+    const wave = 0.5 + 0.5 * Math.sin(arc * WAVE_FREQ - time * WAVE_SPEED);
+    const b = Math.round(WAVE_DARK + wave * (WAVE_BRIGHT - WAVE_DARK));
+    ctx.beginPath();
+    ctx.strokeStyle = `rgb(${b},${b},${b})`;
+    ctx.moveTo(pts[i - 1].x, pts[i - 1].y);
+    ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// Builds the LED branch system as a list of { pts, arc0 } tubes rooted at (cx, cy),
+// growing downward and forking. arc0 carries the cumulative length up to each tube's
+// start so the wave flows continuously through the forks.
+function buildLedBranches(cx, cy) {
+  const tubes = [];
+  const grow = (x, y, ang, len, depth, arc0) => {
+    const ex = x + Math.cos(ang) * len;
+    const ey = y + Math.sin(ang) * len;
+    const pts = [];
+    for (let i = 0; i <= LED_SEG_SAMPLES; i++) {
+      const t = i / LED_SEG_SAMPLES;
+      pts.push({ x: x + (ex - x) * t, y: y + (ey - y) * t });
+    }
+    tubes.push({ pts, arc0 });
+    if (depth > 0) {
+      const childArc = arc0 + len;
+      grow(ex, ey, ang - LED_SPREAD, len * LED_DECAY, depth - 1, childArc);
+      grow(ex, ey, ang + LED_SPREAD, len * LED_DECAY, depth - 1, childArc);
+    }
+  };
+  grow(cx, cy, Math.PI / 2, LED_TRUNK_LEN, LED_DEPTH, 0);
+  return tubes;
+}
+
+// A unique little waveform shape (array of bar half-heights) for one voice packet.
+function makeWaveform() {
+  const n = 5 + Math.floor(Math.random() * 3); // 5–7 bars
+  return Array.from({ length: n }, (_, i) => {
+    const env = Math.sin(((i + 0.5) / n) * Math.PI); // 0→1→0 envelope
+    return 1.5 + env * (2 + Math.random() * 5);
+  });
+}
+
+// Stable pseudo-random width for archive recording #i (so each line keeps its length).
+function archWidth(i) {
+  const r = Math.abs(Math.sin(i * 12.9898 + 4.1) * 43758.5453) % 1;
+  return ARCH_W_MIN + r * (ARCH_W_MAX - ARCH_W_MIN);
+}
+
 // ─── Main draw ────────────────────────────────────────────────────────────────
 
 function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
@@ -301,12 +423,30 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     drawSpiralEdge(ctx, spiralEp.p0, { x: spiralNode.nx * w, y: spiralNode.ny * h }, time);
   }
 
-  // Particles (regular edges only)
-  ctx.fillStyle = '#111';
-  particles.forEach(({ x, y }) => {
-    ctx.beginPath();
-    ctx.arc(x, y, PARTICLE_RADIUS, 0, Math.PI * 2);
-    ctx.fill();
+  // Particles — plain dots, or a unique little travelling waveform on "voice" edges
+  particles.forEach(({ x, y, voice, angle, bars }) => {
+    if (!voice) {
+      ctx.fillStyle = '#111';
+      ctx.beginPath();
+      ctx.arc(x, y, PARTICLE_RADIUS, 0, Math.PI * 2);
+      ctx.fill();
+      return;
+    }
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.strokeStyle = '#111';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([]);
+    const span = (bars.length - 1) * VOICE_BAR_GAP;
+    bars.forEach((hh, i) => {
+      const bx = -span / 2 + i * VOICE_BAR_GAP;
+      ctx.beginPath();
+      ctx.moveTo(bx, -hh);
+      ctx.lineTo(bx, hh);
+      ctx.stroke();
+    });
+    ctx.restore();
   });
 
   // — Decorations drawn under all node shapes ——————————————————————————————
@@ -346,23 +486,51 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.restore();
   });
 
-  // Archive — stacked lines of varying width suggesting stored recordings
+  // Archive — a growing stack of recordings written in below the node
   nodes.filter(n => n.archive).forEach(({ nx, ny }) => {
-    const x = nx * w, y = ny * h;
-    const totalH = (ARCH_LINES.length - 1) * ARCH_LINE_GAP;
-    const startY = y - NODE_RADIUS - 4 - totalH;
+    const cx = nx * w, cy = ny * h;
+    const progress = time / ARCH_INTERVAL;
+    const k    = Math.floor(progress); // index of the newest recording
+    const frac = progress - k;         // 0→1 progress of the current write
+    const startY = cy + NODE_RADIUS + ARCH_TOP_GAP;
     ctx.save();
-    ctx.strokeStyle = '#ccc';
-    ctx.lineWidth = 0.8;
     ctx.setLineDash([]);
-    ARCH_LINES.forEach((lw, i) => {
-      const ly = startY + i * ARCH_LINE_GAP;
+    ctx.lineWidth = 0.8;
+    for (let j = 0; j < ARCH_LINE_COUNT; j++) {
+      const gi = k - j; // global recording index (stable identity)
+      if (gi < 0) continue;
+      const y = startY + (j + frac) * ARCH_LINE_GAP; // smooth downward scroll
+      let alpha = 1, slide = 0, shade = 200;
+      if (j === 0) {                       // newest: slides in from the right, fades up, darker
+        alpha = frac;
+        slide = (1 - frac) * ARCH_SLIDE;
+        shade = 130 + frac * 70;
+      } else if (j === ARCH_LINE_COUNT - 1) { // oldest: fades off the bottom
+        alpha = 1 - frac;
+      }
+      const lw = archWidth(gi);
+      const c = Math.round(shade);
+      const lx = cx + ARCH_OFFSET_X + slide;
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = `rgb(${c},${c},${c})`;
       ctx.beginPath();
-      ctx.moveTo(x - lw / 2, ly);
-      ctx.lineTo(x + lw / 2, ly);
+      ctx.moveTo(lx - lw / 2, y);
+      ctx.lineTo(lx + lw / 2, y);
       ctx.stroke();
-    });
+    }
+    ctx.globalAlpha = 1;
     ctx.restore();
+  });
+
+  // LED strands — branching wave-textured tubes flowing out from the node
+  nodes.filter(n => n.ledStrand).forEach(({ nx, ny }) => {
+    const cx = nx * w, cy = ny * h;
+    buildLedBranches(cx, cy).forEach(({ pts, arc0 }) => drawWavePolyline(ctx, pts, arc0, time));
+    // small solid root so the incoming arrow has a clear target
+    ctx.beginPath();
+    ctx.arc(cx, cy, 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#111';
+    ctx.fill();
   });
 
   // PTZ camera FOV sweep
@@ -402,37 +570,49 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.restore();
   });
 
-  // AI face-tracking box: drifting corner brackets
+  // AI face landmark mesh — 68 points floated above the node with faint feature
+  // strokes and a subtle per-point detection jitter
   nodes.filter(n => n.aiNode).forEach(({ nx, ny }) => {
-    const x  = nx * w, y = ny * h;
-    const dx = Math.sin(time * FACE_DRIFT_SPD) * FACE_DRIFT_PX;
-    const dy = Math.sin(time * FACE_DRIFT_SPD * 0.67 + 1.0) * FACE_DRIFT_PX;
-    const bx = x + dx - FACE_BOX_W / 2;
-    const by = y + dy - FACE_BOX_H / 2;
-    const bw = FACE_BOX_W, bh = FACE_BOX_H, cl = FACE_CORNER;
+    const cx = nx * w;
+    const cyMesh = ny * h - FACE_MESH_DY;
+    const pt = (i) => {
+      const [lx, ly] = FACE_68[i];
+      const jx = Math.sin(time * FACE_JIT_SPD + i * 1.7) * FACE_JITTER;
+      const jy = Math.cos(time * FACE_JIT_SPD + i * 2.3) * FACE_JITTER;
+      return {
+        x: cx + (lx - 0.5) * FACE_MESH_W + jx,
+        y: cyMesh + (ly - 0.625) * FACE_MESH_H + jy,
+      };
+    };
     ctx.save();
-    ctx.strokeStyle = '#bbb';
-    ctx.lineWidth = 0.8;
     ctx.setLineDash([]);
-    [
-      [bx,      by,      1,  1],
-      [bx + bw, by,     -1,  1],
-      [bx,      by + bh, 1, -1],
-      [bx + bw, by + bh,-1, -1],
-    ].forEach(([cx, cy, sx, sy]) => {
+    // faint feature strokes
+    ctx.strokeStyle = '#dcdcdc';
+    ctx.lineWidth = 0.6;
+    FACE_GROUPS.forEach(([a, b, closed]) => {
       ctx.beginPath();
-      ctx.moveTo(cx + sx * cl, cy);
-      ctx.lineTo(cx, cy);
-      ctx.lineTo(cx, cy + sy * cl);
+      for (let i = a; i <= b; i++) {
+        const p = pt(i);
+        if (i === a) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      }
+      if (closed) ctx.closePath();
       ctx.stroke();
     });
+    // landmark dots
+    ctx.fillStyle = '#9a9a9a';
+    for (let i = 0; i < FACE_68.length; i++) {
+      const p = pt(i);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 0.9, 0, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.restore();
   });
 
   // — Node shapes ———————————————————————————————————————————————————————————
 
-  // Regular nodes (circles) — excludes spiral and mirror nodes
-  nodes.filter(n => !n.special && !n.mirror).forEach(({ nx, ny }) => {
+  // Regular nodes (circles) — excludes spiral, mirror and LED-strand nodes
+  nodes.filter(n => !n.special && !n.mirror && !n.ledStrand).forEach(({ nx, ny }) => {
     const x = nx * w;
     const y = ny * h;
     ctx.beginPath();
@@ -481,6 +661,7 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       return Array.from({ length: PARTICLES_PER_EDGE }, (_, i) => ({
         t: i / PARTICLES_PER_EDGE,
         speed: PARTICLE_SPEED + ei * 0.00008 + Math.random() * 0.0004,
+        bars: makeWaveform(),
       }));
     });
 
@@ -499,7 +680,7 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       setLabels({
         nodes: nodes.filter(n => !n.special).map(n => ({
           id: n.id, name: n.label, sub: n.sublabel,
-          x: n.nx * w, y: n.ny * h, above: !!n.labelAbove,
+          x: n.nx * w, y: n.ny * h + (n.ledStrand ? LED_LABEL_DY : 0), above: !!n.labelAbove,
         })),
         edges: edgePoints.filter(e => e.label && !e.toSpecial).map(e => {
           const mid = bezierPoint(e.p0, e.p1, e.p2, 0.5);
@@ -525,7 +706,10 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       const positions = edgePoints.flatMap((ep, ei) =>
         particleTs[ei].map(p => {
           p.t = (p.t + p.speed) % 1;
-          return bezierPoint(ep.p0, ep.p1, ep.p2, p.t);
+          const pt = bezierPoint(ep.p0, ep.p1, ep.p2, p.t);
+          if (!ep.voice) return { x: pt.x, y: pt.y, voice: false };
+          const tan = bezierTangent(ep.p0, ep.p1, ep.p2, p.t);
+          return { x: pt.x, y: pt.y, voice: true, angle: Math.atan2(tan.y, tan.x), bars: p.bars };
         })
       );
 

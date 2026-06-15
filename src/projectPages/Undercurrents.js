@@ -77,19 +77,19 @@ const UC_NODES = [
   { id: 'ics',   label: 'Intercoms',     sublabel: '8 stations',           nx: 0.075, ny: 0.22, labelAbove: true },
   { id: 'dante', label: 'Dante',         sublabel: 'ADC · DAC · AoIP',     nx: 0.26,  ny: 0.62 },
   { id: 'td',    label: 'TouchDesigner', sublabel: 'audio · lighting',     nx: 0.48,  ny: 0.22, labelAbove: true },
-  { id: 'leds',  label: 'LED Strands',   sublabel: 'ArtNet · cistern',     nx: 0.48,  ny: 0.78 },
+  { id: 'leds',  label: 'LED Strands',   sublabel: 'ArtNet · cistern',     nx: 0.48,  ny: 0.78, ledStrand: true },
   { id: 'ai',    label: 'AI API',        sublabel: 'Python · FAISS · LLM', nx: 0.71,  ny: 0.62 },
-  { id: 'arch',  label: 'Archive',       sublabel: 'audio recordings',     nx: 0.92,  ny: 0.22, labelAbove: true },
+  { id: 'arch',  label: 'Archive',       sublabel: 'audio recordings',     nx: 0.92,  ny: 0.22, labelAbove: true, archive: true },
 ];
 
 const UC_EDGES = [
-  { from: 'ics',   to: 'dante', label: 'mic',       bendX:  0.08 },
-  { from: 'dante', to: 'ics',   label: 'speaker',   bendX: -0.08 },
-  { from: 'dante', to: 'td',    label: 'AoIP',      bendX:  0.08 },
-  { from: 'td',    to: 'dante', label: 'audio out', bendX: -0.08 },
+  { from: 'ics',   to: 'dante', label: 'mic',       bendX:  0.08, voice: true },
+  { from: 'dante', to: 'ics',   label: 'speaker',   bendX: -0.08, voice: true },
+  { from: 'dante', to: 'td',    label: 'AoIP',      bendX:  0.08, voice: true },
+  { from: 'td',    to: 'dante', label: 'audio out', bendX: -0.08, voice: true },
   { from: 'td',    to: 'leds',  label: 'ArtNet' },
-  { from: 'td',    to: 'ai',    label: 'clip',      bendX:  0.08 },
-  { from: 'ai',    to: 'td',    label: 'response',  bendX: -0.08 },
+  { from: 'td',    to: 'ai',    label: 'clip',      bendX:  0.08, voice: true },
+  { from: 'ai',    to: 'td',    label: 'response',  bendX: -0.08, voice: true },
   { from: 'ai',    to: 'arch',  label: 'write',     bendX:  0.08 },
   { from: 'arch',  to: 'ai',    label: 'search',    bendX: -0.08 },
 ];
