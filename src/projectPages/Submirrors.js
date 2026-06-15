@@ -121,14 +121,15 @@ const StyledCreditsSection = styled(CreditsSection)`
 const SUBMIRRORS_NODES = [
   { id: 'cam', label: 'Camera',        sublabel: 'live capture',          nx: 0.10, ny: 0.28, lens: true, labelAbove: true },
   { id: 'py',  label: 'Python',        sublabel: 'LivePortrait · AI',     nx: 0.40, ny: 0.70, aiNode: true },
-  { id: 'td',  label: 'TouchDesigner', sublabel: 'compositing',           nx: 0.64, ny: 0.70 },
-  { id: 'mir', label: 'Mirrors',       sublabel: 'full-frame display',    nx: 0.88, ny: 0.28, mirror: true, labelAbove: true },
+  { id: 'td',  label: 'TouchDesigner', sublabel: 'control · compositing',  nx: 0.64, ny: 0.70, labelDx: 34 },
+  { id: 'mir', label: 'Mirrors',       sublabel: 'full-frame display',    nx: 0.88, ny: 0.4, mirror: true, labelAbove: true, mirrorFace: true },
 ];
 
 const SUBMIRRORS_EDGES = [
   { from: 'cam', to: 'py',  label: 'video in' },
   { from: 'py',  to: 'td',  label: 'NDI' },
   { from: 'py',  to: 'td',  label: 'face coords', bendY: -0.22 },
+  { from: 'td',  to: 'py',  label: 'OSC', bendY: 0.16, dashed: true }, // TD pilots the face
   { from: 'td',  to: 'mir', label: 'render' },
 ];
 

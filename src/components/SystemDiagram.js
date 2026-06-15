@@ -93,9 +93,10 @@ const PTZ_FOV_LENGTH = 24;   // pixels from node center to arc tip
 const PTZ_RPM        = 3;    // full rotations per minute
 const PTZ_ROT_SPEED  = (PTZ_RPM * 2 * Math.PI) / 60; // derived: radians per second
 
-// Camera lens rings (concentric circles suggesting optics, static)
-const LENS_RING_1 = NODE_RADIUS * 2.0;  // inner ring radius
-const LENS_RING_2 = NODE_RADIUS * 3.2;  // outer ring radius
+// Camera lens — rings slowly pulse outward from the node, fading as they expand
+const LENS_RINGS  = 3;   // concurrent rings in flight
+const LENS_MAX_R  = 26;  // radius at which a ring has fully faded out
+const LENS_PERIOD = 12;   // seconds for one ring to travel from node to max (slow)
 
 // AI face landmark mesh — the canonical 68-point iBUG/dlib layout, floated above the
 // node like a live face-detection readout. Coordinates are normalised (x 0–1, y ~0.24–1).
@@ -145,9 +146,36 @@ const FACE_GROUPS = [
   [60, 67, true],  // inner lip
 ];
 
-// Mirror / screen node (rectangle instead of circle)
-const MIRROR_W = 16;  // half-width of the mirror rectangle
-const MIRROR_H = 10;  // half-height
+// Mirror / screen node (rectangle instead of circle). When it carries a face it is
+// drawn larger, as a portrait "display" with the 68-point face turning its head inside.
+const MIRROR_W = 36;  // half-width of the mirror screen (portrait 9:16)
+const MIRROR_H = 64;  // half-height (MIRROR_W * 16/9)
+const MIRROR_FACE_W = 44.8;  // face width  (80% of the Python face's 56)
+const MIRROR_FACE_H = 56;    // face height (80% of the Python face's 70)
+const MIRROR_YAW    = 0.7;  // peak head-turn yaw (left/right) in radians (~40°)
+const MIRROR_PITCH  = 0.45; // peak head-tilt pitch (up/down) in radians (~26°)
+const MIRROR_LOOK_K = 200;  // px distance to cursor that maps to a near-full turn
+
+// Approximate per-landmark depth (how far each point protrudes) used to fake a 3D
+// head-turn: high-depth points (the nose) swing across as the face yaws.
+const FACE_DEPTH = [
+  // jaw 0–16 (chin protrudes more than the ears)
+  0, 0, 0.02, 0.04, 0.06, 0.07, 0.08, 0.09, 0.10, 0.09, 0.08, 0.07, 0.06, 0.04, 0.02, 0, 0,
+  // eyebrows 17–26
+  0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15,
+  // nose bridge 27–30
+  0.20, 0.30, 0.42, 0.55,
+  // lower nose 31–35
+  0.42, 0.50, 0.55, 0.50, 0.42,
+  // right eye 36–41
+  0.20, 0.20, 0.20, 0.20, 0.20, 0.20,
+  // left eye 42–47
+  0.20, 0.20, 0.20, 0.20, 0.20, 0.20,
+  // outer lip 48–59
+  0.30, 0.30, 0.30, 0.30, 0.30, 0.30, 0.30, 0.30, 0.30, 0.30, 0.30, 0.30,
+  // inner lip 60–67
+  0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32,
+];
 
 // Intercom cluster — 8 intercoms plotted at their real physical positions
 // Coordinates sourced from node_table.csv (type === 'Intercom')
@@ -224,7 +252,10 @@ function buildEdgePoints(nodes, edges, w, h) {
       x: (p0.x + p2.x) / 2 + (edge.bendX || 0) * w,
       y: (p0.y + p2.y) / 2 + (edge.bendY || 0) * h,
     };
-    return { p0, p1, p2, dashed: !!edge.dashed, label: edge.label, toSpecial: !!to.special, voice: !!edge.voice };
+    return {
+      p0, p1, p2, dashed: !!edge.dashed, label: edge.label, toSpecial: !!to.special,
+      voice: !!edge.voice, toR: NODE_RADIUS, toMirror: !!to.mirror,
+    };
   });
 }
 
@@ -376,15 +407,53 @@ function archWidth(i) {
   return ARCH_W_MIN + r * (ARCH_W_MAX - ARCH_W_MIN);
 }
 
+// Draws the 68-point face landmark mesh centred at (cx, cy), sized fw × fh. `yaw` and
+// `pitch` fake a 3D head orientation (per-point depth swings the protruding features
+// across/down); `jitter` adds detection noise.
+function drawFaceMesh(ctx, cx, cy, fw, fh, time, yaw, pitch, jitter) {
+  const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
+  const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+  const pt = (i) => {
+    const [lx, ly] = FACE_68[i];
+    const z = FACE_DEPTH[i];
+    const xRot = (lx - 0.5) * cosY + z * sinY;  // yaw about the vertical axis
+    const yRot = (ly - 0.625) * cosP + z * sinP; // pitch about the horizontal axis
+    const jx = jitter ? Math.sin(time * FACE_JIT_SPD + i * 1.7) * jitter : 0;
+    const jy = jitter ? Math.cos(time * FACE_JIT_SPD + i * 2.3) * jitter : 0;
+    return { x: cx + xRot * fw + jx, y: cy + yRot * fh + jy };
+  };
+  ctx.save();
+  ctx.setLineDash([]);
+  ctx.strokeStyle = '#dcdcdc';
+  ctx.lineWidth = 0.6;
+  FACE_GROUPS.forEach(([a, b, closed]) => {
+    ctx.beginPath();
+    for (let i = a; i <= b; i++) {
+      const p = pt(i);
+      if (i === a) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+    }
+    if (closed) ctx.closePath();
+    ctx.stroke();
+  });
+  ctx.fillStyle = '#9a9a9a';
+  for (let i = 0; i < FACE_68.length; i++) {
+    const p = pt(i);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 0.9, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
 // ─── Main draw ────────────────────────────────────────────────────────────────
 
-function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
+function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time, pointer) {
   ctx.clearRect(0, 0, w, h);
   ctx.fillStyle = '#fafafa';
   ctx.fillRect(0, 0, w, h);
 
   // Regular edges
-  edgePoints.filter(e => !e.toSpecial).forEach(({ p0, p1, p2, dashed }) => {
+  edgePoints.filter(e => !e.toSpecial).forEach(({ p0, p1, p2, dashed, toR, toMirror }) => {
     ctx.save();
     ctx.beginPath();
     ctx.strokeStyle = '#111';
@@ -399,8 +468,13 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     const len = Math.hypot(tan.x, tan.y);
     const ux = tan.x / len;
     const uy = tan.y / len;
-    const tipX = p2.x - (NODE_RADIUS + 2) * ux;
-    const tipY = p2.y - (NODE_RADIUS + 2) * uy;
+    // distance to back off p2 so the arrowhead sits at the node's edge — for the mirror
+    // that means the rectangle boundary, otherwise the circular node radius
+    const back = toMirror
+      ? Math.min(MIRROR_W / Math.max(Math.abs(ux), 1e-4), MIRROR_H / Math.max(Math.abs(uy), 1e-4)) + 2
+      : toR + 2;
+    const tipX = p2.x - back * ux;
+    const tipY = p2.y - back * uy;
     const angle = Math.atan2(uy, ux);
     const hl = 7;
     const sp = Math.PI / 6;
@@ -555,58 +629,29 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.restore();
   });
 
-  // Camera lens: two concentric rings suggesting optics
+  // Camera lens: rings slowly pulse outward and fade, like a sonar ping
   nodes.filter(n => n.lens).forEach(({ nx, ny }) => {
     const x = nx * w, y = ny * h;
     ctx.save();
     ctx.setLineDash([]);
-    [[LENS_RING_1, '#ccc', 0.8], [LENS_RING_2, '#ddd', 0.6]].forEach(([r, color, lw]) => {
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i < LENS_RINGS; i++) {
+      const p = ((time / LENS_PERIOD) + i / LENS_RINGS) % 1; // 0 at node → 1 at max radius
+      const r = NODE_RADIUS + p * (LENS_MAX_R - NODE_RADIUS);
+      ctx.globalAlpha = Math.sin(p * Math.PI) * 0.6; // fade in from node, fade out at edge
+      ctx.strokeStyle = '#aaa';
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = lw;
       ctx.stroke();
-    });
+    }
+    ctx.globalAlpha = 1;
     ctx.restore();
   });
 
-  // AI face landmark mesh — 68 points floated above the node with faint feature
-  // strokes and a subtle per-point detection jitter
+  // AI face landmark mesh (Python) — 68 points floated above the node, facing forward
+  // with a subtle per-point detection jitter
   nodes.filter(n => n.aiNode).forEach(({ nx, ny }) => {
-    const cx = nx * w;
-    const cyMesh = ny * h - FACE_MESH_DY;
-    const pt = (i) => {
-      const [lx, ly] = FACE_68[i];
-      const jx = Math.sin(time * FACE_JIT_SPD + i * 1.7) * FACE_JITTER;
-      const jy = Math.cos(time * FACE_JIT_SPD + i * 2.3) * FACE_JITTER;
-      return {
-        x: cx + (lx - 0.5) * FACE_MESH_W + jx,
-        y: cyMesh + (ly - 0.625) * FACE_MESH_H + jy,
-      };
-    };
-    ctx.save();
-    ctx.setLineDash([]);
-    // faint feature strokes
-    ctx.strokeStyle = '#dcdcdc';
-    ctx.lineWidth = 0.6;
-    FACE_GROUPS.forEach(([a, b, closed]) => {
-      ctx.beginPath();
-      for (let i = a; i <= b; i++) {
-        const p = pt(i);
-        if (i === a) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
-      }
-      if (closed) ctx.closePath();
-      ctx.stroke();
-    });
-    // landmark dots
-    ctx.fillStyle = '#9a9a9a';
-    for (let i = 0; i < FACE_68.length; i++) {
-      const p = pt(i);
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 0.9, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.restore();
+    drawFaceMesh(ctx, nx * w, ny * h - FACE_MESH_DY, FACE_MESH_W, FACE_MESH_H, time, 0, 0, FACE_JITTER);
   });
 
   // — Node shapes ———————————————————————————————————————————————————————————
@@ -625,8 +670,9 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.stroke();
   });
 
-  // Mirror / screen nodes — drawn as rectangles
-  nodes.filter(n => n.mirror).forEach(({ nx, ny }) => {
+  // Mirror / screen nodes — a portrait screen, with the reflected face turning its head
+  nodes.filter(n => n.mirror).forEach((n) => {
+    const { nx, ny } = n;
     const x = nx * w, y = ny * h;
     ctx.save();
     ctx.beginPath();
@@ -638,6 +684,15 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time) {
     ctx.setLineDash([]);
     ctx.stroke();
     ctx.restore();
+    if (n.mirrorFace) {
+      // the reflected face turns to look at the cursor anywhere on the page
+      let yaw = 0, pitch = 0;
+      if (pointer) {
+        yaw   =  MIRROR_YAW   * Math.tanh((pointer.x - x) / MIRROR_LOOK_K);
+        pitch =  MIRROR_PITCH * Math.tanh((pointer.y - y) / MIRROR_LOOK_K);
+      }
+      drawFaceMesh(ctx, x, y, MIRROR_FACE_W, MIRROR_FACE_H, time, yaw, pitch, 0);
+    }
   });
 }
 
@@ -667,6 +722,11 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
 
     let w = 0, h = 0, edgePoints = [];
 
+    // track the cursor anywhere on the page so the mirror face can look at it
+    let pointerClient = null;
+    const onPointerMove = (e) => { pointerClient = { x: e.clientX, y: e.clientY }; };
+    window.addEventListener('mousemove', onPointerMove);
+
     const resize = () => {
       w = canvas.clientWidth;
       h = canvas.clientHeight;
@@ -680,7 +740,9 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       setLabels({
         nodes: nodes.filter(n => !n.special).map(n => ({
           id: n.id, name: n.label, sub: n.sublabel,
-          x: n.nx * w, y: n.ny * h + (n.ledStrand ? LED_LABEL_DY : 0), above: !!n.labelAbove,
+          x: n.nx * w + (n.labelDx || 0),
+          y: n.ny * h + (n.ledStrand ? LED_LABEL_DY : 0) - (n.mirrorFace ? MIRROR_H : 0),
+          above: !!n.labelAbove,
         })),
         edges: edgePoints.filter(e => e.label && !e.toSpecial).map(e => {
           const mid = bezierPoint(e.p0, e.p1, e.p2, 0.5);
@@ -713,14 +775,24 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
         })
       );
 
-      drawDiagram(ctx, w, h, nodes, edgePoints, positions, time * 0.001);
+      let pointer = null;
+      if (pointerClient) {
+        const rect = canvas.getBoundingClientRect();
+        pointer = { x: pointerClient.x - rect.left, y: pointerClient.y - rect.top };
+      }
+
+      drawDiagram(ctx, w, h, nodes, edgePoints, positions, time * 0.001, pointer);
     };
 
     const ro = new ResizeObserver(resize);
     ro.observe(canvas.parentElement);
     requestAnimationFrame(() => { resize(); rafId = requestAnimationFrame(animate); });
 
-    return () => { cancelAnimationFrame(rafId); ro.disconnect(); };
+    return () => {
+      cancelAnimationFrame(rafId);
+      ro.disconnect();
+      window.removeEventListener('mousemove', onPointerMove);
+    };
   }, [nodes, edges]);
 
   const { nodes: nodeLabels, edges: edgeLabels, spiral } = labels;
