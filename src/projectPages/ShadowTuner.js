@@ -101,7 +101,7 @@ const ShadowTunerProjectPage = ({ project }) => {
                 Interactive radio installation adapted for a spherical LED display, with AI-assisted live audio analysis.
               </DeckSubtitle>
               <DeckMeta>
-                Python · TouchDesigner · RealSense · AI audio analysis · PowerShell · ffmpeg · hardware integration
+                Python · TouchDesigner · RealSense depth camera · AI audio analysis · PowerShell · ffmpeg · hardware integration
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
