@@ -24,6 +24,7 @@ import {
   getBackLink
 } from './BaseProjectPage';
 import SystemDiagram from '../components/SystemDiagram';
+import UndercurrentsClick from './UndercurrentsClick';
 
 const ProjectDeck = styled.div`
   width: 100%;
@@ -100,6 +101,7 @@ const UndercurrentsProjectPage = ({ project }) => {
 
   return (
     <PageWrapper>
+      <UndercurrentsClick />
       <MainContent>
         <Header
           title={`WORK/ ${project.title}`}
