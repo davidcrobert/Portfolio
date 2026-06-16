@@ -731,10 +731,28 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
 
     let w = 0, h = 0, edgePoints = [];
 
-    // track the cursor anywhere on the page so the mirror face can look at it
-    let pointerClient = null;
-    const onPointerMove = (e) => { pointerClient = { x: e.clientX, y: e.clientY }; };
+    // Track mouse and touch points anywhere on the page, then smooth toward them
+    // in canvas space so the mirror face follows without snapping.
+    let pointerTargetClient = null;
+    let pointerCurrent = null;
+    let lastFrameTime = null;
+    const onPointerMove = (e) => {
+      pointerTargetClient = { x: e.clientX, y: e.clientY };
+    };
+    const onTouchPoint = (e) => {
+      const touches = e.touches && e.touches.length ? e.touches : e.changedTouches;
+      if (!touches || !touches.length) return;
+      let x = 0;
+      let y = 0;
+      for (let i = 0; i < touches.length; i++) {
+        x += touches[i].clientX;
+        y += touches[i].clientY;
+      }
+      pointerTargetClient = { x: x / touches.length, y: y / touches.length };
+    };
     window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('touchstart', onTouchPoint, { passive: true });
+    window.addEventListener('touchmove', onTouchPoint, { passive: true });
 
     const resize = () => {
       w = canvas.clientWidth;
@@ -773,6 +791,9 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
     const animate = (time) => {
       rafId = requestAnimationFrame(animate);
       if (!w || !h || !edgePoints.length) return;
+      const timeSeconds = time * 0.001;
+      const dt = lastFrameTime === null ? 0 : Math.min(timeSeconds - lastFrameTime, 0.05);
+      lastFrameTime = timeSeconds;
 
       const positions = edgePoints.flatMap((ep, ei) =>
         particleTs[ei].map(p => {
@@ -785,12 +806,22 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       );
 
       let pointer = null;
-      if (pointerClient) {
+      if (pointerTargetClient) {
         const rect = canvas.getBoundingClientRect();
-        pointer = { x: pointerClient.x - rect.left, y: pointerClient.y - rect.top };
+        const pointerTarget = {
+          x: pointerTargetClient.x - rect.left,
+          y: pointerTargetClient.y - rect.top,
+        };
+        if (!pointerCurrent) {
+          pointerCurrent = { x: w / 2, y: h / 2 };
+        }
+        const ease = 1 - Math.exp(-dt * 10);
+        pointerCurrent.x += (pointerTarget.x - pointerCurrent.x) * ease;
+        pointerCurrent.y += (pointerTarget.y - pointerCurrent.y) * ease;
+        pointer = pointerCurrent;
       }
 
-      drawDiagram(ctx, w, h, nodes, edgePoints, positions, time * 0.001, pointer);
+      drawDiagram(ctx, w, h, nodes, edgePoints, positions, timeSeconds, pointer);
     };
 
     const ro = new ResizeObserver(resize);
@@ -801,6 +832,8 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       cancelAnimationFrame(rafId);
       ro.disconnect();
       window.removeEventListener('mousemove', onPointerMove);
+      window.removeEventListener('touchstart', onTouchPoint);
+      window.removeEventListener('touchmove', onTouchPoint);
     };
   }, [nodes, edges]);
 
