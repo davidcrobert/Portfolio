@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   margin: 48px auto 0;
   background: #fafafa;
   border: 1px solid black;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    padding-bottom: 24px;
+  }
 `;
 
 const DiagramTitle = styled.div`
@@ -31,6 +36,10 @@ const CanvasEl = styled.canvas`
   display: block;
   width: 100%;
   aspect-ratio: 16 / 7;
+
+  @media (max-width: 600px) {
+    aspect-ratio: 4 / 3;
+  }
 `;
 
 const LabelLayer = styled.div`
