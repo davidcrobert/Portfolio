@@ -310,7 +310,10 @@ function buildSpiralPath(p0, center) {
     });
   }
 
-  const totalAngle = SPIRAL_TURNS * 2 * Math.PI;
+  // The coil tangent at thetaStart for positive winding is (-sin θ, cos θ).
+  // If that opposes the entry direction (ux, uy), flip winding so the join is smooth.
+  const windSign = (-Math.sin(thetaStart) * ux + Math.cos(thetaStart) * uy) >= 0 ? 1 : -1;
+  const totalAngle = windSign * SPIRAL_TURNS * 2 * Math.PI;
   for (let i = 1; i <= SPIRAL_SAMPLES; i++) {
     const t  = i / SPIRAL_SAMPLES;
     const th = thetaStart + t * totalAngle;
