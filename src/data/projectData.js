@@ -6,6 +6,16 @@ export const projectData = {
     tags: ["all", "ai", "web", "installation", "audio", "ar/vr/xr", "robotics"],
     projects: [
       {
+        title: "Black Hole",
+        link: "/projects/black-hole",
+        description: "Multi-face tracking and pixel-mapped real-time visuals for Rafael Lozano-Hemmer's interactive installation shown at Art Basel 2026",
+        subtitle1: "Tracking",
+        subtitle2: "& Collapse",
+        year: "2026",
+        tags: ["installation", "ai"],
+        tools: "Python & TouchDesigner & GLSL"
+      },
+      {
         title: "Undercurrents",
         link: "/projects/undercurrents",
         description: "An intercom network inside a 1926 cistern where visitor voices are encoded as light across the columns, with an AI searching a growing archive of past recordings to select a response",
