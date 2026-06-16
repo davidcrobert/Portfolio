@@ -1,4 +1,16 @@
 const projectMedia = {
+  "black-hole": `
+    <iframe
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/o5_tFjF6zBQ?autoplay=1&loop=1&playlist=o5_tFjF6zBQ&controls=1&iv_load_policy=3&rel=0"
+      title="Black Hole"
+      frameborder="0"
+      allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  `,
   "undercurrents": `
     <iframe
       width="560"

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { getProjectMediaEmbed } from '../data/projectMedia';
 import {
   PageWrapper,
   MainContent,
@@ -18,6 +19,7 @@ import {
   CreditRole,
   ExternalLink,
   InlineLink,
+  cleanYouTubeEmbed,
   getBackLink
 } from './BaseProjectPage';
 import { media } from '../styles/responsive';
@@ -66,8 +68,21 @@ const StyledCreditsSection = styled(CreditsSection)`
   margin-top: 40px;
 `;
 
+const PortraitMediaEmbed = styled.div`
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 40px;
+
+  iframe {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    height: auto;
+  }
+`;
+
 const BlackHoleProjectPage = ({ project }) => {
   const backLink = getBackLink();
+  const mediaEmbed = getProjectMediaEmbed(project);
 
   return (
     <PageWrapper>
@@ -87,7 +102,7 @@ const BlackHoleProjectPage = ({ project }) => {
                 A surveillance spiral that identifies and erases its viewers, for Rafael Lozano-Hemmer at Art Basel 2026.
               </DeckSubtitle>
               <DeckMeta>
-                Python · TouchDesigner · TDPyEnvManager · GLSL · pixel mapping
+              TouchDesigner · Python · GLSL · pixel mapping
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>
@@ -105,10 +120,9 @@ const BlackHoleProjectPage = ({ project }) => {
             </IntroBody>
           </CustomHeader>
 
-          <HeroImage
-            src="/images/projects/black-hole.png"
-            alt="Black Hole installation view"
-          />
+          {mediaEmbed && (
+            <PortraitMediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
+          )}
 
           <StyledCreditsSection>
             <CreditsGrid>
@@ -135,7 +149,13 @@ const BlackHoleProjectPage = ({ project }) => {
                     <CreditName>Rafael Lozano-Hemmer</CreditName> - <CreditRole>Artist</CreditRole>
                   </CreditItem>
                   <CreditItem>
-                    <CreditName>David Robert</CreditName> - <CreditRole>Face tracking, pixel mapping, GLSL transitions</CreditRole>
+                    <CreditName>David Robert & Hugo Daoust</CreditName> - <CreditRole>Software, Production</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>William Sutton, Sebastien Dallaire & Stephan Schulz</CreditName> - <CreditRole>Hardware, Production</CreditRole>
+                  </CreditItem>
+                  <CreditItem>
+                    <CreditName>Emily Green</CreditName> - <CreditRole>Production</CreditRole>
                   </CreditItem>
                 </CreditsList>
               </CreditsColumn>
