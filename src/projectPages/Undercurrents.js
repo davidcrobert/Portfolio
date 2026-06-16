@@ -72,6 +72,16 @@ const StyledCreditsSection = styled(CreditsSection)`
   margin-top: 40px;
 `;
 
+const BackendUiImage = styled.img`
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 0 auto 30px;
+  border: 1px solid black;
+  background-color: #fafafa;
+`;
+
 // ─── Diagram ──────────────────────────────────────────────────────────────────
 
 const UC_NODES = [
@@ -195,6 +205,11 @@ const UndercurrentsProjectPage = ({ project }) => {
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
+
+          <BackendUiImage
+            src="/images/projects/Undercurrents/backend_ui.png"
+            alt="Undercurrents backend UI"
+          />
 
           <ExternalLink
             href="https://www.lozano-hemmer.com/undercurrents.php"
