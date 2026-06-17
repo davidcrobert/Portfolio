@@ -17,6 +17,17 @@ export const projectData = {
       },
 
       {
+        title: "Submirrors",
+        link: "/projects/Submirrors",
+        description: "AI applied to a live camera feed - mirrors that puppet and distort a viewer's own facial expression in real time",
+        subtitle1: "Puppets",
+        subtitle2: "& Puppeteers",
+        year: "2025",
+        tags: ["ai"],
+        tools: "Python & TouchDesigner"
+      },
+
+      {
         title: "Black Hole",
         link: "/projects/black-hole",
         description: "Multi-face tracking and pixel-mapped real-time visuals for Rafael Lozano-Hemmer's interactive installation shown at Art Basel 2026",
@@ -24,9 +35,9 @@ export const projectData = {
         subtitle2: "& Collapse",
         year: "2026",
         tags: ["installation", "ai"],
-        tools: "Python & TouchDesigner & Face tracking"
+        tools: "TouchDesigner & Python"
       },
-      
+
       {
         title: "Spiral Reflector",
         link: "/projects/spiral-reflector",
@@ -37,16 +48,7 @@ export const projectData = {
         tags: ["installation", "electronics"],
         tools: "TouchDesigner & Python"
       },
-      {
-        title: "Submirrors",
-        link: "/projects/Submirrors",
-        description: "AI applied to a live camera feed - mirrors that puppet and distort a viewer's own facial expression in real time",
-        subtitle1: "Puppets",
-        subtitle2: "& Puppeteers",
-        year: "2025",
-        tags: ["ai"],
-        tools: "Python & TouchDesigner"
-      },
+
       {
         title: "Shadow Tuner",
         link: "/projects/shadow-tuner",
@@ -57,6 +59,7 @@ export const projectData = {
         tags: ["ai", "installation", "audio"],
         tools: "Python & TouchDesigner & PowerShell"
       },
+      
       {
         title: "Remote Pulse",
         link: "/projects/remote-pulse",
