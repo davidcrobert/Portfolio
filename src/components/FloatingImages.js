@@ -246,7 +246,11 @@ function FloatingImages({ images, summonedId, activeImageIds, onImageHover, onIm
       let newId = null;
       if (!overInteractive) {
         const currentId = hoveredImageRef.current;
-        if (currentId && refs.current[currentId] && activeImageIdsRef.current?.has(currentId)) {
+        const isCurrentSettled = currentId &&
+          summonedIdRef.current !== currentId &&
+          returningIdRef.current !== currentId &&
+          activeImageIdsRef.current?.has(currentId);
+        if (isCurrentSettled && refs.current[currentId]) {
           const r = refs.current[currentId].getBoundingClientRect();
           if (e.clientX >= r.left && e.clientX <= r.right &&
               e.clientY >= r.top  && e.clientY <= r.bottom) {
@@ -255,6 +259,7 @@ function FloatingImages({ images, summonedId, activeImageIds, onImageHover, onIm
         }
         for (const [id, el] of Object.entries(refs.current)) {
           if (!activeImageIdsRef.current?.has(id)) continue;
+          if (id === summonedIdRef.current || id === returningIdRef.current) continue;
           const r = el.getBoundingClientRect();
           if (e.clientX >= r.left && e.clientX <= r.right &&
               e.clientY >= r.top  && e.clientY <= r.bottom) {
@@ -278,14 +283,10 @@ function FloatingImages({ images, summonedId, activeImageIds, onImageHover, onIm
       }
 
       if (newId) {
-        const isSummoned = summonedIdRef.current === newId;
-        const isReturning = returningIdRef.current === newId;
-        if (!isSummoned && !isReturning) {
-          const newEl = refs.current[newId];
-          if (newEl) {
-            newEl.style.transition = 'opacity 0.2s ease';
-            newEl.style.opacity = String(HOVER_OPACITY);
-          }
+        const newEl = refs.current[newId];
+        if (newEl) {
+          newEl.style.transition = 'opacity 0.2s ease';
+          newEl.style.opacity = String(HOVER_OPACITY);
         }
         if (onImageHover) onImageHover(newId);
       }

@@ -164,7 +164,7 @@ const SpiralReflectorProjectPage = ({ project }) => {
                 continuously rotates, capturing the space — its image rendered in real time onto the
                 spiral's length, casting bright points of light that track the camera's gaze.
               </CustomSubtitle>
-              <RoleSummary>I was the sole software developer, building the LED rendering and camera control systems.</RoleSummary>
+              <RoleSummary>I was the sole software developer, building the LED rendering and camera control systems. More below.</RoleSummary>
             </IntroBody>
           </CustomHeader>
 

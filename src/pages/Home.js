@@ -451,7 +451,7 @@ function Home() {
         }}
       />
       <Header
-        title={hoveredProjectTitle ? `David Robert/${truncateTitle(hoveredProjectTitle)}` : 'David Robert'}
+        title={hoveredProjectTitle ? `David Robert/ ${truncateTitle(hoveredProjectTitle)}` : 'David Robert/'}
         subtitle1="Creative Technologist"
         subtitle2="& Interactive Systems Designer"
         hideBackButton={true}

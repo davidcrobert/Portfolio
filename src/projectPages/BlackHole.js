@@ -179,7 +179,7 @@ const BlackHoleProjectPage = ({ project }) => {
                 before the spiral erases them — to look at it is also to be looked at, catalogued, and
                 dissolved.
               </CustomSubtitle>
-              <RoleSummary>I built the face-tracking and pixel-mapping pipeline in Python and TouchDesigner.</RoleSummary>
+              <RoleSummary>I built the face-tracking and pixel-mapping pipeline in Python and TouchDesigner. More below.</RoleSummary>
             </IntroBody>
           </CustomHeader>
 
