@@ -213,8 +213,6 @@ const SubmirrorsProjectPage = ({ project }) => {
             </div>
           </VideoGrid>
 
-          <SystemDiagram nodes={SUBMIRRORS_NODES} edges={SUBMIRRORS_EDGES} />
-
           <StyledCreditsSection>
             <CreditsGrid>
               <CreditsColumn>
@@ -242,6 +240,8 @@ const SubmirrorsProjectPage = ({ project }) => {
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
+
+          <SystemDiagram nodes={SUBMIRRORS_NODES} edges={SUBMIRRORS_EDGES} />
 
           <ImageLink href="https://www.lozano-hemmer.com/recurrent_waiting.php" target="_blank" rel="noopener noreferrer">
             <StyledDocImage src="/images/projects/Submirrors/recurrent_waiting.jpg" alt="Recurrent Waiting" />

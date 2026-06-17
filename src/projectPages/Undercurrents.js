@@ -52,20 +52,29 @@ const IntroBody = styled.div`
   margin-top: 30px;
 `;
 
-const ImagePair = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  width: calc(100% - 4px);
-  margin: 30px auto 40px;
-`;
-
-const WideImage = styled.img`
-  flex: 1;
-  min-width: 0;
+const HeroImage = styled.img`
+  display: block;
+  width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  margin: 30px auto 8px;
+`;
+
+const CloseUpImage = styled.img`
   display: block;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: 0 auto 40px;
+
+  @media screen and (min-width: 769px) {
+    width: 65vw;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledCreditsSection = styled(CreditsSection)`
@@ -145,22 +154,18 @@ const UndercurrentsProjectPage = ({ project }) => {
             </IntroBody>
           </CustomHeader>
 
-          <ImagePair>
-            <WideImage
-              src="/images/projects/Undercurrents/undercurrents1.jpg"
-              alt="Undercurrents installation view 1"
-            />
-            <WideImage
-              src="/images/projects/Undercurrents/undercurrents2.jpg"
-              alt="Undercurrents installation view 2"
-            />
-          </ImagePair>
+          <HeroImage
+            src="/images/projects/Undercurrents/undercurrents1.jpg"
+            alt="Undercurrents installation view"
+          />
+          <CloseUpImage
+            src="/images/projects/Undercurrents/undercurrents2.jpg"
+            alt="Visitor at an Undercurrents intercom station"
+          />
 
           {mediaEmbed && (
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
-
-          <SystemDiagram nodes={UC_NODES} edges={UC_EDGES} />
 
           <StyledCreditsSection>
             <CreditsGrid>
@@ -205,6 +210,8 @@ const UndercurrentsProjectPage = ({ project }) => {
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
+
+          <SystemDiagram nodes={UC_NODES} edges={UC_EDGES} />
 
           <BackendUiImage
             src="/images/projects/Undercurrents/backend_ui.png"

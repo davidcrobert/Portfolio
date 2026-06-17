@@ -164,7 +164,7 @@ const BlackHoleProjectPage = ({ project }) => {
                 A surveillance spiral that identifies and erases its viewers, for Rafael Lozano-Hemmer at Art Basel 2026.
               </DeckSubtitle>
               <DeckMeta>
-              TouchDesigner · Python · GLSL · pixel mapping
+              TouchDesigner · Python · Face tracking · GLSL · pixel mapping
               </DeckMeta>
             </ProjectDeck>
             <IntroBody>

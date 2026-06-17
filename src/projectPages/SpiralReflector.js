@@ -43,21 +43,20 @@ const SPIRAL_EDGES = [
 ];
 
 const ImageGallery = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
   width: 100%;
-  max-width: 960px;
   margin: 30px auto 40px;
 
   @media screen and (max-width: 768px) {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 68vw;
+    grid-template-columns: unset;
     justify-content: start;
     gap: 10px;
-    margin: 24px auto 32px;
+    margin: 8px auto 32px;
     max-width: 100%;
     padding: 0 16px 6px;
     overflow-x: auto;
@@ -107,14 +106,11 @@ const IntroBody = styled.div`
 `;
 
 const GalleryCell = styled.div`
-  flex: 0 1 calc((100% - 40px) / 5);
-  max-width: calc((100% - 40px) / 5);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   background-color: #111;
 
   @media screen and (max-width: 768px) {
-    max-width: none;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
@@ -125,11 +121,6 @@ const GalleryCell = styled.div`
     object-fit: cover;
     display: block;
     transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 0.85;
-      cursor: pointer;
-    }
   }
 `;
 
@@ -190,8 +181,6 @@ const SpiralReflectorProjectPage = ({ project }) => {
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
 
-          <SystemDiagram nodes={SPIRAL_NODES} edges={SPIRAL_EDGES} />
-
           <StyledCreditsSection>
             <CreditsGrid>
               <CreditsColumn>
@@ -222,6 +211,8 @@ const SpiralReflectorProjectPage = ({ project }) => {
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
+
+          <SystemDiagram nodes={SPIRAL_NODES} edges={SPIRAL_EDGES} />
 
           <ExternalLink
             href="https://www.lozano-hemmer.com/spiral_reflector.php"
