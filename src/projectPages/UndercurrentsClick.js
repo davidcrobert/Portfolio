@@ -1,66 +1,56 @@
 import { useEffect, useRef } from 'react';
 
 const RADIUS = 20;
-const SPEED  = 1500; // px per second along path
+const SPEED = 1500; // px per second along path
 
-// Find where a ray from (x,y) in direction (dx,dy) first exits the viewport
+// Find where a ray from (x,y) in direction (dx,dy) first exits the viewport.
 function rayToEdge(x, y, dx, dy, w, h) {
   const ts = [];
-  if (dx >  1e-9) ts.push((w - x) / dx);
-  if (dx < -1e-9) ts.push(    -x  / dx);
-  if (dy >  1e-9) ts.push((h - y) / dy);
-  if (dy < -1e-9) ts.push(    -y  / dy);
+  if (dx > 1e-9) ts.push((w - x) / dx);
+  if (dx < -1e-9) ts.push(-x / dx);
+  if (dy > 1e-9) ts.push((h - y) / dy);
+  if (dy < -1e-9) ts.push(-y / dy);
   const t = Math.min(...ts.filter(v => v > 1e-9));
   return { x: x + t * dx, y: y + t * dy };
 }
 
-// 0=left 1=right 2=top 3=bottom
-function whichEdge(pt, w, h) {
-  if (pt.x < 2)     return 0;
-  if (pt.x > w - 2) return 1;
-  if (pt.y < 2)     return 2;
-  return 3;
-}
-
-// Build path: straight in → clockwise circle (spins rotations) → straight out
-// Entry/exit directions are fully random; circle is centred at (cx, cy).
+// Build path: straight in -> clockwise circle (spins rotations) -> straight out.
+// Entry and exit are radial hits on the circle instead of tangent matches, so
+// the needle visibly breaks into and out of the orbit mid-arc.
 function buildPath(cx, cy, vpW, vpH) {
-  const R      = RADIUS;
-  const spins  = 3 + Math.floor(Math.random() * 2); // 6–10
-  const needLen = 20 + Math.random() * 40;           // 20–60 px
+  const R = RADIUS;
+  const spins = 3 + Math.floor(Math.random() * 2);
+  const needLen = 20 + Math.random() * 40;
 
-  // Random entry direction → clockwise tangent angle → entry edge point
-  const αIn  = Math.random() * 2 * Math.PI;
-  const dxIn = Math.cos(αIn), dyIn = Math.sin(αIn);
-  // Clockwise tangent at θ is (-sinθ, cosθ). Match to (dxIn, dyIn): θ = atan2(-dxIn, dyIn)
-  const θE  = Math.atan2(-dxIn, dyIn);
-  const cex = cx + R * Math.cos(θE);
-  const cey = cy + R * Math.sin(θE);
+  // Random line direction into the circle's centre.
+  const alpha = Math.random() * 2 * Math.PI;
+  const dxIn = Math.cos(alpha);
+  const dyIn = Math.sin(alpha);
+  const thetaE = alpha + Math.PI;
+  const cex = cx + R * Math.cos(thetaE);
+  const cey = cy + R * Math.sin(thetaE);
+
+  // Random radial exit point, independent of the incoming line.
+  const thetaX = Math.random() * 2 * Math.PI;
+  const dxOut = Math.cos(thetaX);
+  const dyOut = Math.sin(thetaX);
+  const cxx = cx + R * Math.cos(thetaX);
+  const cxy = cy + R * Math.sin(thetaX);
+
   const entryPt = rayToEdge(cex, cey, -dxIn, -dyIn, vpW, vpH);
+  const exitPt = rayToEdge(cxx, cxy, dxOut, dyOut, vpW, vpH);
 
-  // Random exit direction — retry until it exits through a different edge
-  let dxOut, dyOut, θX, cxx, cxy, exitPt, tries = 0;
-  do {
-    const αOut = Math.random() * 2 * Math.PI;
-    dxOut = Math.cos(αOut); dyOut = Math.sin(αOut);
-    θX    = Math.atan2(-dxOut, dyOut);
-    cxx   = cx + R * Math.cos(θX);
-    cxy   = cy + R * Math.sin(θX);
-    exitPt = rayToEdge(cxx, cxy, dxOut, dyOut, vpW, vpH);
-    tries++;
-  } while (whichEdge(entryPt, vpW, vpH) === whichEdge(exitPt, vpW, vpH) && tries < 20);
+  // Total clockwise arc: N full rotations + partial arc from thetaE to thetaX.
+  const partialArc = ((thetaX - thetaE) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  const totalArc = spins * 2 * Math.PI + partialArc;
 
-  // Total clockwise arc: N full rotations + partial arc from θE to θX
-  const partialArc = ((θX - θE) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-  const totalArc   = spins * 2 * Math.PI + partialArc;
-
-  const lenIn   = Math.hypot(cex - entryPt.x, cey - entryPt.y);
+  const lenIn = Math.hypot(cex - entryPt.x, cey - entryPt.y);
   const lenLoop = R * totalArc;
-  const lenOut  = Math.hypot(exitPt.x - cxx, exitPt.y - cxy);
-  const total   = lenIn + lenLoop + lenOut;
+  const lenOut = Math.hypot(exitPt.x - cxx, exitPt.y - cxy);
+  const total = lenIn + lenLoop + lenOut;
 
   return {
-    cx, cy, R, θE, totalArc,
+    cx, cy, R, thetaE, totalArc,
     entryX: entryPt.x, entryY: entryPt.y,
     cex, cey, cxx, cxy,
     exitX: exitPt.x, exitY: exitPt.y,
@@ -71,7 +61,7 @@ function buildPath(cx, cy, vpW, vpH) {
 
 function samplePath(p, s) {
   if (s < 0) {
-    // Off-screen behind entry
+    // Off-screen behind entry.
     return { x: p.entryX + p.dxIn * s, y: p.entryY + p.dyIn * s };
   }
   if (s < p.lenIn) {
@@ -80,15 +70,15 @@ function samplePath(p, s) {
   }
   const sL = s - p.lenIn;
   if (sL < p.lenLoop) {
-    const θ = p.θE + sL / p.R;
-    return { x: p.cx + p.R * Math.cos(θ), y: p.cy + p.R * Math.sin(θ) };
+    const theta = p.thetaE + sL / p.R;
+    return { x: p.cx + p.R * Math.cos(theta), y: p.cy + p.R * Math.sin(theta) };
   }
   const sO = s - p.lenIn - p.lenLoop;
   if (sO <= p.lenOut) {
     const t = p.lenOut > 0 ? sO / p.lenOut : 0;
     return { x: p.cxx + (p.exitX - p.cxx) * t, y: p.cxy + (p.exitY - p.cxy) * t };
   }
-  // Off-screen past exit
+  // Off-screen past exit.
   const excess = sO - p.lenOut;
   return { x: p.exitX + p.dxOut * excess, y: p.exitY + p.dyOut * excess };
 }
@@ -99,15 +89,15 @@ export default function UndercurrentsClick() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx   = canvas.getContext('2d');
-    const dpr   = Math.min(window.devicePixelRatio || 1, 2);
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const anims = [];
     let vpW, vpH, rafId, lastTime;
 
     const resize = () => {
       vpW = window.innerWidth;
       vpH = window.innerHeight;
-      canvas.width  = Math.round(vpW * dpr);
+      canvas.width = Math.round(vpW * dpr);
       canvas.height = Math.round(vpH * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
@@ -137,12 +127,12 @@ export default function UndercurrentsClick() {
         for (let k = 0; k <= N; k++) {
           const pt = samplePath(anim.path, tailS + (k / N) * anim.path.needLen);
           if (k === 0) ctx.moveTo(pt.x, pt.y);
-          else         ctx.lineTo(pt.x, pt.y);
+          else ctx.lineTo(pt.x, pt.y);
         }
         ctx.strokeStyle = '#111';
-        ctx.lineWidth   = 1.5;
-        ctx.lineCap     = 'round';
-        ctx.lineJoin    = 'round';
+        ctx.lineWidth = 1.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.stroke();
       }
     };
