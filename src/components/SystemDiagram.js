@@ -142,6 +142,10 @@ const FACE_68 = [
   [0.54, 0.80], [0.50, 0.81], [0.46, 0.80],
 ];
 
+// Upper/lower eyelid landmark indices for blink animation
+const BLINK_UPPER = new Set([37, 38, 43, 44]); // upper lid points (right and left eye)
+const BLINK_LOWER = new Set([40, 41, 46, 47]); // lower lid points
+
 // Feature groups as [startIndex, endIndex, closed?] for the faint connecting strokes.
 const FACE_GROUPS = [
   [0, 16, false],  // jaw
@@ -266,6 +270,15 @@ function buildEdgePoints(nodes, edges, w, h) {
       voice: !!edge.voice, toR: NODE_RADIUS, toMirror: !!to.mirror,
     };
   });
+}
+
+// Blink curve: fast close (80 ms), brief hold (70 ms), slower open (150 ms)
+function computeBlinkT(elapsed) {
+  if (elapsed < 0)    return 0;
+  if (elapsed < 0.08) return elapsed / 0.08;
+  if (elapsed < 0.15) return 1;
+  if (elapsed < 0.30) return 1 - (elapsed - 0.15) / 0.15;
+  return 0;
 }
 
 // ─── Spiral path ─────────────────────────────────────────────────────────────
@@ -422,14 +435,19 @@ function archWidth(i) {
 // Draws the 68-point face landmark mesh centred at (cx, cy), sized fw × fh. `yaw` and
 // `pitch` fake a 3D head orientation (per-point depth swings the protruding features
 // across/down); `jitter` adds detection noise.
-function drawFaceMesh(ctx, cx, cy, fw, fh, time, yaw, pitch, jitter) {
+function drawFaceMesh(ctx, cx, cy, fw, fh, time, yaw, pitch, jitter, blinkT = 0) {
   const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
   const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
   const pt = (i) => {
     const [lx, ly] = FACE_68[i];
     const z = FACE_DEPTH[i];
-    const xRot = (lx - 0.5) * cosY + z * sinY;  // yaw about the vertical axis
-    const yRot = (ly - 0.625) * cosP + z * sinP; // pitch about the horizontal axis
+    let lyb = ly;
+    if (blinkT > 0) {
+      if (BLINK_UPPER.has(i)) lyb += blinkT * 0.03;
+      else if (BLINK_LOWER.has(i)) lyb -= blinkT * 0.03;
+    }
+    const xRot = (lx - 0.5) * cosY + z * sinY;
+    const yRot = (lyb - 0.625) * cosP + z * sinP;
     const jx = jitter ? Math.sin(time * FACE_JIT_SPD + i * 1.7) * jitter : 0;
     const jy = jitter ? Math.cos(time * FACE_JIT_SPD + i * 2.3) * jitter : 0;
     return { x: cx + xRot * fw + jx, y: cy + yRot * fh + jy };
@@ -459,7 +477,7 @@ function drawFaceMesh(ctx, cx, cy, fw, fh, time, yaw, pitch, jitter) {
 
 // ─── Main draw ────────────────────────────────────────────────────────────────
 
-function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time, pointer) {
+function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time, pointer, blinkT = 0) {
   ctx.clearRect(0, 0, w, h);
   ctx.fillStyle = '#fafafa';
   ctx.fillRect(0, 0, w, h);
@@ -703,7 +721,7 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time, pointer) {
         yaw   =  MIRROR_YAW   * Math.tanh((pointer.x - x) / MIRROR_LOOK_K);
         pitch =  MIRROR_PITCH * Math.tanh((pointer.y - y) / MIRROR_LOOK_K);
       }
-      drawFaceMesh(ctx, x, y, MIRROR_FACE_W, MIRROR_FACE_H, time, yaw, pitch, 0);
+      drawFaceMesh(ctx, x, y, MIRROR_FACE_W, MIRROR_FACE_H, time, yaw, pitch, 0, blinkT);
     }
   });
 }
@@ -712,6 +730,7 @@ function drawDiagram(ctx, w, h, nodes, edgePoints, particles, time, pointer) {
 
 const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
   const canvasRef = useRef(null);
+  const blinkRef  = useRef({ startTime: null });
   const [labels, setLabels] = useState({ nodes: [], edges: [], spiral: null });
 
   useEffect(() => {
@@ -753,8 +772,11 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       }
       pointerTargetClient = { x: x / touches.length, y: y / touches.length };
     };
+    const onBlink = () => { blinkRef.current.startTime = lastFrameTime; };
     window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('click', onBlink);
     window.addEventListener('touchstart', onTouchPoint, { passive: true });
+    window.addEventListener('touchstart', onBlink,     { passive: true });
     window.addEventListener('touchmove', onTouchPoint, { passive: true });
 
     const resize = () => {
@@ -824,7 +846,11 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
         pointer = pointerCurrent;
       }
 
-      drawDiagram(ctx, w, h, nodes, edgePoints, positions, timeSeconds, pointer);
+      const blinkElapsed = blinkRef.current.startTime !== null
+        ? timeSeconds - blinkRef.current.startTime
+        : Infinity;
+      const blinkT = computeBlinkT(blinkElapsed);
+      drawDiagram(ctx, w, h, nodes, edgePoints, positions, timeSeconds, pointer, blinkT);
     };
 
     const ro = new ResizeObserver(resize);
@@ -835,7 +861,9 @@ const SystemDiagram = ({ nodes, edges, title = 'System Architecture' }) => {
       cancelAnimationFrame(rafId);
       ro.disconnect();
       window.removeEventListener('mousemove', onPointerMove);
+      window.removeEventListener('click', onBlink);
       window.removeEventListener('touchstart', onTouchPoint);
+      window.removeEventListener('touchstart', onBlink);
       window.removeEventListener('touchmove', onTouchPoint);
     };
   }, [nodes, edges]);
