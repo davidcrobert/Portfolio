@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import FloatingImages from '../components/FloatingImages';
@@ -304,7 +304,9 @@ const ResumeLink = styled.a`
 `;
 
 function Home() {
+  const navigate = useNavigate();
   const [hoveredProjectId, setHoveredProjectId] = useState(null);
+  const [hoveredImageId, setHoveredImageId] = useState(null);
   const [imageCache, setImageCache] = useState({});
   const [activeFilter, setActiveFilter] = useState('all');
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
@@ -387,6 +389,22 @@ function Home() {
     return formatted ? `[${formatted}]` : null;
   };
 
+  const allProjects = useMemo(() => [...artProjects, ...workProjects], [artProjects, workProjects]);
+
+  const hoveredProjectTitle = useMemo(() => {
+    const id = hoveredImageId || hoveredProjectId;
+    if (!id) return null;
+    const project = allProjects.find(p => p.link.split('/').pop() === id);
+    return project?.title || null;
+  }, [hoveredImageId, hoveredProjectId, allProjects]);
+
+  const truncateTitle = (title) => {
+    if (!title) return '';
+    const words = title.split(' ');
+    if (words.length <= 4) return title;
+    return words.slice(0, 4).join(' ') + '...';
+  };
+
   const floatingImages = useMemo(() =>
     Object.entries(imageCache)
       .filter(([, src]) => src)
@@ -421,9 +439,19 @@ function Home() {
   return (
     <IndexContainer>
       {/* <Sketch bottomBoundarySelector="footer" /> */}
-      <FloatingImages images={floatingImages} summonedId={hoveredProjectId} activeImageIds={activeImageIds} />
+      <FloatingImages
+        images={floatingImages}
+        summonedId={hoveredProjectId}
+        activeImageIds={activeImageIds}
+        onImageHover={(id) => !isMobile && setHoveredImageId(id)}
+        onImageLeave={() => setHoveredImageId(null)}
+        onImageClick={(id) => {
+          const project = allProjects.find(p => p.link.split('/').pop() === id);
+          if (project) navigate(project.link);
+        }}
+      />
       <Header
-        title="David Robert"
+        title={hoveredProjectTitle ? `David Robert/${truncateTitle(hoveredProjectTitle)}` : 'David Robert'}
         subtitle1="Creative Technologist"
         subtitle2="& Interactive Systems Designer"
         hideBackButton={true}

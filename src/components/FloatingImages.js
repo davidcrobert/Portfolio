@@ -9,11 +9,12 @@ const SUMMONED_W_RATIO = 0.4;
 const SUMMONED_H_RATIO = 0.5;
 const MOBILE_SUMMONED_W_RATIO = 0.28;
 const MOBILE_SUMMONED_H_RATIO = 0.24;
+const HOVER_OPACITY = 0.55;
 const DRIFT_SPEED = 0.28;
 const MAX_OFFSCREEN_RATIO = 0.6;
 const MOBILE_SIZE_SCALE = 0.58;
 
-function FloatingImages({ images, summonedId, activeImageIds }) {
+function FloatingImages({ images, summonedId, activeImageIds, onImageHover, onImageLeave, onImageClick }) {
   const refs = useRef({});
   const pos = useRef({});
   const vel = useRef({});
@@ -25,6 +26,8 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
   const returningIdRef = useRef(null);
   const returnTimeoutRef = useRef(null);
   const isMobileRef = useRef(window.innerWidth <= 768);
+  const hoveredImageRef = useRef(null);
+  const activeImageIdsRef = useRef(activeImageIds);
 
   const getSizeForViewport = (baseSize) => {
     return isMobileRef.current ? Math.round(baseSize * MOBILE_SIZE_SCALE) : baseSize;
@@ -38,6 +41,10 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
   useEffect(() => {
     imagesRef.current = images;
   }, [images]);
+
+  useEffect(() => {
+    activeImageIdsRef.current = activeImageIds;
+  }, [activeImageIds]);
 
   useEffect(() => {
     summonedIdRef.current = summonedId;
@@ -226,6 +233,80 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
     return () => window.removeEventListener('resize', syncViewportSizing);
   }, [activeImageIds]);
 
+  // Track cursor over floating images via mousemove, bypassing pointer-events.
+  // document.elementFromPoint skips pointer-events:none elements and returns
+  // the real content underneath, so interactive elements always win.
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isMobileRef.current) return;
+
+      const topEl = document.elementFromPoint(e.clientX, e.clientY);
+      const overInteractive = !!topEl?.closest('a, button');
+
+      let newId = null;
+      if (!overInteractive) {
+        const currentId = hoveredImageRef.current;
+        if (currentId && refs.current[currentId] && activeImageIdsRef.current?.has(currentId)) {
+          const r = refs.current[currentId].getBoundingClientRect();
+          if (e.clientX >= r.left && e.clientX <= r.right &&
+              e.clientY >= r.top  && e.clientY <= r.bottom) {
+            return; // still inside the locked image, don't let a drifting image take over
+          }
+        }
+        for (const [id, el] of Object.entries(refs.current)) {
+          if (!activeImageIdsRef.current?.has(id)) continue;
+          const r = el.getBoundingClientRect();
+          if (e.clientX >= r.left && e.clientX <= r.right &&
+              e.clientY >= r.top  && e.clientY <= r.bottom) {
+            newId = id;
+            break;
+          }
+        }
+      }
+
+      const prevId = hoveredImageRef.current;
+      if (newId === prevId) return;
+      hoveredImageRef.current = newId;
+
+      if (prevId) {
+        const prevEl = refs.current[prevId];
+        if (prevEl && summonedIdRef.current !== prevId) {
+          prevEl.style.transition = 'opacity 0.3s ease';
+          prevEl.style.opacity = String(getFloatOpacity());
+        }
+        if (onImageLeave) onImageLeave();
+      }
+
+      if (newId) {
+        const isSummoned = summonedIdRef.current === newId;
+        const isReturning = returningIdRef.current === newId;
+        if (!isSummoned && !isReturning) {
+          const newEl = refs.current[newId];
+          if (newEl) {
+            newEl.style.transition = 'opacity 0.2s ease';
+            newEl.style.opacity = String(HOVER_OPACITY);
+          }
+        }
+        if (onImageHover) onImageHover(newId);
+      }
+    };
+
+    const handleClick = (e) => {
+      if (!onImageClick || isMobileRef.current) return;
+      const topEl = document.elementFromPoint(e.clientX, e.clientY);
+      if (topEl?.closest('a, button')) return;
+      const id = hoveredImageRef.current;
+      if (id) onImageClick(id);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleClick);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('click', handleClick);
+    };
+  }, [onImageHover, onImageLeave, onImageClick]);
+
   useEffect(() => {
     const animate = () => {
       const currentSummonedId = summonedIdRef.current;
@@ -315,6 +396,7 @@ function FloatingImages({ images, summonedId, activeImageIds }) {
             left: 0,
             top: 0,
             zIndex: 3,
+            pointerEvents: 'none',
           }}
         />
       ))}
