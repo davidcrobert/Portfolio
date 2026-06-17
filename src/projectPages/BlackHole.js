@@ -91,7 +91,7 @@ const StyledCreditsSection = styled(CreditsSection)`
 const VideoWrapper = styled.div`
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 320px;
   margin: 0 auto 40px;
   aspect-ratio: 9 / 16;
   cursor: pointer;
