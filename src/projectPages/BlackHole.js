@@ -212,7 +212,7 @@ const BlackHoleProjectPage = ({ project }) => {
               <CreditsColumn>
                 <CreditsHeader>My Role</CreditsHeader>
                 <RoleDescription>
-                  Built the multi-face tracking pipeline in Python, managed via TDPyEnvManager
+                  Built the multi-face tracking pipeline in Python
                   inside TouchDesigner, with asynchronous threading so detection runs without
                   blocking the render loop. The system identifies and assigns stable IDs to
                   faces in the live camera feed, maintaining continuity as the audience changes.
