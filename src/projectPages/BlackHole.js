@@ -199,7 +199,7 @@ const BlackHoleProjectPage = ({ project }) => {
             ) : (
               <>
                 <VideoThumbnail
-                  src={`https://img.youtube.com/vi/${VIDEO_ID}/hqdefault.jpg`}
+                  src={`https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`}
                   alt="Black Hole video"
                 />
                 <PlayButton />
