@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
-import { getProjectMediaEmbed } from '../data/projectMedia';
 import {
   PageWrapper,
   MainContent,
@@ -19,7 +18,6 @@ import {
   CreditRole,
   ExternalLink,
   InlineLink,
-  cleanYouTubeEmbed,
   getBackLink
 } from './BaseProjectPage';
 import { media } from '../styles/responsive';
@@ -54,35 +52,99 @@ const IntroBody = styled.div`
   margin-top: 30px;
 `;
 
-const HeroImage = styled.img`
-  display: block;
-  width: 100%;
-  max-width: 1100px;
-  height: auto;
+const LandscapeImagePair = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: calc(100% - 4px);
   margin: 30px auto 40px;
-  border: 1px solid black;
-  background-color: #fafafa;
+`;
+
+const LandscapeImage = styled.img`
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+`;
+
+const PortraitImagePair = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: calc(100% - 4px);
+  margin: 30px auto 0;
+`;
+
+const PortraitImage = styled.img`
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
 `;
 
 const StyledCreditsSection = styled(CreditsSection)`
   margin-top: 40px;
 `;
 
-const PortraitMediaEmbed = styled.div`
+const VideoWrapper = styled.div`
+  position: relative;
   width: 100%;
   max-width: 420px;
   margin: 0 auto 40px;
+  aspect-ratio: 9 / 16;
+  cursor: pointer;
+  overflow: hidden;
 
   iframe {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 9 / 16;
-    height: auto;
+    height: 100%;
+    border: 0;
   }
 `;
 
+const VideoThumbnail = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const PlayButton = styled.div`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23000'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 55% 50%;
+    background-size: 40%;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  ${VideoWrapper}:hover &::after {
+    transform: scale(1.1);
+    background-color: white;
+  }
+`;
+
+const VIDEO_ID = 'o5_tFjF6zBQ';
+
 const BlackHoleProjectPage = ({ project }) => {
   const backLink = getBackLink();
-  const mediaEmbed = getProjectMediaEmbed(project);
+  const [videoActive, setVideoActive] = useState(false);
 
   return (
     <PageWrapper>
@@ -120,9 +182,30 @@ const BlackHoleProjectPage = ({ project }) => {
             </IntroBody>
           </CustomHeader>
 
-          {mediaEmbed && (
-            <PortraitMediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
-          )}
+          <LandscapeImagePair>
+            <LandscapeImage src="/images/projects/BlackHole/blackhole1.jpg" alt="Black Hole installation view" />
+            <LandscapeImage src="/images/projects/BlackHole/blackhole2.jpg" alt="Black Hole face tracking" />
+          </LandscapeImagePair>
+
+          <VideoWrapper onClick={() => setVideoActive(true)}>
+            {videoActive ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&controls=1&iv_load_policy=3&rel=0`}
+                title="Black Hole"
+                allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            ) : (
+              <>
+                <VideoThumbnail
+                  src={`https://img.youtube.com/vi/${VIDEO_ID}/hqdefault.jpg`}
+                  alt="Black Hole video"
+                />
+                <PlayButton />
+              </>
+            )}
+          </VideoWrapper>
 
           <StyledCreditsSection>
             <CreditsGrid>
@@ -161,6 +244,11 @@ const BlackHoleProjectPage = ({ project }) => {
               </CreditsColumn>
             </CreditsGrid>
           </StyledCreditsSection>
+
+          <PortraitImagePair>
+            <PortraitImage src="/images/projects/BlackHole/blackhole3.jpg" alt="Black Hole interaction detail" />
+            <PortraitImage src="/images/projects/BlackHole/blackhole4.jpg" alt="Black Hole interaction detail" />
+          </PortraitImagePair>
 
           <ExternalLink
             href="https://www.lozano-hemmer.com/black_hole.php"
