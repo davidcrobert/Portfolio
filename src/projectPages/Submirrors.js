@@ -8,6 +8,7 @@ import {
   DescriptionParagraph,
   CustomHeader,
   CustomSubtitle,
+  RoleSummary,
   CreditsSection,
   CreditsGrid,
   CreditsColumn,
@@ -177,6 +178,7 @@ const SubmirrorsProjectPage = ({ project }) => {
                 follow a scrolling teleprompter. The inference pipeline runs in Python, with
                 TouchDesigner handling compositing and puppeteering control.
               </CustomSubtitle>
+              <RoleSummary>I was the sole developer of the AI puppeteering pipeline.</RoleSummary>
             </IntroBody>
           </CustomHeader>
 

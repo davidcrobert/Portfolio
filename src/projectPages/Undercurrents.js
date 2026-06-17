@@ -8,6 +8,7 @@ import {
   ProjectContent,
   CustomHeader,
   CustomSubtitle,
+  RoleSummary,
   MediaEmbed,
   CreditsSection,
   CreditsGrid,
@@ -151,6 +152,7 @@ const UndercurrentsProjectPage = ({ project }) => {
                 new voice. Commissioned poems surface occasionally within this stream, accompanied
                 by animated LED sequences.
               </CustomSubtitle>
+              <RoleSummary>I built the audio routing system in TouchDesigner and the AI voice-retrieval pipeline.</RoleSummary>
             </IntroBody>
           </CustomHeader>
 

@@ -99,6 +99,20 @@ export const CustomSubtitle = styled.p`
   }
 `;
 
+export const RoleSummary = styled.p`
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  text-align: left;
+  font-style: italic;
+  margin-top: 14px;
+
+  ${media.downTablet} {
+    font-size: 12px;
+  }
+`;
+
 export const MediaEmbed = styled.div`
   width: 100%;
   max-width: 1000px;

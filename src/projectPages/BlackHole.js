@@ -7,6 +7,7 @@ import {
   ProjectContent,
   CustomHeader,
   CustomSubtitle,
+  RoleSummary,
   CreditsSection,
   CreditsGrid,
   CreditsColumn,
@@ -176,9 +177,9 @@ const BlackHoleProjectPage = ({ project }) => {
                 : a 220cm concave spiral of 14,755 LED bulbs with a surveillance camera at its centre.
                 The camera identifies visitors in real time, drawing their portraits into the vortex
                 before the spiral erases them — to look at it is also to be looked at, catalogued, and
-                dissolved. I built the face-tracking and pixel-mapping pipeline in Python and
-                TouchDesigner that translates live detections into the physical LED layout.
+                dissolved.
               </CustomSubtitle>
+              <RoleSummary>I built the face-tracking and pixel-mapping pipeline in Python and TouchDesigner.</RoleSummary>
             </IntroBody>
           </CustomHeader>
 
