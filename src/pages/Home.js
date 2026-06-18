@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
@@ -303,8 +303,17 @@ const ResumeLink = styled.a`
   }
 `;
 
+const HOME_SCROLL_STORAGE_KEY = 'portfolio:homeScrollPosition';
+
 function Home() {
   const navigate = useNavigate();
+  const workSideRef = useRef(null);
+  const artSideRef = useRef(null);
+  const latestHomeScrollRef = useRef({
+    windowY: 0,
+    workY: 0,
+    artY: 0,
+  });
   const [hoveredProjectId, setHoveredProjectId] = useState(null);
   const [hoveredImageId, setHoveredImageId] = useState(null);
   const [imageCache, setImageCache] = useState({});
@@ -351,6 +360,59 @@ function Home() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const saveHomeScroll = useCallback(() => {
+    const scrollPosition = {
+      windowY: window.scrollY,
+      workY: workSideRef.current?.scrollTop || latestHomeScrollRef.current.workY,
+      artY: artSideRef.current?.scrollTop || latestHomeScrollRef.current.artY,
+    };
+
+    latestHomeScrollRef.current = scrollPosition;
+    window.sessionStorage.setItem(HOME_SCROLL_STORAGE_KEY, JSON.stringify(scrollPosition));
+  }, []);
+
+  useLayoutEffect(() => {
+    const applySavedScroll = () => {
+      const savedScroll = window.sessionStorage.getItem(HOME_SCROLL_STORAGE_KEY);
+      if (!savedScroll) {
+        return;
+      }
+
+      try {
+        const { windowY = 0, workY = 0, artY = 0 } = JSON.parse(savedScroll);
+        window.scrollTo({ top: windowY, left: 0, behavior: 'auto' });
+
+        if (workSideRef.current) {
+          workSideRef.current.scrollTop = workY;
+        }
+
+        if (artSideRef.current) {
+          artSideRef.current.scrollTop = artY;
+        }
+      } catch (error) {
+        window.sessionStorage.removeItem(HOME_SCROLL_STORAGE_KEY);
+      }
+    };
+
+    applySavedScroll();
+    const restoreFrame = window.requestAnimationFrame(applySavedScroll);
+
+    return () => {
+      window.cancelAnimationFrame(restoreFrame);
+      saveHomeScroll();
+    };
+  }, [saveHomeScroll]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', saveHomeScroll, { passive: true });
+    window.addEventListener('beforeunload', saveHomeScroll);
+
+    return () => {
+      window.removeEventListener('scroll', saveHomeScroll);
+      window.removeEventListener('beforeunload', saveHomeScroll);
+    };
+  }, [saveHomeScroll]);
 
   const handleProjectHover = (projectLink) => {
     if (isMobile) {
@@ -462,7 +524,7 @@ function Home() {
 
       <SplitContainer>
         {(!isMobile || filteredWork.length > 0) && (
-          <Side $left>
+          <Side $left ref={workSideRef} onScroll={saveHomeScroll}>
             <SideContent>
             <SideLabel $stackedSpacing={false}>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
               <ProjectList>
@@ -490,7 +552,7 @@ function Home() {
         )}
 
         {(!isMobile || filteredArt.length > 0) && (
-          <Side>
+          <Side ref={artSideRef} onScroll={saveHomeScroll}>
             <SideContent>
             <SideLabel $stackedSpacing={isMobile && filteredWork.length > 0}>
               {mainPortfolioConfig.leftColumnLabel}
