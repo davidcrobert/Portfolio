@@ -254,7 +254,7 @@ function SplitPortfolioHome({
 
   useEffect(() => {
     const allProjects = sections.flatMap(section => section.projects);
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'tif'];
+    const imageExtensions = ['webp', 'jpg', 'jpeg', 'png', 'tif'];
 
     allProjects.forEach(project => {
       const projectId = getProjectSlug(project);

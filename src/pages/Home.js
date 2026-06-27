@@ -45,6 +45,8 @@ const Side = styled.div`
   flex-direction: column;
   direction: ${props => props.$left ? 'rtl' : 'ltr'};
   min-width: 0;
+  --visible-project-count: ${props => 2.475};
+  --scroll-panel-height: 620px;
 
   @media screen and (min-width: 769px) {
     overflow-y: auto;
@@ -64,6 +66,7 @@ const Side = styled.div`
   ${media.downTablet} {
     direction: ltr;
     overflow: visible;
+    --scroll-panel-height: auto;
   }
 `;
 
@@ -113,6 +116,10 @@ const Project = styled.section`
   justify-content: center;
   min-height: 180px;
   padding: ${spacing.cardPadding} 0;
+
+  @media screen and (min-width: 769px) {
+    min-height: calc(var(--scroll-panel-height) / var(--visible-project-count));
+  }
 
   &:last-child {
     border-bottom: none;
@@ -326,7 +333,7 @@ function Home() {
   // Preload and cache image paths for all projects
   useEffect(() => {
     const allProjects = [...artProjects, ...workProjects];
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'tif'];
+    const imageExtensions = ['webp', 'jpg', 'jpeg', 'png', 'tif'];
 
     allProjects.forEach(project => {
       const projectId = project.link.split('/').pop();
@@ -352,14 +359,31 @@ function Home() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const updatePanelMetrics = useCallback(() => {
+    const update = (el) => {
+      if (!el) return;
+      const label = el.querySelector('[data-side-label="true"]');
+      const visiblePanelHeight = Math.max(1, el.clientHeight - (label?.offsetHeight || 0));
+      el.style.setProperty('--scroll-panel-height', `${visiblePanelHeight}px`);
+    };
+    update(workSideRef.current);
+    update(artSideRef.current);
+  }, []);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(updatePanelMetrics);
+    return () => cancelAnimationFrame(frame);
+  }, [updatePanelMetrics]);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
+      updatePanelMetrics();
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [updatePanelMetrics]);
 
   const saveHomeScroll = useCallback(() => {
     const scrollPosition = {
@@ -390,19 +414,20 @@ function Home() {
         if (artSideRef.current) {
           artSideRef.current.scrollTop = artY;
         }
+        updatePanelMetrics();
       } catch (error) {
         window.sessionStorage.removeItem(HOME_SCROLL_STORAGE_KEY);
       }
     };
 
     applySavedScroll();
-    const restoreFrame = window.requestAnimationFrame(applySavedScroll);
+    const restoreFrame = window.requestAnimationFrame(() => { applySavedScroll(); updatePanelMetrics(); });
 
     return () => {
       window.cancelAnimationFrame(restoreFrame);
       saveHomeScroll();
     };
-  }, [saveHomeScroll]);
+  }, [saveHomeScroll, updatePanelMetrics]);
 
   useEffect(() => {
     window.addEventListener('scroll', saveHomeScroll, { passive: true });
@@ -524,9 +549,9 @@ function Home() {
 
       <SplitContainer>
         {(!isMobile || filteredWork.length > 0) && (
-          <Side $left ref={workSideRef} onScroll={saveHomeScroll}>
+          <Side $left ref={workSideRef} onScroll={() => { saveHomeScroll(); updatePanelMetrics(); }}>
             <SideContent>
-            <SideLabel $stackedSpacing={false}>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
+            <SideLabel data-side-label="true" $stackedSpacing={false}>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
               <ProjectList>
                 {filteredWork.map((project, index) => (
                   <Project key={project.id ?? index}>
@@ -552,9 +577,9 @@ function Home() {
         )}
 
         {(!isMobile || filteredArt.length > 0) && (
-          <Side ref={artSideRef} onScroll={saveHomeScroll}>
+          <Side ref={artSideRef} onScroll={() => { saveHomeScroll(); updatePanelMetrics(); }}>
             <SideContent>
-            <SideLabel $stackedSpacing={isMobile && filteredWork.length > 0}>
+            <SideLabel data-side-label="true" $stackedSpacing={isMobile && filteredWork.length > 0}>
               {mainPortfolioConfig.leftColumnLabel}
             </SideLabel>
               <ProjectList>

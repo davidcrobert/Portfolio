@@ -167,7 +167,7 @@ const ShadowTunerProjectPage = ({ project }) => {
           </DescriptionParagraph>
 
           <ImageLink href="https://www.lozano-hemmer.com/shadow_tuner.php" target="_blank" rel="noopener noreferrer">
-            <StyledDocImage src={"/images/projects/ShadowTuner/shadow-tuner_small.jpg"} alt="Shadow Tuner" />
+            <StyledDocImage src={"/images/projects/ShadowTuner/shadow-tuner_small.webp"} alt="Shadow Tuner" />
           </ImageLink>
 
           <DescriptionParagraph>
@@ -182,7 +182,7 @@ const ShadowTunerProjectPage = ({ project }) => {
           </DescriptionParagraph>
 
           <ImageLink href="https://www.lozano-hemmer.com/shadow_tuner.php" target="_blank" rel="noopener noreferrer">
-            <StyledDocImage src={"/images/projects/ShadowTuner/shadow-tuner_large.jpg"} alt="Shadow Tuner" />
+            <StyledDocImage src={"/images/projects/ShadowTuner/shadow-tuner_large.webp"} alt="Shadow Tuner" />
           </ImageLink>
 
           <DescriptionParagraph>

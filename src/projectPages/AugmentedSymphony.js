@@ -154,7 +154,7 @@ const AugmentedSymphonyProjectPage = ({ project }) => {
             immersive, dynamic soundscape.
           </DescriptionParagraph>
 
-          <StyledDocImage src="/images/projects/augmented-symphony.png" alt="Augmented Symphony AR Interface" />
+          <StyledDocImage src="/images/projects/augmented-symphony.webp" alt="Augmented Symphony AR Interface" />
 
           <DescriptionParagraph>
             The research contribution was exploring how interactivity and spatial agency could enhance

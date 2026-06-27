@@ -157,11 +157,11 @@ const UndercurrentsProjectPage = ({ project }) => {
           </CustomHeader>
 
           <HeroImage
-            src="/images/projects/Undercurrents/undercurrents1.jpg"
+            src="/images/projects/Undercurrents/undercurrents1.webp"
             alt="Undercurrents installation view"
           />
           <CloseUpImage
-            src="/images/projects/Undercurrents/undercurrents2.jpg"
+            src="/images/projects/Undercurrents/undercurrents2.webp"
             alt="Visitor at an Undercurrents intercom station"
           />
 
@@ -216,7 +216,7 @@ const UndercurrentsProjectPage = ({ project }) => {
           <SystemDiagram nodes={UC_NODES} edges={UC_EDGES} />
 
           <BackendUiImage
-            src="/images/projects/Undercurrents/backend_ui.png"
+            src="/images/projects/Undercurrents/backend_ui.webp"
             alt="Undercurrents backend UI"
           />
 

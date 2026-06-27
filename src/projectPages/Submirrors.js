@@ -245,7 +245,7 @@ const SubmirrorsProjectPage = ({ project }) => {
           <SystemDiagram nodes={SUBMIRRORS_NODES} edges={SUBMIRRORS_EDGES} />
 
           <ImageLink href="https://www.lozano-hemmer.com/recurrent_waiting.php" target="_blank" rel="noopener noreferrer">
-            <StyledDocImage src="/images/projects/Submirrors/recurrent_waiting.jpg" alt="Recurrent Waiting" />
+            <StyledDocImage src="/images/projects/Submirrors/recurrent_waiting.webp" alt="Recurrent Waiting" />
           </ImageLink>
 
           <DescriptionParagraph>
@@ -263,7 +263,7 @@ const SubmirrorsProjectPage = ({ project }) => {
           </DescriptionParagraph>
 
           <ImageLink href="https://www.lozano-hemmer.com/recurrent_kafka.php" target="_blank" rel="noopener noreferrer">
-            <StyledDocImage src="/images/projects/Submirrors/recurrent_kafka.jpg" alt="Recurrent Kafka" />
+            <StyledDocImage src="/images/projects/Submirrors/recurrent_kafka.webp" alt="Recurrent Kafka" />
           </ImageLink>
 
           <DescriptionParagraph>

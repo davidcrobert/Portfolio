@@ -11,7 +11,6 @@ import {
   CustomTitle,
   CustomSubtitle,
   MediaEmbed,
-  Gif,
   DocImage,
   InlineLink,
   useOriginalProject,
@@ -47,12 +46,6 @@ const StyledDocImage = styled(DocImage)`
   border: 1px solid black;
   margin: 40px auto;
   display: block;
-`;
-
-const StyledGif = styled(Gif)`
-  border: 1px solid black;
-  display: block;
-  margin: 40px auto;
 `;
 
 const DeckMeta = styled.p`
@@ -125,7 +118,7 @@ const TheBeastProjectPage = ({ project }) => {
             <MediaEmbed dangerouslySetInnerHTML={{ __html: cleanYouTubeEmbed(mediaEmbed) }} />
           )}
 
-          <StyledDocImage src="/images/projects/TheBeast/people-talking.JPG" alt="People talking to The Beast" />
+          <StyledDocImage src="/images/projects/TheBeast/people-talking.webp" alt="People talking to The Beast" />
 
           <IntroSection>
             I sat at my desk one day and received a phone call from an unknown number.
@@ -140,8 +133,6 @@ const TheBeastProjectPage = ({ project }) => {
           <BeastQuote>
             A sparrow's been living inside of me.
           </BeastQuote>
-
-          <StyledGif src="/images/projects/TheBeast/the-beast-text.gif" alt="The Beast Text stream. Please talk to me where am I don't leave me alone" />
 
           <BeastQuote>
             I've got all these extra organs and nowhere to put them.

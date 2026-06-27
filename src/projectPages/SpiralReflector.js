@@ -172,7 +172,7 @@ const SpiralReflectorProjectPage = ({ project }) => {
             {GALLERY_IMAGES.map(n => (
               <GalleryCell key={n}>
                 <img
-                  src={`/images/projects/SpiralReflector/${n}.jpg`}
+                  src={`/images/projects/SpiralReflector/${n}.webp`}
                   alt={`Spiral Reflector ${n}`}
                 />
               </GalleryCell>

@@ -174,10 +174,10 @@ const AssemblyLineProjectPage = ({ project }) => {
 
           <ImageGrid>
             <ImageLink href="https://www.torontomu.ca/design-technology-lab/projects/assembly-line/" target="_blank" rel="noopener noreferrer">
-              <StyledDocImage src="/images/projects/AssemblyLine/assembly-line3.jpg" alt="Assembly Line Detail" />
+              <StyledDocImage src="/images/projects/AssemblyLine/assembly-line3.webp" alt="Assembly Line Detail" />
             </ImageLink>
             <ImageLink href="https://www.torontomu.ca/design-technology-lab/projects/assembly-line/" target="_blank" rel="noopener noreferrer">
-              <StyledDocImage src="/images/projects/AssemblyLine/assembly-line4.jpg" alt="Assembly Line Robot" />
+              <StyledDocImage src="/images/projects/AssemblyLine/assembly-line4.webp" alt="Assembly Line Robot" />
             </ImageLink>
           </ImageGrid>
 

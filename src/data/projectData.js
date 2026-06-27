@@ -19,7 +19,7 @@ export const projectData = {
       {
         title: "Submirrors",
         link: "/projects/Submirrors",
-        description: "AI applied to a live camera feed - mirrors that puppet and distort a viewer's own facial expression in real time",
+        description: "AI applied to a live camera feed, creating mirrors that puppet and distort a viewer's own facial expression in real time",
         subtitle1: "Puppets",
         subtitle2: "& Puppeteers",
         year: "2025",

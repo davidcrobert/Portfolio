@@ -132,8 +132,8 @@ const BlackHoleProjectPage = ({ project }) => {
           </CustomHeader>
 
           <LandscapeImagePair>
-            <LandscapeImage src="/images/projects/BlackHole/blackhole1.jpg" alt="Black Hole installation view" />
-            <LandscapeImage src="/images/projects/BlackHole/blackhole2.jpg" alt="Black Hole face tracking" />
+            <LandscapeImage src="/images/projects/BlackHole/blackhole1.webp" alt="Black Hole installation view" />
+            <LandscapeImage src="/images/projects/BlackHole/blackhole2.webp" alt="Black Hole face tracking" />
           </LandscapeImagePair>
 
           <MediaEmbed>
@@ -188,8 +188,8 @@ const BlackHoleProjectPage = ({ project }) => {
           </StyledCreditsSection>
 
           <PortraitImagePair>
-            <PortraitImage src="/images/projects/BlackHole/blackhole3.jpg" alt="Black Hole interaction detail" />
-            <PortraitImage src="/images/projects/BlackHole/blackhole4.jpg" alt="Black Hole interaction detail" />
+            <PortraitImage src="/images/projects/BlackHole/blackhole3.webp" alt="Black Hole interaction detail" />
+            <PortraitImage src="/images/projects/BlackHole/blackhole4.webp" alt="Black Hole interaction detail" />
           </PortraitImagePair>
 
           <ExternalLink
