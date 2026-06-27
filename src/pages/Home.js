@@ -551,7 +551,7 @@ function Home() {
         {(!isMobile || filteredWork.length > 0) && (
           <Side $left ref={workSideRef} onScroll={() => { saveHomeScroll(); updatePanelMetrics(); }}>
             <SideContent>
-            <SideLabel data-side-label="true" $stackedSpacing={false}>{mainPortfolioConfig.rightColumnLabel}</SideLabel>
+            <SideLabel data-side-label="true" $stackedSpacing={false}>{mainPortfolioConfig.rightColumnLabel} <span style={{ color: '#888', fontStyle: 'normal', marginLeft: '8px' }}>·&nbsp;&nbsp;&nbsp;{filteredWork.length}</span></SideLabel>
               <ProjectList>
                 {filteredWork.map((project, index) => (
                   <Project key={project.id ?? index}>
@@ -580,7 +580,7 @@ function Home() {
           <Side ref={artSideRef} onScroll={() => { saveHomeScroll(); updatePanelMetrics(); }}>
             <SideContent>
             <SideLabel data-side-label="true" $stackedSpacing={isMobile && filteredWork.length > 0}>
-              {mainPortfolioConfig.leftColumnLabel}
+              {mainPortfolioConfig.leftColumnLabel} <span style={{ color: '#888', fontStyle: 'normal', marginLeft: '8px' }}>·&nbsp;&nbsp;&nbsp;{filteredArt.length}</span>
             </SideLabel>
               <ProjectList>
                 {filteredArt.map((project, index) => (
